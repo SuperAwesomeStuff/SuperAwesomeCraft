@@ -58,6 +58,23 @@ Gear tiers should offer horizontal choices with distinct abilities, not one best
 
 Villagers move into Settlements that players build and use their buildings. A Settlement's prosperity grows with what's been built and how it's used, which unlocks trades and services. Prosperity draws Raids: wave-based group encounters that scale with the Settlement. A Raid never destroys player blocks. Walls and layout matter, fighters have a reason to defend, and everyone has a reason to show up.
 
+### Adventuring
+
+Exploration should be painless but not free. Vanilla's adventuring problems are real (no movement step between horse and Elytra, harsh death, early inventory clutter, unreadable structure placement), but fixes come from progression and items, not from changing base physics. Background: [The Bottom Dweller on adventuring](research/bottom-dweller-and-matcha-flavoured.md).
+
+- **Player movement stays vanilla.** No higher jump; no automatic step-up.
+- **Mounts:**
+  - Breeding stays and stays rewarding, but improves faster, and every horse and donkey starts from a higher baseline.
+  - Horses can carry chests, donkeys can wear armor, and mounts aren't blocked by leaves.
+  - Step-up height stays vanilla.
+- **A movement step between horse and Elytra,** such as a glider, as part of cheap early Convenience.
+- **Two kinds of rail:** technical minecarts and rails keep exact vanilla physics for contraptions. Separate locomotion minecarts and track are built for fast travel.
+- **Nether highways stay** as legitimate creative problem-solving.
+- **Death:** items go into a grave that never despawns. Mid-game tools locate a grave from far away, reclaim it remotely, or teleport you back to it.
+- **Inventory:** backpacks expand your inventory as progression, Shulker boxes arrive earlier, and quick-dump and sort are standard.
+- **Readable world generation:** the world stays infinite and random. There's no fixed starting region. Important structures are placed by biome rules players can learn by playing, not by hidden grid algorithms (the way Ancient Cities appear under mountains). Structures carry environmental storytelling, such as a ruined castle marking the Stronghold beneath it.
+- **Per-player loot:** generated loot containers (chests, End Ship Elytra, vaults) are rolled separately for each player, so arriving second never means arriving to nothing.
+
 ### Economy
 
 There is no single currency everything converts into. Each playstyle earns rewards that are useful in their own right instead of an exchange rate that can be optimized. Buyer-side income has limits. Farms are welcome but never required.
@@ -66,7 +83,8 @@ There is no single currency everything converts into. Each playstyle earns rewar
 
 - Players connect with an **unmodified client**. The server can send a resource pack automatically. See [ADR-0001](adr/0001-server-side-fabric-with-polymer.md).
 - Balance for 5 to 10 players of varying skill on one shared world.
-- Avoid first-come finite resources that the first player can claim.
+- Avoid first-come finite resources that the first player can claim. Generated loot is per player.
+- **Technical parity:** vanilla mechanics that contraptions depend on (minecart physics, redstone, mob behavior used by farms) stay exactly vanilla. When we want different behavior, we add a separate variant instead of changing the original.
 
 ## Open questions
 

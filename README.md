@@ -16,6 +16,7 @@ It succeeds [Super Awesome Datapacks](https://github.com/SuperAwesomeStuff/Super
 4. **Encounters, not arena bosses.** Challenges are dungeon crawls and fights against groups of enemies, ending in climax fights inside arenas the game designed, which can't be cheesed.
 5. **Every playstyle has a project that matters.** Huge builds, colonies, collections and growth with no cap all feed into the world instead of sitting beside it.
 6. **Nothing destroys what players build.** Encounters and Raids never break player blocks.
+7. **Technical parity.** Mechanics that contraptions rely on stay exactly vanilla. New behavior comes as a separate variant, never as a change to the original.
 
 ## Documentation
 

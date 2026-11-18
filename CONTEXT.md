@@ -45,5 +45,16 @@ A wave-based group encounter against a Settlement that scales with its Prosperit
 A reason a player plays, such as huge projects, collecting or power. Players combine several; the design targets motivations, not archetypes.
 _Avoid_: Archetype, player type, class
 
+**Per-player loot**:
+Generated loot containers that roll separately for each player who opens them. The first player to arrive never empties them for others.
+_Avoid_: Shared loot, instanced chests
+
+**Technical parity**:
+The rule that vanilla mechanics contraptions depend on stay exactly vanilla. Changed behavior ships as a separate variant, for example a locomotion minecart alongside the unchanged vanilla minecart.
+_Avoid_: Vanilla compatibility
+
+**Grave**:
+A container holding a player's items after death. It never despawns, and Convenience tools can locate it, reclaim it, or return the player to it.
+
 **Collection Log**:
 A per-player record of distinct items, creatures and places discovered, with rewards for breadth.
