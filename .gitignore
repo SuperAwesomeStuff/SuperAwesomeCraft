@@ -1,0 +1,17 @@
+# Private design notes about real players. Never commit.
+docs/private/
+
+# Java / Gradle / Fabric
+.gradle/
+build/
+out/
+run/
+*.class
+.idea/
+*.iml
+.vscode/
+
+# Python tooling
+__pycache__/
+*.pyc
+.cache/
