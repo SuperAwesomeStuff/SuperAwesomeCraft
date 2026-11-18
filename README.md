@@ -1,7 +1,5 @@
 # Super Awesome Craft
 
-_Working title._
-
 A total conversion of Minecraft Java Edition for a small server of roughly 5 to 10 friends. It uses Minecraft as an engine and keeps vanilla's familiar moment-to-moment play, but replaces its progression with **Eras**: chains of dungeon encounters that unlock new areas, materials and systems. Living **Settlements** and **Raids** give the server shared reasons to gather.
 
 **Status:** In design. There is no playable build yet.
