@@ -14,11 +14,11 @@ Domain documentation uses the single-context layout. See `docs/agents/domain.md`
 
 ## Private notes
 
-`docs/private/` holds notes about real players (profiles and playtest data). It is git-ignored. Read it for design context, but never commit it, quote player names in commits, issues or PRs, or move its contents into tracked files.
+`docs/private/` holds notes about real players: profiles, and playtest server data and dashboards under `docs/private/playtest-*/`. It is git-ignored. Read it for design context, but never commit it, quote player names in commits, issues or PRs, or move its contents into tracked files.
 
 ## Wiki
 
-The GitHub wiki (`SuperAwesomeCraft.wiki` repo, cloned beside this one) is the player-facing version of the design for friends who won't read the docs. Write it in plain language with no jargon, and label each page **Decided**, **Leaning** or **Idea**. When a decision in `docs/` changes, update the matching wiki page. The wiki is public: never include player names or anything from `docs/private/`.
+The GitHub wiki (the separate `SuperAwesomeCraft.wiki` repo, cloned into the git-ignored `wiki/` folder) is the player-facing version of the design for friends who won't read the docs. Write it in plain language with no jargon, and label each page **Decided**, **Leaning** or **Idea**. When a decision in `docs/` changes, update the matching wiki page. The wiki is public: never include player names or anything from `docs/private/`.
 
 ## Research
 

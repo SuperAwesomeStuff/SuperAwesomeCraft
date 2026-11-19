@@ -15,3 +15,6 @@ run/
 __pycache__/
 *.pyc
 .cache/
+
+# Wiki is its own git repo (SuperAwesomeCraft.wiki), cloned here for convenience
+wiki/
