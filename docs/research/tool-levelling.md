@@ -75,7 +75,7 @@ This page assumes the brief's premise that a **client mod is allowed**. [ADR-000
 ## Problems with tool levelling
 
 - **Losing the tool.**
-  - *Death.* Graves already cover this ([CONTEXT.md](../../CONTEXT.md)). The leak is lava, void and despawn, so graves need to catch void and lava deaths too.
+  - *Death.* Graves already cover this ([GLOSSARY.md](../../GLOSSARY.md)). The leak is lava, void and despawn, so graves need to catch void and lava deaths too.
   - *Breakage.* In vanilla a tool at zero durability is deleted along with all its history. TiC's "broken, not destroyed" rule is essential if tools carry levels.
   - *Tier upgrades.* If an iron to diamond to netherite upgrade resets progress, players delay upgrading or never bond with a tool. Vanilla's netherite smithing upgrade already keeps enchantments, and the same rule should apply to levels.
   - *Wanting a second tool.* A Silk Touch pick and a Fortune pick should not mean levelling twice from zero.
@@ -93,7 +93,7 @@ This page assumes the brief's premise that a **client mod is allowed**. [ADR-000
 - **The player holds knowledge.** The Codex records which Techniques and recipes you have learned. Tool-type Mastery sets a floor for every future tool of that type.
 - **Eras and materials hold Power.** Enchantment capacity and relic tiers stay exactly as in the Ascendant Arcana plan.
 
-Working names below (Familiarity, Technique, Mastery, Codex) need settling in [CONTEXT.md](../../CONTEXT.md).
+Working names below (Familiarity, Technique, Mastery, Codex) need settling in [GLOSSARY.md](../../GLOSSARY.md).
 
 ### 1. Familiarity: a short level track on each tool
 

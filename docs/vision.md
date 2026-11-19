@@ -40,17 +40,17 @@ The design targets **motivations**, not fixed archetypes, because every real pla
 
 The game advances through a small number of **Eras**. Each Era has an **Era Gate**: a dungeon chain with group encounters, ending in a climax fight in an arena built into the dungeon. Clearing it gives the player:
 
-- access to the next Era's area or dimension (a personal unlock, as with Twilight Forest's progression barriers),
+- the means to open the next Era's dimension, for the whole world (see [ADR-0003](adr/0003-world-progression-through-portals.md)),
 - new materials, Catalysts and trades,
 - the next tier of power.
 
-Once any player has cleared a Gate, the world eases that Era for everyone else: trades get cheaper, structures easier to find, Catalysts cheaper. That's catch-up help, not a requirement.
+Progression belongs to the world. Once a portal to a new dimension exists, anyone can walk through it and do anything there. Nothing checks whether a player personally cleared a Gate.
 
-**Leaning: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Era Gate. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
+**Decided: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Era Gate. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
 
 **Idea: Heart upgrades.** Like Terraria's Life Crystals, players raise their max health with items found while exploring each dimension, not only by clearing its Gate. Later encounters can hit harder while feeling about as hard. Healing probably needs to scale with max health, because vanilla regenerates at a fixed rate.
 
-**Idea: Era-gated blocks.** Each Era's new ores, dungeon walls and structure blocks need that Era's tools to mine, like Terraria's pickaxe power. This never applies to vanilla building blocks or to anything players place, because mining speed is Convenience.
+**Decided: Era-gated blocks.** Each Era's new ores, dungeon walls and structure blocks need that Era's tools to mine, like Terraria's pickaxe power. This never applies to vanilla building blocks or to anything players place, because mining speed is Convenience.
 
 ### Convenience and Power
 
@@ -63,9 +63,9 @@ Gear tiers should offer horizontal choices with distinct abilities, not one best
 ### Gear
 
 - **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels.
-- **Idea: no durability.** Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Era Gates, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
+- **Decided: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Era Gates, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
 - **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. Raw stats come from slotted, upgradable components. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
-- **Leaning: tools level with use instead of a separate skills system.** Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
+- **Decided: tools level with use instead of a separate skills system.** There are no player-level skills. Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
   - A tool's **Familiarity** rises to a hard cap of 5, mostly from doing new things, plus a daily allowance. Levels unlock slots for toggleable **Techniques** (Convenience only).
   - Enchantment capacity and stat slots come from materials and Eras, never from use, so grinding can't buy power.
   - Techniques learned are kept forever in the player's **Codex**. Maxing any tool of a type grants **Mastery**: new tools of that type start at level 2 and level faster. Upgrading a tool's tier keeps its progress.
@@ -104,7 +104,8 @@ There is no single currency everything converts into. Each playstyle earns rewar
 - Players install the mod as a **modpack** on both client and server. See [ADR-0001](adr/0001-fabric-client-and-server-mod.md).
 - Balance for 5 to 10 players of varying skill on one shared world.
 - Avoid first-come finite resources that the first player can claim. Generated loot is per player.
-- **Technical parity:** vanilla mechanics that contraptions depend on (minecart physics, redstone, mob behavior used by farms) stay exactly vanilla. When we want different behavior, we add a separate variant instead of changing the original.
+- **Technical parity:** how vanilla mechanics behave (physics, redstone timing, mob AI, spawning, item movement) stays exactly vanilla. It doesn't protect whether a resource exists: XP farms stop mattering because XP is gone, and dispensers using shears never run out. When we want different behavior, we add a separate variant instead of changing the original.
+- **Seasons:** the game is built one Season at a time. Each replaces one part of vanilla and gets a short playtest that answers one question; anything not built yet stays vanilla.
 
 ## Open questions
 

@@ -1,6 +1,6 @@
 # Personal progression with catch-up easing
 
-**Status:** Accepted.
+**Status:** Superseded by [ADR-0003](0003-world-progression-through-portals.md).
 
 In the September 2026 playtest, every player climbed a private ladder. Fast players ran out of goals and left; slow players fell behind and left. Terraria's world-wide boss progression solves both problems, but forcing world state on everyone takes choices away from players who want to go at their own pace or ignore combat.
 

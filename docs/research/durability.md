@@ -149,7 +149,7 @@ What durability does in vanilla Minecraft, how other games pace progression with
 
 - **Less tedium:** no repair trips, no warning mods, no trading-hall-for-Mending.
 - **Attachment to gear.** A pick that never breaks can carry levels, slots, a name and a history. Tinkers-style levelling *needs* this: levelling gear that can be destroyed punishes investment. The never-despawning Grave already protects gear on death.
-- **Builders get Convenience for free,** which is the vision's fourth root cause ("Convenience was tied to power"). Durability is already listed as Convenience in [CONTEXT.md](../../CONTEXT.md).
+- **Builders get Convenience for free,** which is the vision's fourth root cause ("Convenience was tied to power"). Durability is already listed as Convenience in [GLOSSARY.md](../../GLOSSARY.md).
 - **Multiple specialised tools become sensible.** With Ascendant Arcana capacity budgets, a Fortune pick, a Silk Touch pick and a Smelting pick are permanent and coexist. Making *several* copies replaces *replacing* one.
 
 ## Middle grounds

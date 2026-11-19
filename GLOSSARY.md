@@ -5,20 +5,20 @@ A Minecraft total conversion for a small friends server. Vanilla's moment-to-mom
 ## Language
 
 **Era**:
-A stage of progression with its own area, materials and power tier. A player advances by clearing its Era Gate.
+A stage of progression with its own dimension, materials and power tier. The whole world advances to the next Era when any player clears the current Era Gate.
 _Avoid_: Tier, chapter, age
 
 **Era Gate**:
-The dungeon chain that ends an Era. It contains group encounters and a climax fight in an arena built into the dungeon. Clearing it unlocks the next Era for that player.
+The dungeon chain that ends an Era. It contains group encounters and a climax fight in an arena built into the dungeon. Clearing it opens the next Era for everyone on the server.
 _Avoid_: Boss, boss fight
 
 **Climax fight**:
 The final encounter of an Era Gate. It takes place in an arena the game designed, which players cannot relocate or cheese.
 _Avoid_: Boss fight
 
-**Personal unlock**:
-Access a player gains by clearing an Era Gate themselves. Progression is personal by default.
-_Avoid_: World unlock
+**World unlock**:
+The opening of the next Era for everyone on the server when any player clears an Era Gate. No player is ever blocked from content another player can reach.
+_Avoid_: Personal unlock, gate condition
 
 **Catch-up easing**:
 The reduced cost or difficulty of an Era for every player once anyone on the server has cleared its Gate. It eases progression but never requires it.
@@ -50,7 +50,7 @@ Generated loot containers that roll separately for each player who opens them. T
 _Avoid_: Shared loot, instanced chests
 
 **Technical parity**:
-The rule that vanilla mechanics contraptions depend on stay exactly vanilla. Changed behavior ships as a separate variant, for example a locomotion minecart alongside the unchanged vanilla minecart.
+The rule that vanilla mechanics behave exactly as in vanilla: physics, redstone timing, mob AI, spawning and item movement. It protects how mechanics behave, not whether a resource or system exists. Changed behavior ships as a separate variant, such as the Travel cart beside the unchanged minecart.
 _Avoid_: Vanilla compatibility
 
 **Grave**:
@@ -62,6 +62,10 @@ A per-player record of distinct items, creatures and places discovered, with rew
 **Heart upgrade**:
 A permanent increase to a player's max health, found while exploring an Era's dimension.
 _Avoid_: Life crystal
+
+**Catalyst**:
+A material consumed to apply an enchantment level.
+_Avoid_: Reagent, ingredient
 
 **Capacity**:
 The budget an item has for enchantments. Each enchantment level uses some of it, so an item can't carry everything.
@@ -86,3 +90,7 @@ _Avoid_: Fast minecart, locomotion cart
 
 **Gold rail**:
 A stronger powered rail that only boosts Travel carts beyond vanilla speed. Powered rails are crafted from copper.
+
+**Season**:
+One build-and-playtest cycle that replaces one part of vanilla and answers one design question. Parts not yet built stay vanilla.
+_Avoid_: Update, version, phase

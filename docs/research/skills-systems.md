@@ -71,7 +71,7 @@ A data-driven Fabric/Forge framework rather than a fixed skill set. Skill trees 
 
 **Yes, have skills, but not a skills plugin.** Eras are the Power ladder and they are built around combat encounters. Without a second ladder, builders, miners, farmers and explorers have nothing to climb except the combat ladder, which is exactly how the Super Awesome Datapacks playtest failed. The skill system should be that second ladder: a Convenience ladder, one track per Motivation, short and capped, with rewards that change how you play. Everything that made the designer wary of skills plugins (compounding stats, uncapped levels, XP for repetition) is cut.
 
-Working name: **Proficiency** (to be settled in [CONTEXT.md](../../CONTEXT.md)). "Skill" invites mcMMO expectations.
+Working name: **Proficiency** (to be settled in [GLOSSARY.md](../../GLOSSARY.md)). "Skill" invites mcMMO expectations.
 
 ### Shape
 
