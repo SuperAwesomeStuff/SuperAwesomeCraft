@@ -81,7 +81,7 @@ There is no single currency everything converts into. Each playstyle earns rewar
 
 ## Constraints
 
-- Players connect with an **unmodified client**. The server can send a resource pack automatically. See [ADR-0001](adr/0001-server-side-fabric-with-polymer.md).
+- Players install the mod as a **modpack** on both client and server. See [ADR-0001](adr/0001-fabric-client-and-server-mod.md).
 - Balance for 5 to 10 players of varying skill on one shared world.
 - Avoid first-come finite resources that the first player can claim. Generated loot is per player.
 - **Technical parity:** vanilla mechanics that contraptions depend on (minecart physics, redstone, mob behavior used by farms) stay exactly vanilla. When we want different behavior, we add a separate variant instead of changing the original.

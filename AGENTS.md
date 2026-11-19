@@ -19,3 +19,7 @@ Domain documentation uses the single-context layout. See `docs/agents/domain.md`
 ## Wiki
 
 The GitHub wiki (`SuperAwesomeCraft.wiki` repo, cloned beside this one) is the player-facing version of the design for friends who won't read the docs. Write it in plain language with no jargon, and label each page **Decided**, **Leaning** or **Idea**. When a decision in `docs/` changes, update the matching wiki page. The wiki is public: never include player names or anything from `docs/private/`.
+
+## Research
+
+When the user mentions a mod, game, plugin or design concept you don't know the specifics of, spawn a research subagent instead of guessing. It should check primary sources (mod pages, source code, official wikis), write its findings to `docs/research/<topic>.md` in the style of the existing files there, and cite URLs. Mark anything it couldn't verify. Read the existing research notes before starting design work on a related topic.
