@@ -25,11 +25,11 @@ The reduced cost or difficulty of an Era for every player once anyone on the ser
 _Avoid_: World state, world progression
 
 **Convenience**:
-Quality-of-life capability such as durability, mining speed, storage, mobility and block access. Available early and without combat.
+Quality-of-life capability such as mining speed, Techniques, storage, mobility and block access. Available early and without combat.
 _Avoid_: Utility gear
 
 **Power**:
-Combat capability such as damage, protection and survivability. Earned through Eras.
+Combat capability such as damage, protection, survivability and Heart upgrades. Earned through Eras.
 
 **Settlement**:
 A player-built place that Villagers move into and use. Its Prosperity unlocks trades and services, and it draws Raids.
@@ -58,3 +58,31 @@ A container holding a player's items after death. It never despawns, and Conveni
 
 **Collection Log**:
 A per-player record of distinct items, creatures and places discovered, with rewards for breadth.
+
+**Heart upgrade**:
+A permanent increase to a player's max health, found while exploring an Era's dimension.
+_Avoid_: Life crystal
+
+**Capacity**:
+The budget an item has for enchantments. Each enchantment level uses some of it, so an item can't carry everything.
+
+**Familiarity**:
+A tool's level, gained by using it and capped at 5. Levels unlock Technique slots, never Power.
+_Avoid_: Tool XP, Proficiency, skill
+
+**Technique**:
+A toggleable Convenience ability slotted into a levelled tool, such as vein-mining or tree-felling.
+_Avoid_: Modifier, ability
+
+**Codex**:
+A per-player record of the Techniques and recipes a player has learned. It's kept forever.
+
+**Mastery**:
+A per-player bonus for maxing Familiarity on any tool of a type. New tools of that type start at level 2 and level faster.
+
+**Travel cart**:
+The fast minecart variant built for getting around. The vanilla minecart is unchanged.
+_Avoid_: Fast minecart, locomotion cart
+
+**Gold rail**:
+A stronger powered rail that only boosts Travel carts beyond vanilla speed. Powered rails are crafted from copper.

@@ -46,13 +46,31 @@ The game advances through a small number of **Eras**. Each Era has an **Era Gate
 
 Once any player has cleared a Gate, the world eases that Era for everyone else: trades get cheaper, structures easier to find, Catalysts cheaper. That's catch-up help, not a requirement.
 
+**Leaning: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Era Gate. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
+
+**Idea: Heart upgrades.** Like Terraria's Life Crystals, players raise their max health with items found while exploring each dimension, not only by clearing its Gate. Later encounters can hit harder while feeling about as hard. Healing probably needs to scale with max health, because vanilla regenerates at a fixed rate.
+
+**Idea: Era-gated blocks.** Each Era's new ores, dungeon walls and structure blocks need that Era's tools to mine, like Terraria's pickaxe power. This never applies to vanilla building blocks or to anything players place, because mining speed is Convenience.
+
 ### Convenience and Power
 
 | Convenience (cheap, early, no combat needed) | Power (earned through Eras) |
 | --- | --- |
-| Durability, mining speed, Silk Touch, storage (early Shulkers), mobility, reach, bulk block access | Damage, protection, survivability, encounter-specific gear |
+| Mining speed, Silk Touch, Techniques (vein-mining, tree-felling, builder modes), storage (early Shulkers), mobility, reach, bulk block access | Damage, protection, survivability, Heart upgrades, encounter-specific gear |
 
 Gear tiers should offer horizontal choices with distinct abilities, not one best set.
+
+### Gear
+
+- **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels.
+- **Idea: no durability.** Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Era Gates, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
+- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. Raw stats come from slotted, upgradable components. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
+- **Leaning: tools level with use instead of a separate skills system.** Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
+  - A tool's **Familiarity** rises to a hard cap of 5, mostly from doing new things, plus a daily allowance. Levels unlock slots for toggleable **Techniques** (Convenience only).
+  - Enchantment capacity and stat slots come from materials and Eras, never from use, so grinding can't buy power.
+  - Techniques learned are kept forever in the player's **Codex**. Maxing any tool of a type grants **Mastery**: new tools of that type start at level 2 and level faster. Upgrading a tool's tier keeps its progress.
+  - Weapons and armor don't level; combat Power comes from Eras.
+  - Catch-up: the low cap, Mastery, faster levelling once anyone on the server has mastered a tool type, and levelled tools can be given to new players.
 
 ### Settlements and Raids
 
@@ -68,7 +86,9 @@ Exploration should be painless but not free. Vanilla's adventuring problems are 
   - Horses can carry chests, donkeys can wear armor, and mounts aren't blocked by leaves.
   - Step-up height stays vanilla.
 - **A movement step between horse and Elytra,** such as a glider, as part of cheap early Convenience.
-- **Two kinds of rail:** technical minecarts and rails keep exact vanilla physics for contraptions. Separate locomotion minecarts and track are built for fast travel.
+- **Two kinds of rail:** technical minecarts and rails keep exact vanilla physics for contraptions. A separate **travel cart** uses physics like the experimental minecart rework, but faster. Background: [minecarts and rails](research/minecarts-and-rails.md).
+  - **Leaning:** powered rails are crafted with copper instead of gold. A new, stronger **gold rail** uses gold.
+  - Suggested speeds: the vanilla cart stays at 8 m/s on both rails. The travel cart goes 16 m/s on powered rails and 24 m/s on gold rails, playtested toward 32.
 - **Nether highways stay** as legitimate creative problem-solving.
 - **Death:** items go into a grave that never despawns. Mid-game tools locate a grave from far away, reclaim it remotely, or teleport you back to it.
 - **Inventory:** backpacks expand your inventory as progression, Shulker boxes arrive earlier, and quick-dump and sort are standard.
@@ -94,4 +114,7 @@ There is no single currency everything converts into. Each playstyle earns rewar
 - How is Settlement prosperity measured without dictating how people build?
 - What replaces the Emerald economy, and what are the limits on buyer income?
 - What are the target hours played for each Era?
+- What replaces durability and XP as sinks for ore and time, if durability goes?
+- What are the Techniques for each tool type, including builder and explorer tools?
+- How much health do Heart upgrades give per dimension, and how does healing scale?
 - Which of Super Awesome Enchanting and Super Awesome Villagers carry over, and how do they change?
