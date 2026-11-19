@@ -19,6 +19,7 @@ It succeeds [Super Awesome Datapacks](https://github.com/SuperAwesomeStuff/Super
 ## Documentation
 
 - [Vision](docs/vision.md): the problem, the pillars in detail, and the game's structure.
+- [Design map](docs/design-map.md): every area of the design at a glance, with loose ideas that aren't decided yet.
 - [GLOSSARY.md](GLOSSARY.md): glossary of domain terms.
 - [ADRs](docs/adr/): architectural and design decisions.
 - [Research](docs/research/): background reading summaries.

@@ -23,3 +23,7 @@ The GitHub wiki (the separate `SuperAwesomeCraft.wiki` repo, cloned into the git
 ## Research
 
 When the user mentions a mod, game, plugin or design concept you don't know the specifics of, spawn a research subagent instead of guessing. It should check primary sources (mod pages, source code, official wikis), write its findings to `docs/research/<topic>.md` in the style of the existing files there, and cite URLs. Mark anything it couldn't verify. Read the existing research notes before starting design work on a related topic.
+
+## Design map
+
+`docs/design-map.md` is the rough map of the whole design. New ideas go there as **Ideas** first. Don't treat Ideas as decisions or build on them; promote one to Leaning or Decided (and into `docs/vision.md`) only when the user confirms it, usually when the Season that needs it is being designed.
