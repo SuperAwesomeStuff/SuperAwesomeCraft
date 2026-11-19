@@ -27,7 +27,7 @@ The design targets **motivations**, not fixed archetypes, because every real pla
 | Having space of their own | Travel tools that keep distant homes connected to the group |
 | Huge long-term projects | Bulk materials and builder tools that make large projects possible to finish, and systems that give those projects a function |
 | Growth with no cap, as long as it's useful | Settlement expansion, deep resource layers, large-scale scaling systems |
-| Gear and power | Era Gates, encounter loot, horizontal gear choices |
+| Gear and power | Strongholds, encounter loot, horizontal gear choices |
 | Collecting | A Collection Log with rewards for breadth |
 | Exploration and challenge | Dungeons and areas that unlock in sequence; structures found by learnable rules, not luck |
 | Running a settlement | Villagers who live in, use and grow with what players build |
@@ -38,17 +38,23 @@ The design targets **motivations**, not fixed archetypes, because every real pla
 
 ### Eras
 
-The game advances through a small number of **Eras**. Each Era has an **Era Gate**: a dungeon chain with group encounters, ending in a climax fight in an arena built into the dungeon. Clearing it gives the player:
+The game advances through a small number of **Eras**. Each Era ends at a **Stronghold**, named for the dimension it leads to: the Nether Stronghold holds the first portal to the Nether, and so on. It's a dungeon with group encounters, ending in a climax fight in an arena built into it. Clearing it gives:
 
-- the means to open the next Era's dimension, for the whole world (see [ADR-0003](adr/0003-world-progression-through-portals.md)),
+- the Stronghold's portal opens: the first way into the next dimension, for the whole world (see [ADR-0003](adr/0003-world-progression-through-portals.md)),
 - new materials, Catalysts and trades,
 - the next tier of power.
 
-Progression belongs to the world. Once a portal to a new dimension exists, anyone can walk through it and do anything there. Nothing checks whether a player personally cleared a Gate.
+Progression belongs to the world. Once a portal to a new dimension exists, anyone can walk through it and do anything there. Nothing checks whether a player personally cleared a Stronghold.
 
-**Decided: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Era Gate. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
+The journey: travel to the next Stronghold, fight through it, win the climax fight, and step through its portal. Inside the new dimension, gather the materials to **build new portals** back home, so nobody has to trek back to the Stronghold every time.
 
-**Idea: Heart upgrades.** Like Terraria's Life Crystals, players raise their max health with items found while exploring each dimension, not only by clearing its Gate. Later encounters can hit harder while feeling about as hard. Healing probably needs to scale with max health, because vanilla regenerates at a fixed rate.
+- **Several Strongholds per Era** exist in each world, placed by learnable rules (see Readable world generation below), so they're consistently findable.
+- **Fighting a Stronghold again:** find another uncleared one, or perform a ritual at a cleared one to reset its climax fight, like respawning the Ender Dragon. Loot is per player.
+- **Catch-up easing:** once the world has unlocked an Era, Villagers start offering trades for its materials. Players who've been to a dimension can also bring back blocks, materials and crafting stations for others.
+
+**Decided: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Stronghold. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
+
+**Idea: Heart upgrades.** Like Terraria's Life Crystals, players raise their max health with items found while exploring each dimension, not only by clearing its Stronghold. Later encounters can hit harder while feeling about as hard. Healing probably needs to scale with max health, because vanilla regenerates at a fixed rate.
 
 **Decided: Era-gated blocks.** Each Era's new ores, dungeon walls and structure blocks need that Era's tools to mine, like Terraria's pickaxe power. This never applies to vanilla building blocks or to anything players place, because mining speed is Convenience.
 
@@ -62,9 +68,9 @@ Gear tiers should offer horizontal choices with distinct abilities, not one best
 
 ### Gear
 
-- **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels.
-- **Decided: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Era Gates, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
-- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. Raw stats come from slotted, upgradable components. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
+- **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels. Mobs still carry their hidden XP value so Sculk Catalysts spread exactly as in vanilla (technical parity). The anvil keeps only renaming, for free; combining enchantments moves to the new enchanting.
+- **Decided: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Strongholds, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
+- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. Raw stats come from slotted, upgradable **Augments**. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
 - **Decided: tools level with use instead of a separate skills system.** There are no player-level skills. Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
   - A tool's **Familiarity** rises to a hard cap of 5, mostly from doing new things, plus a daily allowance. Levels unlock slots for toggleable **Techniques** (Convenience only).
   - Enchantment capacity and stat slots come from materials and Eras, never from use, so grinding can't buy power.
@@ -99,6 +105,14 @@ Exploration should be painless but not free. Vanilla's adventuring problems are 
 
 There is no single currency everything converts into. Each playstyle earns rewards that are useful in their own right instead of an exchange rate that can be optimized. Buyer-side income has limits. Farms are welcome but never required.
 
+## Seasons
+
+The game is built one Season at a time (see Constraints). Only the next Season is designed in detail.
+
+- **Season 0 (no playtest):** a Fabric client-and-server mod skeleton, a one-click modpack (Modrinth pack), a dev server on the home server PC, and the playtest scripts pointed at it. Targets the latest Minecraft version Fabric supports when work starts.
+- **Season 1, Gear:** no XP, no durability, Catalyst enchanting with Capacity and Augments, and Familiarity with Techniques for the pickaxe, axe and shovel. Everything else stays vanilla. The question: without a single "max gear" endpoint, do people keep playing past where they quit last time?
+- **Later, in some order:** rails and the Travel cart, the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
+
 ## Constraints
 
 - Players install the mod as a **modpack** on both client and server. See [ADR-0001](adr/0001-fabric-client-and-server-mod.md).
@@ -111,7 +125,7 @@ There is no single currency everything converts into. Each playstyle earns rewar
 
 - What is the setting or theme that gives Eras a reason to exist?
 - How many Eras, and what does each one unlock?
-- What does each Era Gate look like as a dungeon, and how is the climax arena protected?
+- What does each Stronghold look like as a dungeon, and how is the climax arena protected?
 - How is Settlement prosperity measured without dictating how people build?
 - What replaces the Emerald economy, and what are the limits on buyer income?
 - What are the target hours played for each Era?

@@ -2,7 +2,7 @@
 
 **Status:** Accepted. Supersedes the earlier proposal for a server-only Polymer mod.
 
-Super Awesome Datapacks were pure datapacks. That kept installation easy, but custom interfaces (the FancyUI workaround), faked blocks and entities, and real encounter AI were fragile or out of reach. This project is now a total conversion that uses Minecraft as an engine. It needs Era Gates with designed encounters, new dimensions, Settlements with Villager behavior, custom blocks, items, interfaces, and gear systems (enchanting capacity, tool levels).
+Super Awesome Datapacks were pure datapacks. That kept installation easy, but custom interfaces (the FancyUI workaround), faked blocks and entities, and real encounter AI were fragile or out of reach. This project is now a total conversion that uses Minecraft as an engine. It needs Strongholds with designed encounters, new dimensions, Settlements with Villager behavior, custom blocks, items, interfaces, and gear systems (enchanting capacity, tool levels).
 
 We will build a **Fabric mod installed on both the client and the server**. Data-driven content (recipes, loot tables, world generation, trades, tags, advancements) stays as datapack JSON shipped inside the mod. Java code is for behavior that data can't express, and client code is for anything that needs real rendering or screens.
 

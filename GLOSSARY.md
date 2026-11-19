@@ -5,24 +5,24 @@ A Minecraft total conversion for a small friends server. Vanilla's moment-to-mom
 ## Language
 
 **Era**:
-A stage of progression with its own dimension, materials and power tier. The whole world advances to the next Era when any player clears the current Era Gate.
+A stage of progression with its own dimension, materials and power tier. The whole world advances to the next Era when any player clears one of its Strongholds.
 _Avoid_: Tier, chapter, age
 
-**Era Gate**:
-The dungeon chain that ends an Era. It contains group encounters and a climax fight in an arena built into the dungeon. Clearing it opens the next Era for everyone on the server.
-_Avoid_: Boss, boss fight
+**Stronghold**:
+The dungeon that ends an Era, named for the dimension its portal leads to (a Nether Stronghold holds the first portal to the Nether). It contains group encounters and ends in a Climax fight; winning it opens the Stronghold's portal. A world has several of each, placed by learnable rules, and a cleared one can be fought again.
+_Avoid_: Stronghold, gate dungeon, boss arena
 
 **Climax fight**:
-The final encounter of an Era Gate. It takes place in an arena the game designed, which players cannot relocate or cheese.
+The final encounter of an Stronghold. It takes place in an arena the game designed, which players cannot relocate or cheese.
 _Avoid_: Boss fight
 
 **World unlock**:
-The opening of the next Era for everyone on the server when any player clears an Era Gate. No player is ever blocked from content another player can reach.
+The opening of the next Era for everyone on the server when any player first clears one of its Strongholds. No player is ever blocked from content another player can reach.
 _Avoid_: Personal unlock, gate condition
 
 **Catch-up easing**:
-The reduced cost or difficulty of an Era for every player once anyone on the server has cleared its Gate. It eases progression but never requires it.
-_Avoid_: World state, world progression
+What becomes available to everyone once the world has unlocked an Era, such as new Villager trades for that Era's materials, so players who haven't cleared a Stronghold can still use what it opened.
+_Avoid_: Rubber-banding
 
 **Convenience**:
 Quality-of-life capability such as mining speed, Techniques, storage, mobility and block access. Available early and without combat.
@@ -67,6 +67,10 @@ _Avoid_: Life crystal
 A material consumed to apply an enchantment level.
 _Avoid_: Reagent, ingredient
 
+**Augment**:
+A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted.
+_Avoid_: Relic, gem, upgrade part
+
 **Capacity**:
 The budget an item has for enchantments. Each enchantment level uses some of it, so an item can't carry everything.
 
@@ -94,3 +98,6 @@ A stronger powered rail that only boosts Travel carts beyond vanilla speed. Powe
 **Season**:
 One build-and-playtest cycle that replaces one part of vanilla and answers one design question. Parts not yet built stay vanilla.
 _Avoid_: Update, version, phase
+
+**Portal**:
+The way into an Era's dimension. The first one sits at the end of a Stronghold; later ones are built from materials gathered in that dimension.
