@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "superawesomecraft",
+	"version": "${version}",
+	"name": "Super Awesome Craft",
+	"description": "A total conversion of Minecraft for a small server of friends.",
+	"authors": [
+		"SuperAwesomeStuff"
+	],
+	"contact": {
+		"sources": "https://github.com/SuperAwesomeStuff/SuperAwesomeCraft"
+	},
+	"icon": "assets/superawesomecraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.superawesomestuff.craft.SuperAwesomeCraft"
+		],
+		"client": [
+			"com.superawesomestuff.craft.client.SuperAwesomeCraftClient"
+		],
+		"fabric-gametest": [
+			"com.superawesomestuff.craft.gametest.NoExperienceTests"
+		]
+	},
+	"mixins": [
+		"superawesomecraft.mixins.json",
+		{
+			"config": "superawesomecraft.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
