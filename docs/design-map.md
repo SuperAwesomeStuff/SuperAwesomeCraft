@@ -14,7 +14,7 @@ SuperAwesomeCraft
 ├── Gear ───────────── Convenience vs Power
 │   ├── No XP, no durability
 │   ├── Enchanting (Catalysts, Capacity, library)
-│   ├── Augments (raw stats)
+│   ├── Raw stats (Augments? enchantments? tool tiers?)
 │   ├── Tool levelling (Familiarity, Techniques, Codex, Mastery)
 │   └── Heart upgrades
 ├── World ──────────── readable generation, per-player loot, Era-gated blocks
@@ -52,14 +52,17 @@ SuperAwesomeCraft
 
 ## Gear
 
+Everything in Gear except no XP is preliminary until Season 1 is designed.
+
 - **Decided:**
   - Convenience is cheap and early; Power is earned through Eras.
   - No XP. Mobs keep their hidden XP value for Sculk Catalysts. The anvil only renames, for free.
+- **Leaning:**
   - No durability. Mending and Unbreaking are gone.
   - Tools level instead of a separate skills system: Familiarity (cap 5) unlocks Technique slots; Codex and Mastery are per player. Weapons and armor don't level.
-  - Raw stats come from Augments.
-- **Leaning:** enchanting after Ascendant Arcana: fixed Catalyst recipes per level, a Capacity budget per item, and a library of Chiseled Bookshelves powering the table.
+  - Enchanting after Ascendant Arcana: fixed Catalyst recipes per level, a Capacity budget per item, and a library of Chiseled Bookshelves powering the table.
 - **Ideas:**
+  - Every system can be learned in-game without a wiki or recipe viewer (recipe book, tooltips). Ascendant Arcana's Relics fail this.
   - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use Catalysts.
   - Library power unlocks rarer enchantments; treasure enchantments need their book stored in the library. Books come from loot, librarians and fishing.
   - In Season 1, librarians sell Catalysts and new-system books; other trades stay vanilla.
@@ -68,6 +71,7 @@ SuperAwesomeCraft
   - Builder's wand and explorer tools as levelled tools of their own.
   - Heart upgrades found while exploring each dimension, like Terraria's Life Crystals. Healing scales with max health.
 - **Open:**
+  - Where do raw stats come from? Augments felt like a redundant second system in an Ascendant Arcana playtest. Alternatives: stat enchantments under Capacity, or stats from each Era's tool tier. See [vision.md](vision.md#gear).
   - What replaces durability and XP as sinks for ore and time?
   - What are the Techniques per tool type?
   - What are the Capacity numbers per material?

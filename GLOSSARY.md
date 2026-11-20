@@ -68,7 +68,7 @@ A material consumed to apply an enchantment level.
 _Avoid_: Reagent, ingredient
 
 **Augment**:
-A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted.
+A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted. Under review: raw stats may come from enchantments or tool tiers instead.
 _Avoid_: Relic, gem, upgrade part
 
 **Capacity**:

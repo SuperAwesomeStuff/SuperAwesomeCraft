@@ -68,15 +68,21 @@ Gear tiers should offer horizontal choices with distinct abilities, not one best
 
 ### Gear
 
+Everything here except no XP is preliminary. The final shape gets settled when Season 1 is designed and playtested.
+
 - **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels. Mobs still carry their hidden XP value so Sculk Catalysts spread exactly as in vanilla (technical parity). The anvil keeps only renaming, for free; combining enchantments moves to the new enchanting.
-- **Decided: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Strongholds, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
-- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. Raw stats come from slotted, upgradable **Augments**. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
-- **Decided: tools level with use instead of a separate skills system.** There are no player-level skills. Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
+- **Leaning: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Strongholds, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
+- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
+- **Leaning: tools level with use instead of a separate skills system.** There are no player-level skills. Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
   - A tool's **Familiarity** rises to a hard cap of 5, mostly from doing new things, plus a daily allowance. Levels unlock slots for toggleable **Techniques** (Convenience only).
   - Enchantment capacity and stat slots come from materials and Eras, never from use, so grinding can't buy power.
   - Techniques learned are kept forever in the player's **Codex**. Maxing any tool of a type grants **Mastery**: new tools of that type start at level 2 and level faster. Upgrading a tool's tier keeps its progress.
   - Weapons and armor don't level; combat Power comes from Eras.
   - Catch-up: the low cap, Mastery, faster levelling once anyone on the server has mastered a tool type, and levelled tools can be given to new players.
+- **Open: where raw stats come from** (speed, damage, protection). Slotted **Augments**, like Ascendant Arcana's Relics, were the plan, but a creative playtest of Ascendant Arcana made them look like a second system doing enchanting's job with different materials, and their recipes can't be found without a recipe viewer. Options:
+  1. Stat enchantments return and cost Capacity like any other, so Capacity carries the trade-off (close to Super Awesome Enchanting).
+  2. Stats come from each Era's tool tier, and enchanting covers only behaviour.
+  3. A stat upgrade stays, but it is discoverable in-game: in the vanilla recipe book, with tooltips that explain it.
 
 ### Settlements and Raids
 
@@ -110,7 +116,7 @@ There is no single currency everything converts into. Each playstyle earns rewar
 The game is built one Season at a time (see Constraints). Only the next Season is designed in detail.
 
 - **Season 0 (no playtest):** a Fabric client-and-server mod skeleton, a one-click modpack (Modrinth pack), a dev server on the home server PC, and the playtest scripts pointed at it. Targets the latest Minecraft version Fabric supports when work starts.
-- **Season 1, Gear:** no XP, no durability, Catalyst enchanting with Capacity and Augments, and Familiarity with Techniques for the pickaxe, axe and shovel. Everything else stays vanilla. The question: without a single "max gear" endpoint, do people keep playing past where they quit last time?
+- **Season 1, Gear:** no XP, no durability, Catalyst enchanting with Capacity (and whatever answers the raw-stats question), and Familiarity with Techniques for the pickaxe, axe and shovel. Everything else stays vanilla. The question: without a single "max gear" endpoint, do people keep playing past where they quit last time?
 - **Later, in some order:** rails and the Travel cart, the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
 
 ## Constraints
@@ -130,6 +136,7 @@ The game is built one Season at a time (see Constraints). Only the next Season i
 - What replaces the Emerald economy, and what are the limits on buyer income?
 - What are the target hours played for each Era?
 - What replaces durability and XP as sinks for ore and time, if durability goes?
+- Where do raw stats come from: Augments, enchantments under Capacity, or tool tiers?
 - What are the Techniques for each tool type, including builder and explorer tools?
 - How much health do Heart upgrades give per dimension, and how does healing scale?
 - Which of Super Awesome Enchanting and Super Awesome Villagers carry over, and how do they change?

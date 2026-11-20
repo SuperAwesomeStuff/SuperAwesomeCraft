@@ -138,10 +138,20 @@ Infinity no longer needs an arrow. Piercing works on bows only. Arrows from the 
 - **Needs approximation:** projectile and AOE effects such as Singularity, Glacioclasm and turrets can use display entities and vanilla particles, but not custom models with animation or custom particles. Client-predicted behaviour, such as crossbow loading and Elytra boost, may rubber-band if we deny it on the server.
 - **Needs a custom client:** a true scrolling recipe list with native widgets, a power meter that renders outside a container GUI, custom particle types, and EMI or JEI-style recipe browsing. Use a server-side recipe book GUI instead.
 
+## Playtest impressions
+
+A short creative-mode session with Ascendant Arcana alone, November 2026.
+
+- **The enchanting is very close to Super Awesome Enchanting.** Fixed recipes and Capacity felt familiar rather than new.
+- **Relics feel redundant.** They're a second upgrade system that ends up where enchanting already goes. Only the materials, and so the Era gating, differ. It isn't clear that basic buffs are worth a whole extra system to learn.
+- **Relics can't be discovered in play.** Without a recipe viewer, there's no way to find out how to make one or what it does.
+
+This puts Recommendation 2 below in doubt. See the raw-stats question in [vision.md](../vision.md#gear).
+
 ## Recommendations
 
 1. Use **item capacity budgets** and **material recipes for each level** as the core of a new table variant, with recipe ingredients tied to eras.
-2. Move raw stats (speed, durability, protection, damage) into a **slotted, upgradable component**, limited to 2 per item and crafted through eras, so stat power is a choice, not a checklist.
+2. Move raw stats (speed, durability, protection, damage) into a **slotted, upgradable component**, limited to 2 per item and crafted through eras, so stat power is a choice, not a checklist. *(Questioned after the playtest above.)*
 3. Make repair cheap and renewable (a Restorine equivalent); keep Mending out of the new table.
 4. Use the **Chiseled Bookshelf library** as a power source and unlock gate: a long-term project for collectors.
 5. Keep vanilla mechanics exact. Settle how the vanilla table coexists before building.
