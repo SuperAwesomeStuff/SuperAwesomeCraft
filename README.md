@@ -2,7 +2,7 @@
 
 A total conversion of Minecraft Java Edition for a small server of roughly 5 to 10 friends. It uses Minecraft as an engine and keeps vanilla's familiar moment-to-moment play, but replaces its progression with **Eras**: chains of dungeon encounters that unlock new areas, materials and systems. Living **Settlements** and **Raids** give the server shared reasons to gather.
 
-**Status:** Season 0. The mod builds and removes XP; there's no modpack or playtest server yet.
+**Status:** Season 0. The mod builds, removes XP and ships as a modpack; there's no playtest server yet.
 
 It succeeds [Super Awesome Datapacks](https://github.com/SuperAwesomeStuff/SuperAwesomeDatapacks). Those packs worked well as individual system reworks, but a playtest showed that the progression problems are structural. See [the vision](docs/vision.md) for why.
 
@@ -34,4 +34,13 @@ cd mod
 ./gradlew runGametest   # automated in-game tests, headless
 ./gradlew runClient     # play it in a dev client
 ./gradlew runServer     # dev server in mod/run/
+./gradlew modpack       # mod/build/modpack/SuperAwesomeCraft-<version>.mrpack
 ```
+
+## Installing the modpack (Prism Launcher)
+
+1. Get the `.mrpack` file.
+2. In Prism, click **Add Instance**, choose **Import**, and pick the file.
+3. Launch the new instance. Prism downloads Minecraft, Fabric and Fabric API itself.
+
+For a new version, import the new file as a fresh instance and copy any worlds or settings across.
