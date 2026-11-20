@@ -47,7 +47,7 @@ cmd_setup() {
 			https://meta.fabricmc.net/v2/versions/loader/$MC_VERSION/$LOADER_VERSION/$FABRIC_INSTALLER/server/jar \
 		&& printf '#!/bin/bash\ncd \"\$(dirname \"\$0\")\"\nexec \"%s\" -Xmx$MEMORY -Xms1G -jar fabric-server-launch.jar nogui\n' \"$JAVA\" > start.sh \
 		&& chmod +x start.sh \
-		&& { [ -f server.properties ] || printf 'server-port=$PORT\nmotd=Super Awesome Craft (dev)\nonline-mode=true\n' > server.properties; }"
+		&& { [ -f server.properties ] || printf 'server-port=$PORT\nmotd=Super Awesome Craft (dev)\nonline-mode=true\nwhite-list=false\n' > server.properties; }"
 	if ! remote "grep -qs '^eula=true' ~/$DIR/eula.txt"; then
 		echo "The server needs the Minecraft EULA accepted: https://aka.ms/MinecraftEULA"
 		read -r -p "Accept it for this server? [y/N] " answer
