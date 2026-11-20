@@ -1,5 +1,17 @@
 # Vision
 
+## Vision statement
+
+**Decided: Every playstyle pushes the world forward.**
+
+Every mechanic should serve this line. When judging a feature, ask what it lets someone contribute that others will feel. Three pillars sit under it:
+
+- **Progress is shared.** What one player unlocks, the world gets.
+- **Always a next horizon.** There is no single max-gear endpoint.
+- **Convenience is cheap, Power is earned.** Building never waits on combat.
+
+Features that serve the statement only weakly, such as PvP arenas, are side content, not central systems. Background: [Game Design 101](research/game-design-101.md#the-vision-statement).
+
 ## The problem
 
 Super Awesome Datapacks reworked Enchanting and Villager trading. They were played on a 26.3 server with six regular players in September 2026. The reworks worked as designed, but the server lasted about ten days and roughly 54 player-hours.

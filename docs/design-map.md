@@ -23,6 +23,10 @@ SuperAwesomeCraft
 └── Social ─────────── Collection Log, PvP and minigames
 ```
 
+## Vision statement
+
+- **Decided:** "Every playstyle pushes the world forward." Pillars: progress is shared; always a next horizon; Convenience is cheap, Power is earned. See [vision.md](vision.md#vision-statement).
+
 ## How we build it
 
 - **Decided:** build in Seasons with vanilla as the placeholder for anything not built yet. Fabric mod on client and server ([ADR-0001](adr/0001-fabric-client-and-server-mod.md)), shipped as a one-click modpack.
@@ -43,6 +47,11 @@ SuperAwesomeCraft
   - Built portals need a frame material from their destination, so obsidian frames don't open the Nether. Vanilla Ruined Portals become decoration or hints. Portal linking stays vanilla.
   - Each player's first clear of a kind of Stronghold gives a guaranteed unique reward; re-fights give per-player loot.
   - The End is rebuilt as a real Stronghold-style finale rather than just the Dragon.
+  - **Power dip and regrowth** (after Terraria's Hardmode). Each new dimension starts much harder than the last, so top gear from the previous Era feels weak again. Players regain strength through Heart upgrades found by exploring and the new Era's gear, rather than only by rushing the next tier. Unlike Hardmode, already-cleared dimensions don't get harder, so builders' homes stay safe.
+  - **Coming back stronger.** Older dimensions stay as dangerous as they were, so going back shows how far you've grown. Revisits are worth making: some resources in older dimensions can only be mined or used with a later Era's tools, like Terraria's Chlorophyte.
+  - **The dip comes from new mobs, not buffed vanilla ones.** Making the Nether harder with new mobs or variants, or with a player-side effect that fades as you adapt (for example, through that dimension's Heart upgrades), keeps vanilla mob stats and the farms that depend on them intact.
+  - **Arena in the destination.** A Stronghold's portal works before the climax fight, one-way into a fixed arena in the next dimension. It's hard to leave without winning, like the End's platform. The win opens the arena into the dimension. Remote grave recovery (see Getting around) gives players a paid alternative to a corpse run into the arena, so it needs to arrive before the first arena does. This would answer how the arena is protected from cheese. It conflicts with the current plan of an arena built into the Stronghold.
+  - **Harder summoned versions** of climax fights for skilled groups, added in a later Season. Rewards are challenge, trophies and cosmetics rather than Power, so they don't widen the gap between players.
 - **Open:**
   - What's the theme? Why do the Eras exist?
   - What is the sky dimension like?
@@ -70,6 +79,7 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Reaching a Technique's level records it in your Codex; any tool of that type with a free slot can then use it.
   - Builder's wand and explorer tools as levelled tools of their own.
   - Heart upgrades found while exploring each dimension, like Terraria's Life Crystals. Healing scales with max health.
+  - **Parallel materials:** each Era has two or three gear materials, each with its own armor, tools or weapons and a distinct situational bonus rather than bigger numbers. No set is locked behind an activity a player might dislike, and sets aren't built around a playstyle. Instead they give variety within one: a fighter might swap between sets for different fights, a miner for different jobs. With no durability, owning several sets is itself a goal. This could also answer the raw-stats question: stats come from the material.
 - **Open:**
   - Where do raw stats come from? Augments felt like a redundant second system in an Ascendant Arcana playtest. Alternatives: stat enchantments under Capacity, or stats from each Era's tool tier. See [vision.md](vision.md#gear).
   - What replaces durability and XP as sinks for ore and time?
