@@ -5,6 +5,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,6 +16,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * Repair in the crafting grid: a damaged item plus the material it's made from, in any arrangement. Each material item
  * restores half the item's durability. Enchantments and slot upgrades are kept. Never accepts more material than needed.
+ * Netherite gear repairs with Diamonds, since Netherite Ingots are too dear to spend on repairs.
  */
 public class MaterialRepairRecipe extends CustomRecipe {
 	public static final MaterialRepairRecipe INSTANCE = new MaterialRepairRecipe();
@@ -50,7 +52,7 @@ public class MaterialRepairRecipe extends CustomRecipe {
 			if (stack.isEmpty() || stack == tool) {
 				continue;
 			}
-			if (!repairable.isValidRepairItem(stack)) {
+			if (!isRepairMaterial(repairable, stack)) {
 				return null;
 			}
 			materials++;
@@ -60,6 +62,13 @@ public class MaterialRepairRecipe extends CustomRecipe {
 			return null;
 		}
 		return new Found(tool, materials);
+	}
+
+	public static boolean isRepairMaterial(Repairable repairable, ItemStack stack) {
+		if (repairable.isValidRepairItem(new ItemStack(Items.NETHERITE_INGOT))) {
+			return stack.is(Items.DIAMOND);
+		}
+		return repairable.isValidRepairItem(stack);
 	}
 
 	@Override

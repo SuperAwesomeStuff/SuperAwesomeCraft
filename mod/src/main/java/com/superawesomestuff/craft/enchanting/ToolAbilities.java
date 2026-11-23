@@ -48,11 +48,16 @@ public final class ToolAbilities {
 		EntityTypes.PIGLIN, Items.PIGLIN_HEAD
 	);
 	private static final ThreadLocal<Boolean> BREAKING_EXTRA = ThreadLocal.withInitial(() -> false);
+	private static final ThreadLocal<Direction> HIT_FACE = new ThreadLocal<>();
 
 	private ToolAbilities() {
 	}
 
 	public static void init() {
+		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) -> {
+			HIT_FACE.set(hitFace(player, pos));
+			return true;
+		});
 		PlayerBlockBreakEvents.AFTER.register(ToolAbilities::afterBreak);
 		LootTableEvents.MODIFY_DROPS.register((table, context, drops) -> {
 			smelt(context, drops);
@@ -60,9 +65,21 @@ public final class ToolAbilities {
 		});
 	}
 
-	public static boolean excavates(Player player) {
+	/** True when the player's Excavating tool is digging a block it's good at, so the 3x3 (and its slowdown) applies. */
+	public static boolean excavates(Player player, BlockState state) {
+		ItemStack tool = player.getMainHandItem();
 		return !player.isShiftKeyDown()
-			&& ModEnchantments.level(player.level().registryAccess(), player.getMainHandItem(), ModEnchantments.EXCAVATING) > 0;
+			&& ModEnchantments.level(player.level().registryAccess(), tool, ModEnchantments.EXCAVATING) > 0
+			&& tool.isCorrectToolForDrops(state);
+	}
+
+	/** The face of {@code pos} the player is looking at, from a fresh ray cast. Falls back to their look direction. */
+	private static Direction hitFace(Player player, BlockPos pos) {
+		net.minecraft.world.phys.HitResult hit = player.pick(player.blockInteractionRange() + 1.0, 1.0F, false);
+		if (hit instanceof net.minecraft.world.phys.BlockHitResult blockHit && blockHit.getBlockPos().equals(pos)) {
+			return blockHit.getDirection();
+		}
+		return Math.abs(player.getXRot()) > 45 ? Direction.UP : player.getDirection();
 	}
 
 	private static void afterBreak(Level level, Player player, BlockPos pos, BlockState state, net.minecraft.world.level.block.entity.BlockEntity blockEntity) {
@@ -94,10 +111,10 @@ public final class ToolAbilities {
 
 	/** The other eight blocks of a 3x3 facing the player, limited to blocks the tool mines and no harder than the first. */
 	private static List<BlockPos> excavationArea(Player player, BlockPos pos, BlockState origin, Level level, ItemStack tool) {
-		if (!tool.isCorrectToolForDrops(origin) && origin.getDestroySpeed(level, pos) > 0) {
+		if (!tool.isCorrectToolForDrops(origin)) {
 			return List.of();
 		}
-		Direction facing = Math.abs(player.getXRot()) > 45 ? Direction.UP : player.getDirection();
+		Direction facing = HIT_FACE.get() != null ? HIT_FACE.get() : Direction.UP;
 		float originHardness = origin.getDestroySpeed(level, pos);
 		List<BlockPos> result = new ArrayList<>();
 		for (int a = -1; a <= 1; a++) {

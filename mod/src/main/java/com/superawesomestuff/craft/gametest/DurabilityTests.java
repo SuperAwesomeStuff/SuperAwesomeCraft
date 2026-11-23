@@ -60,4 +60,15 @@ public class DurabilityTests {
 		helper.assertFalse(MaterialRepairRecipe.INSTANCE.matches(wrong, helper.getLevel()), "diamond doesn't repair iron");
 		helper.succeed();
 	}
+
+	@GameTest
+	public void netheriteRepairsWithDiamonds(GameTestHelper helper) {
+		ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
+		sword.setDamageValue(100);
+		helper.assertTrue(MaterialRepairRecipe.INSTANCE.matches(
+			CraftingInput.of(2, 1, List.of(sword, new ItemStack(Items.DIAMOND))), helper.getLevel()), "diamond repairs netherite");
+		helper.assertFalse(MaterialRepairRecipe.INSTANCE.matches(
+			CraftingInput.of(2, 1, List.of(sword, new ItemStack(Items.NETHERITE_INGOT))), helper.getLevel()), "ingots don't");
+		helper.succeed();
+	}
 }

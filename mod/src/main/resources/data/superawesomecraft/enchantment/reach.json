@@ -13,9 +13,9 @@
     "per_level_above_first": 10
   },
   "slots": [
-    "mainhand"
+    "chest"
   ],
-  "supported_items": "#minecraft:enchantable/mining",
+  "supported_items": "#minecraft:enchantable/chest_armor",
   "weight": 2,
   "effects": {
     "minecraft:attributes": [

@@ -29,9 +29,9 @@ import org.jspecify.annotations.Nullable;
  * <li>Every enchantment uses one slot at any level. Curses use none.</li>
  * <li>Slots come from the item's material (item tags {@code superawesomecraft:enchant_slots/1..4}) plus
  * {@link SlotUpgrade}s.</li>
- * <li>Damage enchantments share a cap of V per weapon, Protections a cap of IV per armour piece. Otherwise
- * vanilla exclusivity applies.</li>
- * <li>Each level costs its recipe; levels IV and V, counted across a shared cap, also cost Blaze Rods.</li>
+ * <li>Damage enchantments can be mixed on one weapon and Protections on one armour piece; each still takes a slot.
+ * Otherwise vanilla exclusivity applies.</li>
+ * <li>Each level costs its recipe; levels IV and V also cost Blaze Rods.</li>
  * </ul>
  */
 public final class EnchantRules {
@@ -40,20 +40,15 @@ public final class EnchantRules {
 		slotTag(4), slotTag(3), slotTag(2), slotTag(1)
 	);
 
+	/** Groups vanilla makes exclusive but Season 1 lets you mix, since each enchantment already takes a slot. */
 	public enum Group {
-		DAMAGE(EnchantmentTags.DAMAGE_EXCLUSIVE, 5),
-		PROTECTION(EnchantmentTags.ARMOR_EXCLUSIVE, 4);
+		DAMAGE(EnchantmentTags.DAMAGE_EXCLUSIVE),
+		PROTECTION(EnchantmentTags.ARMOR_EXCLUSIVE);
 
 		public final TagKey<Enchantment> tag;
-		public final int cap;
 
-		Group(TagKey<Enchantment> tag, int cap) {
+		Group(TagKey<Enchantment> tag) {
 			this.tag = tag;
-			this.cap = cap;
-		}
-
-		public String translationKey() {
-			return "superawesomecraft.enchanting.group." + this.name().toLowerCase(java.util.Locale.ROOT);
 		}
 	}
 
@@ -64,7 +59,6 @@ public final class EnchantRules {
 		MAX_LEVEL,
 		NO_SLOT,
 		INCOMPATIBLE,
-		GROUP_FULL,
 		ALREADY_APPLIED,
 		EMPTY;
 
@@ -150,16 +144,6 @@ public final class EnchantRules {
 		return used;
 	}
 
-	public static int groupTotal(ItemStack stack, Group group) {
-		int total = 0;
-		for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments(stack).entrySet()) {
-			if (entry.getKey().is(group.tag)) {
-				total += entry.getIntValue();
-			}
-		}
-		return total;
-	}
-
 	/** Vanilla compatibility, except that enchantments in the same shared-cap group can be mixed. */
 	public static boolean compatible(Holder<Enchantment> a, Holder<Enchantment> b) {
 		if (a.equals(b)) {
@@ -214,17 +198,9 @@ public final class EnchantRules {
 				}
 			}
 		}
-		int counted = level + 1;
-		Optional<Group> group = group(enchantment);
-		if (group.isPresent()) {
-			counted = groupTotal(stack, group.get()) + 1;
-			if (counted > group.get().cap) {
-				return Check.fail(Status.GROUP_FULL);
-			}
-		}
 		List<Cost> costs = new ArrayList<>();
 		costs.add(perLevel);
-		if (counted > MAX_LEVEL_WITHOUT_BLAZE_RODS) {
+		if (level + 1 > MAX_LEVEL_WITHOUT_BLAZE_RODS) {
 			costs.add(EnchantingRecipes.blazeRods());
 		}
 		return new Check(Status.OK, costs);
@@ -277,10 +253,6 @@ public final class EnchantRules {
 						return Check.fail(Status.INCOMPATIBLE);
 					}
 				}
-			}
-			Optional<Group> group = group(enchantment);
-			if (group.isPresent() && groupTotal(preview, group.get()) - level + target > group.get().cap) {
-				return Check.fail(Status.GROUP_FULL);
 			}
 			EnchantmentHelper.updateEnchantments(preview, mutable -> mutable.set(enchantment, target));
 			changed = true;

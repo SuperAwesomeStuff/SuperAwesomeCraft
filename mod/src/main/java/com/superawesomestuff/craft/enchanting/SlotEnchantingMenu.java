@@ -34,8 +34,8 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 	public static final int ITEM_Y = 26;
 	public static final int BOOK_X = 12;
 	public static final int BOOK_Y = 62;
-	public static final int INVENTORY_X = 45;
-	public static final int INVENTORY_Y = 154;
+	public static final int INVENTORY_X = 57;
+	public static final int INVENTORY_Y = 152;
 
 	private final Container tableSlots = new SimpleContainer(2) {
 		@Override

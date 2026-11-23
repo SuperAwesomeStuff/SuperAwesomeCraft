@@ -76,31 +76,28 @@ public class EnchantingTests {
 	}
 
 	@GameTest
-	public void damageEnchantmentsMixUnderASharedCapOfFive(GameTestHelper helper) {
+	public void damageEnchantmentsAndProtectionsMixFreely(GameTestHelper helper) {
 		ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
-		add(helper, sword, Enchantments.SHARPNESS, 3);
-		add(helper, sword, Enchantments.SMITE, 1);
+		add(helper, sword, Enchantments.SHARPNESS, 5);
+		add(helper, sword, Enchantments.SMITE, 5);
 		add(helper, sword, Enchantments.BANE_OF_ARTHROPODS, 1);
-		helper.assertValueEqual(EnchantRules.groupTotal(sword, EnchantRules.Group.DAMAGE), 5, "damage total");
-		expect(helper, sword, Enchantments.SHARPNESS, Status.GROUP_FULL);
-		helper.succeed();
-	}
+		helper.assertValueEqual(EnchantRules.usedSlots(sword), 3, "each damage enchantment takes a slot");
 
-	@GameTest
-	public void protectionsMixUnderASharedCapOfFour(GameTestHelper helper) {
 		ItemStack chest = new ItemStack(Items.NETHERITE_CHESTPLATE);
-		add(helper, chest, Enchantments.PROTECTION, 2);
-		add(helper, chest, Enchantments.BLAST_PROTECTION, 2);
-		expect(helper, chest, Enchantments.FIRE_PROTECTION, Status.GROUP_FULL);
+		add(helper, chest, Enchantments.PROTECTION, 4);
+		add(helper, chest, Enchantments.BLAST_PROTECTION, 4);
+		add(helper, chest, Enchantments.FIRE_PROTECTION, 1);
 		helper.succeed();
 	}
 
 	@GameTest
-	public void fourthAndFifthLevelsNeedBlazeRodsCountedAcrossTheCap(GameTestHelper helper) {
+	public void fourthAndFifthLevelsNeedBlazeRods(GameTestHelper helper) {
 		ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
 		add(helper, sword, Enchantments.SHARPNESS, 3);
+		EnchantRules.Check fourth = EnchantRules.checkAddLevel(sword, ench(helper, Enchantments.SHARPNESS));
+		helper.assertTrue(fourth.costs().stream().anyMatch(c -> c.display() == Items.BLAZE_ROD), "Level IV should need Blaze Rods");
 		EnchantRules.Check smite = EnchantRules.checkAddLevel(sword, ench(helper, Enchantments.SMITE));
-		helper.assertTrue(smite.costs().stream().anyMatch(c -> c.display() == Items.BLAZE_ROD), "4th damage level should need Blaze Rods");
+		helper.assertFalse(smite.costs().stream().anyMatch(c -> c.display() == Items.BLAZE_ROD), "Smite I needs no Blaze Rods");
 
 		ItemStack pick = new ItemStack(Items.DIAMOND_PICKAXE);
 		add(helper, pick, Enchantments.EFFICIENCY, 2);
@@ -163,7 +160,6 @@ public class EnchantingTests {
 		ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
 		add(helper, sword, Enchantments.SHARPNESS, 4);
 		add(helper, sword, sac("bane_of_illagers"), 1);
-		expect(helper, sword, Enchantments.BREACH, Status.GROUP_FULL);
 		add(helper, sword, sac("frost_aspect"), 1);
 		expect(helper, sword, Enchantments.FIRE_ASPECT, Status.INCOMPATIBLE);
 

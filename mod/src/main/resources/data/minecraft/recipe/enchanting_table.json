@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "minecraft:amethyst_block",
+    "#": "minecraft:amethyst_block",
     "B": "minecraft:book",
-    "L": "minecraft:lapis_lazuli"
+    "D": "minecraft:lapis_lazuli"
   },
   "pattern": [
     " B ",
-    "ALA",
-    "ALA"
+    "D#D",
+    "###"
   ],
   "result": {
     "id": "minecraft:enchanting_table"
