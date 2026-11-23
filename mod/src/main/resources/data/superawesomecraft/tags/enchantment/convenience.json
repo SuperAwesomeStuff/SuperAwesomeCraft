@@ -1,0 +1,25 @@
+{
+  "values": [
+    "minecraft:efficiency",
+    "minecraft:unbreaking",
+    "minecraft:silk_touch",
+    "minecraft:feather_falling",
+    "minecraft:respiration",
+    "minecraft:aqua_affinity",
+    "minecraft:depth_strider",
+    "minecraft:frost_walker",
+    "minecraft:soul_speed",
+    "minecraft:swift_sneak",
+    "minecraft:lure",
+    "minecraft:loyalty",
+    "minecraft:riptide",
+    { "id": "superawesomecraft:reach", "required": false },
+    { "id": "superawesomecraft:step_assist", "required": false },
+    { "id": "superawesomecraft:magnetism", "required": false },
+    { "id": "superawesomecraft:smelting", "required": false },
+    { "id": "superawesomecraft:excavating", "required": false },
+    { "id": "superawesomecraft:felling", "required": false },
+    { "id": "superawesomecraft:harvesting", "required": false },
+    { "id": "superawesomecraft:beheading", "required": false }
+  ]
+}

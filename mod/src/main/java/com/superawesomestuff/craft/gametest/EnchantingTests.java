@@ -151,6 +151,43 @@ public class EnchantingTests {
 	}
 
 	@GameTest
+	public void randomSourcesCapAtThreeAndDropMending(GameTestHelper helper) {
+		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+		sword.enchant(ench(helper, Enchantments.SHARPNESS), 5);
+		sword.enchant(ench(helper, Enchantments.MENDING), 1);
+		sword.enchant(ench(helper, Enchantments.VANISHING_CURSE), 1);
+		com.superawesomestuff.craft.enchanting.RandomEnchantLimits.limit(sword);
+		helper.assertValueEqual(EnchantRules.enchantments(sword).getLevel(ench(helper, Enchantments.SHARPNESS)), 3, "sharpness");
+		helper.assertValueEqual(EnchantRules.enchantments(sword).getLevel(ench(helper, Enchantments.MENDING)), 0, "mending");
+		helper.assertValueEqual(EnchantRules.enchantments(sword).getLevel(ench(helper, Enchantments.VANISHING_CURSE)), 1, "curse");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void villagersSellOnlyConvenienceBooksAndPlainGear(GameTestHelper helper) {
+		ItemStack powerBook = net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(
+			new net.minecraft.world.item.enchantment.EnchantmentInstance(ench(helper, Enchantments.SHARPNESS), 2));
+		helper.assertTrue(com.superawesomestuff.craft.enchanting.RandomEnchantLimits.limitOffer(offer(powerBook)) == null, "sharpness book refused");
+
+		ItemStack comfortBook = net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(
+			new net.minecraft.world.item.enchantment.EnchantmentInstance(ench(helper, Enchantments.EFFICIENCY), 5));
+		var kept = com.superawesomestuff.craft.enchanting.RandomEnchantLimits.limitOffer(offer(comfortBook));
+		helper.assertTrue(kept != null, "efficiency book kept");
+		helper.assertValueEqual(kept.getResult().getOrDefault(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS,
+			net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY).getLevel(ench(helper, Enchantments.EFFICIENCY)), 3, "efficiency capped");
+
+		ItemStack pick = new ItemStack(Items.DIAMOND_PICKAXE);
+		pick.enchant(ench(helper, Enchantments.EFFICIENCY), 2);
+		var plain = com.superawesomestuff.craft.enchanting.RandomEnchantLimits.limitOffer(offer(pick));
+		helper.assertTrue(EnchantRules.enchantments(plain.getResult()).isEmpty(), "gear sold unenchanted");
+		helper.succeed();
+	}
+
+	private static net.minecraft.world.item.trading.MerchantOffer offer(ItemStack result) {
+		return new net.minecraft.world.item.trading.MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, 1), result, 1, 1, 0.05F);
+	}
+
+	@GameTest
 	public void tablePaysFromInventoryAndRefusesWhenShort(GameTestHelper helper) {
 		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 		SlotEnchantingMenu menu = new SlotEnchantingMenu(1, player.getInventory(), ContainerLevelAccess.NULL);

@@ -8,7 +8,9 @@
 		"EnchantmentHelperMixin",
 		"ItemStackMixin",
 		"PlayerMixin",
-		"ServerLevelMixin"
+		"RandomEnchantingMixin",
+		"ServerLevelMixin",
+		"VillagerTradeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
