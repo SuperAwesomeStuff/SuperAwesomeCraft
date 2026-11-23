@@ -193,6 +193,23 @@ public class EnchantingTests {
 		helper.succeed();
 	}
 
+	@GameTest(maxTicks = 100)
+	public void beheadingDropsVanillaHeads(GameTestHelper helper) {
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		player.setGameMode(GameType.SURVIVAL);
+		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+		sword.enchant(ench(helper, sac("beheading")), 3);
+		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sword);
+		for (int i = 0; i < 40; i++) {
+			var zombie = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIE, new net.minecraft.core.BlockPos(2, 2, 2));
+			zombie.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(player), 1000);
+		}
+		helper.runAfterDelay(5, () -> {
+			helper.assertItemEntityPresent(Items.ZOMBIE_HEAD);
+			helper.succeed();
+		});
+	}
+
 	@GameTest
 	public void randomSourcesCapAtThreeAndDropMending(GameTestHelper helper) {
 		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);

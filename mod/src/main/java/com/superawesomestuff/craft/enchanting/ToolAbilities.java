@@ -34,19 +34,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 /**
  * Season 1 tool enchantments with Java behaviour: Excavating (3x3), Felling (whole trees), Smelting (smelted drops) and
- * Beheading (mob heads). Area abilities break each extra block through the normal break path, so every block costs
+ * Beheading (see {@link Beheading}). Area abilities break each extra block through the normal break path, so every block costs
  * durability and drops normally. Crouching turns Excavating and Felling off.
  */
 public final class ToolAbilities {
 	public static final float EXCAVATING_SPEED = 0.3F;
 	public static final int FELLING_LIMIT = 192;
-	public static final float BEHEADING_CHANCE_PER_LEVEL = 0.1F;
-	private static final Map<EntityType<?>, net.minecraft.world.item.Item> HEADS = Map.of(
-		EntityTypes.ZOMBIE, Items.ZOMBIE_HEAD,
-		EntityTypes.SKELETON, Items.SKELETON_SKULL,
-		EntityTypes.CREEPER, Items.CREEPER_HEAD,
-		EntityTypes.PIGLIN, Items.PIGLIN_HEAD
-	);
 	private static final ThreadLocal<Boolean> BREAKING_EXTRA = ThreadLocal.withInitial(() -> false);
 	private static final ThreadLocal<Direction> HIT_FACE = new ThreadLocal<>();
 
@@ -61,7 +54,7 @@ public final class ToolAbilities {
 		PlayerBlockBreakEvents.AFTER.register(ToolAbilities::afterBreak);
 		LootTableEvents.MODIFY_DROPS.register((table, context, drops) -> {
 			smelt(context, drops);
-			behead(context, drops);
+			Beheading.onDrops(table, context, drops);
 		});
 	}
 
@@ -177,22 +170,6 @@ public final class ToolAbilities {
 					it.set(result);
 				}
 			}
-		}
-	}
-
-	private static void behead(LootContext context, List<ItemStack> drops) {
-		Entity victim = context.getOptional(LootContextParams.THIS_ENTITY);
-		Entity killer = context.getOptional(LootContextParams.ATTACKING_ENTITY);
-		if (victim == null || !(killer instanceof LivingEntity living)) {
-			return;
-		}
-		net.minecraft.world.item.Item head = HEADS.get(victim.getType());
-		if (head == null) {
-			return;
-		}
-		int level = ModEnchantments.level(context.getLevel().registryAccess(), living.getMainHandItem(), ModEnchantments.BEHEADING);
-		if (level > 0 && context.getRandom().nextFloat() < BEHEADING_CHANCE_PER_LEVEL * level) {
-			drops.add(new ItemStack(head));
 		}
 	}
 }

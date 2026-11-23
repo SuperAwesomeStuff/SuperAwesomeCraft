@@ -98,7 +98,7 @@ Two rules for anything new: **it must do something no existing enchantment does*
 | **Smelting** | Pick, shovel, axe | I | Convenience | Mined blocks drop their smelted form (sand to glass, ore to ingot). No bonus drops. Exclusive with Silk Touch |
 | **Harvesting** | Hoe | I | Convenience | Tills 3×3, and right-clicking a ripe crop harvests and replants it |
 | **Step Assist** | Boots | I | Convenience | Step up full blocks without jumping |
-| **Beheading** | Sword, axe | III | Convenience | Chance for a kill to drop the mob's head. No bonus to Wither Skeleton skulls (that's a Power shortcut to the Wither) |
+| **Beheading** | Sword, axe | III | Convenience | 10% chance per level for a player's kill to drop the mob's head. Vanilla heads (zombie, skeleton, wither skeleton, creeper, piglin, dragon) always work. With the Vanilla Tweaks *More Mob Heads* data pack installed, every mob it covers works too, with the right variant ([research](../../research/more-mob-heads.md)) |
 | **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Can sit beside the other damage enchantments |
 | **Frost Aspect** | Sword, axe, spear, mace | II | Power | Slows the target instead of burning it. Exclusive with Fire Aspect |
 | **Rebounding** | Chestplate | III | Power | Knocks melee attackers away. Can sit beside Thorns, which damages instead |
@@ -139,7 +139,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.0, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.1, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

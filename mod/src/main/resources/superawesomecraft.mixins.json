@@ -9,6 +9,8 @@
 		"ExcavatingSpeedMixin",
 		"ItemStackMixin",
 		"PlayerMixin",
+		"RandomChanceMixin",
+		"RandomChanceWithEnchantedBonusMixin",
 		"RandomEnchantingMixin",
 		"ServerLevelMixin",
 		"VillagerTradeMixin"
