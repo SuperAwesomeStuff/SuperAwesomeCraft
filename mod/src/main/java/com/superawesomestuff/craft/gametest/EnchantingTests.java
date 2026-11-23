@@ -248,7 +248,7 @@ public class EnchantingTests {
 	}
 
 	@GameTest
-	public void tablePaysFromInventoryAndRefusesWhenShort(GameTestHelper helper) {
+	public void tablePaysFromMaterialSlotsAndRefusesWhenShort(GameTestHelper helper) {
 		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 		SlotEnchantingMenu menu = new SlotEnchantingMenu(1, player.getInventory(), ContainerLevelAccess.NULL);
 		menu.getSlot(SlotEnchantingMenu.ITEM_SLOT).set(new ItemStack(Items.IRON_PICKAXE));
@@ -256,13 +256,26 @@ public class EnchantingTests {
 			.getId(ench(helper, Enchantments.EFFICIENCY).value());
 		int button = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, efficiency);
 
-		player.getInventory().add(new ItemStack(Items.REDSTONE, 20));
+		player.getInventory().add(new ItemStack(Items.REDSTONE, 64));
+		helper.assertFalse(menu.clickMenuButton(player, button), "redstone in the inventory doesn't count");
+
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 20));
 		helper.assertFalse(menu.clickMenuButton(player, button), "20 redstone is not enough");
 
-		player.getInventory().add(new ItemStack(Items.REDSTONE, 20));
-		helper.assertTrue(menu.clickMenuButton(player, button), "40 redstone is enough");
+		menu.getSlot(SlotEnchantingMenu.LAST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 20));
+		helper.assertTrue(menu.clickMenuButton(player, button), "40 redstone across both slots is enough");
 		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.EFFICIENCY)), 1, "efficiency level");
-		helper.assertValueEqual(player.getInventory().countItem(Items.REDSTONE), 8, "redstone left");
+		helper.assertValueEqual(menu.materialCount(com.superawesomestuff.craft.enchanting.Cost.of(Items.REDSTONE, 1)), 8, "redstone left in the slots");
+		helper.assertValueEqual(player.getInventory().countItem(Items.REDSTONE), 64, "inventory untouched");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void booksCannotBeEnchanted(GameTestHelper helper) {
+		helper.assertFalse(SlotEnchantingMenu.canEnchant(new ItemStack(Items.BOOK)), "book");
+		helper.assertFalse(SlotEnchantingMenu.canEnchant(new ItemStack(Items.ENCHANTED_BOOK)), "enchanted book");
+		helper.assertTrue(SlotEnchantingMenu.canEnchant(new ItemStack(Items.IRON_SWORD)), "sword");
+		helper.assertFalse(EnchantRules.checkUpgrade(new ItemStack(Items.BOOK), SlotUpgrade.OVERWORLD).ok(), "no slot upgrades on books");
 		helper.succeed();
 	}
 }

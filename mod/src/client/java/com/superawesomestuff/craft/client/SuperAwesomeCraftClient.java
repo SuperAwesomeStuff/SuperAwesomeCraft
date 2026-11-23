@@ -15,6 +15,10 @@ public class SuperAwesomeCraftClient implements ClientModInitializer {
 			if (stack.isBroken()) {
 				lines.add(1, Component.translatable("superawesomecraft.durability.broken").withStyle(ChatFormatting.RED));
 			}
+			Component repair = RepairTooltip.describe(stack);
+			if (repair != null) {
+				lines.add(Math.min(lines.size(), stack.isBroken() ? 2 : 1), repair);
+			}
 		});
 	}
 }

@@ -50,7 +50,7 @@ Rare materials (4 per level) are in **bold**. Everything else is 32 per level.
 | Iron Nuggets | Sweeping Edge |
 | Kelp | Respiration, Aqua Affinity |
 | Prismarine Shards | Depth Strider, Impaling |
-| Snowballs | Frost Walker, Frost Aspect |
+| Snow Blocks | Frost Walker, Frost Aspect |
 | Soul Soil | Soul Speed |
 | **Diamonds** | Excavating, Infinity |
 | **Ender Pearls** | Reach, Loyalty |

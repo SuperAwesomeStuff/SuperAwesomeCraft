@@ -272,7 +272,7 @@ public final class EnchantRules {
 	// Slot upgrades
 
 	public static Check checkUpgrade(ItemStack stack, SlotUpgrade upgrade) {
-		if (stack.isEmpty() || !(stack.has(DataComponents.ENCHANTABLE) || stack.isDamageableItem())) {
+		if (!SlotEnchantingMenu.canEnchant(stack)) {
 			return Check.fail(Status.EMPTY);
 		}
 		if (hasUpgrade(stack, upgrade)) {

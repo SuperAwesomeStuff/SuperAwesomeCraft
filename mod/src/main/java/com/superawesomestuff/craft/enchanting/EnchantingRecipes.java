@@ -44,7 +44,7 @@ public final class EnchantingRecipes {
 		common(Items.IRON_NUGGET, "sweeping_edge");
 		common(Items.KELP, "respiration", "aqua_affinity");
 		common(Items.PRISMARINE_SHARD, "depth_strider", "impaling");
-		common(Items.SNOWBALL, "frost_walker", "sac:frost_aspect");
+		common(Items.SNOW_BLOCK, "frost_walker", "sac:frost_aspect");
 		common(Items.SOUL_SOIL, "soul_speed");
 		rare(Items.DIAMOND, "sac:excavating", "infinity");
 		rare(Items.ENDER_PEARL, "sac:reach", "loyalty");
