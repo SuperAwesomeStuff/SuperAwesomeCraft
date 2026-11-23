@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.enchanting;
 
+import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -17,29 +18,27 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
 
 /**
- * The Season 1 enchanting table, laid out like Ascendant Arcana's. Slots: the item, a found book, and two material slots
- * the player fills from their inventory to pay for the selected enchantment. Actions arrive as menu button ids:
+ * The Season 1 enchanting table, laid out like Ascendant Arcana's. Slots: the item, and two material slots the player
+ * fills from their inventory to pay for the selected enchantment. An enchanted book in a material slot is a voucher: it
+ * pays one level's material of an enchantment it holds, and loses that level. Actions arrive as menu button ids:
  * {@code action * 1000 + argument}.
  */
 public class SlotEnchantingMenu extends AbstractContainerMenu {
 	public static final int ITEM_SLOT = 0;
-	public static final int BOOK_SLOT = 1;
-	public static final int FIRST_MATERIAL_SLOT = 2;
-	public static final int LAST_MATERIAL_SLOT = 3;
-	private static final int TABLE_SLOTS = 4;
+	public static final int FIRST_MATERIAL_SLOT = 1;
+	public static final int LAST_MATERIAL_SLOT = 2;
+	private static final int TABLE_SLOTS = 3;
 
 	public static final int ACTION_ADD = 0;
 	public static final int ACTION_REMOVE = 1;
-	public static final int ACTION_BOOK = 2;
 	public static final int ACTION_UPGRADE = 3;
 
 	public static final int ITEM_X = 18;
-	public static final int ITEM_Y = 30;
-	public static final int BOOK_X = 18;
-	public static final int BOOK_Y = 84;
+	public static final int ITEM_Y = 40;
 	public static final int MATERIAL_X = 169;
 	public static final int MATERIAL_Y = 68;
 	public static final int MATERIAL_GAP = 20;
@@ -73,24 +72,13 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				return canEnchant(stack);
 			}
 		});
-		this.addSlot(new Slot(this.table, BOOK_SLOT, BOOK_X, BOOK_Y) {
-			@Override
-			public int getMaxStackSize() {
-				return 1;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return stack.is(Items.ENCHANTED_BOOK);
-			}
-		});
 		for (int i = 0; i <= LAST_MATERIAL_SLOT - FIRST_MATERIAL_SLOT; i++) {
 			this.addSlot(new Slot(this.table, FIRST_MATERIAL_SLOT + i, MATERIAL_X, MATERIAL_Y + i * MATERIAL_GAP));
 		}
 		this.addStandardInventorySlots(inventory, INVENTORY_X, INVENTORY_Y);
 	}
 
-	/** Tools, weapons and armour go in the item slot. Books don't: they're applied, not enchanted. */
+	/** Tools, weapons and armour go in the item slot. Books don't: they're vouchers, used from a material slot. */
 	public static boolean canEnchant(ItemStack stack) {
 		return !stack.is(Items.BOOK) && !stack.is(Items.ENCHANTED_BOOK)
 			&& (stack.isDamageableItem() || stack.has(DataComponents.ENCHANTABLE));
@@ -104,17 +92,53 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		return this.table.getItem(ITEM_SLOT);
 	}
 
-	public ItemStack book() {
-		return this.table.getItem(BOOK_SLOT);
-	}
-
 	/** How many of {@code cost} sit in the material slots. */
 	public int materialCount(Cost cost) {
 		return Payment.count(this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, cost);
 	}
 
-	public boolean canPay(Player player, EnchantRules.Check check) {
-		return check.ok() && Payment.canAfford(player, this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, check.costs());
+	// Book vouchers
+
+	/** The material slot holding a book with at least one level of {@code enchantment}, or -1. */
+	public int voucherSlot(Holder<Enchantment> enchantment) {
+		for (int i = FIRST_MATERIAL_SLOT; i <= LAST_MATERIAL_SLOT; i++) {
+			ItemStack stack = this.table.getItem(i);
+			if (stack.is(Items.ENCHANTED_BOOK)
+				&& stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) > 0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/** What adding a level of {@code enchantment} costs right now: a book voucher replaces its material (not Blaze Rods). */
+	public List<Cost> addCosts(Holder<Enchantment> enchantment, EnchantRules.Check check) {
+		if (!check.ok() || this.voucherSlot(enchantment) < 0 || check.costs().isEmpty()) {
+			return check.costs();
+		}
+		return check.costs().subList(1, check.costs().size());
+	}
+
+	private void spendVoucher(int slot, Holder<Enchantment> enchantment) {
+		ItemStack book = this.table.getItem(slot);
+		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+		int level = stored.getLevel(enchantment);
+		ItemEnchantments.Mutable mutable = new ItemEnchantments.Mutable(stored);
+		if (level <= 1) {
+			mutable.removeIf(enchantment::equals);
+		} else {
+			mutable.set(enchantment, level - 1);
+		}
+		ItemEnchantments left = mutable.toImmutable();
+		if (left.isEmpty()) {
+			this.table.setItem(slot, book.transmuteCopy(Items.BOOK));
+		} else {
+			book.set(DataComponents.STORED_ENCHANTMENTS, left);
+		}
+	}
+
+	public boolean canPay(Player player, List<Cost> costs) {
+		return Payment.canAfford(player, this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, costs);
 	}
 
 	@Override
@@ -125,6 +149,7 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		Registry<Enchantment> registry = player.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 
 		EnchantRules.Check check;
+		List<Cost> costs;
 		Runnable apply;
 		switch (action) {
 			case ACTION_ADD, ACTION_REMOVE -> {
@@ -135,19 +160,19 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				Holder<Enchantment> enchantment = holder.get();
 				if (action == ACTION_ADD) {
 					check = EnchantRules.checkAddLevel(item, enchantment);
-					apply = () -> EnchantRules.addLevel(item, enchantment);
+					costs = this.addCosts(enchantment, check);
+					int voucher = this.voucherSlot(enchantment);
+					apply = () -> {
+						if (voucher >= 0 && costs.size() < check.costs().size()) {
+							this.spendVoucher(voucher, enchantment);
+						}
+						EnchantRules.addLevel(item, enchantment);
+					};
 				} else {
 					check = EnchantRules.checkRemove(item, enchantment);
+					costs = check.costs();
 					apply = () -> EnchantRules.remove(item, enchantment);
 				}
-			}
-			case ACTION_BOOK -> {
-				ItemStack book = this.book();
-				check = EnchantRules.checkBook(item, book);
-				apply = () -> {
-					EnchantRules.applyBook(item, book);
-					this.table.setItem(BOOK_SLOT, ItemStack.EMPTY);
-				};
 			}
 			case ACTION_UPGRADE -> {
 				if (argument < 0 || argument >= SlotUpgrade.values().length) {
@@ -155,6 +180,7 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				}
 				SlotUpgrade upgrade = SlotUpgrade.values()[argument];
 				check = EnchantRules.checkUpgrade(item, upgrade);
+				costs = check.costs();
 				apply = () -> EnchantRules.applyUpgrade(item, upgrade);
 			}
 			default -> {
@@ -162,13 +188,13 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 			}
 		}
 
-		if (!this.canPay(player, check)) {
+		if (!check.ok() || !this.canPay(player, costs)) {
 			return false;
 		}
 		if (player.level().isClientSide()) {
 			return true;
 		}
-		Payment.take(player, this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, check.costs());
+		Payment.take(player, this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, costs);
 		apply.run();
 		this.table.setChanged();
 		this.broadcastChanges();
@@ -200,10 +226,6 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		int inventoryEnd = this.slots.size();
 		if (slotIndex < TABLE_SLOTS) {
 			if (!this.moveItemStackTo(stack, TABLE_SLOTS, inventoryEnd, true)) {
-				return ItemStack.EMPTY;
-			}
-		} else if (stack.is(Items.ENCHANTED_BOOK)) {
-			if (!this.moveItemStackTo(stack, BOOK_SLOT, BOOK_SLOT + 1, false)) {
 				return ItemStack.EMPTY;
 			}
 		} else if (canEnchant(stack) && !this.slots.get(ITEM_SLOT).hasItem()) {

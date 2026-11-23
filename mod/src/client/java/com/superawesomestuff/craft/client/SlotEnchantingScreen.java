@@ -28,7 +28,7 @@ import org.jspecify.annotations.Nullable;
  * The Season 1 enchanting table, copied from Ascendant Arcana's layout: the item on the left, a scrolling list of
  * enchantment tiles in the middle, the selected enchantment's description top right, and material slots plus the
  * Enchant button bottom right. Fill the material slots from your inventory and the button lights up. Remove needs
- * a second click to confirm.
+ * a second click to confirm. An enchanted book in a material slot pays one level of an enchantment it holds.
  */
 public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchantingMenu> {
 	private static final int WIDTH = 256;
@@ -47,10 +47,10 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 	private static final int MATERIAL_BOX_H = LIST_Y + LIST_H - MATERIAL_BOX_Y;
 	private static final int BUTTON_Y = 108;
 	private static final int BUTTON_H = 14;
-	private static final int REMOVE_X = 166;
-	private static final int REMOVE_W = 38;
-	private static final int ACTION_X = 207;
+	private static final int ACTION_X = 166;
 	private static final int ACTION_W = 41;
+	private static final int REMOVE_X = 210;
+	private static final int REMOVE_W = 38;
 	private static final int CONFIRM_TICKS = 60;
 	private static final float SMALL = 0.75F;
 
@@ -73,12 +73,11 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 	private int scroll;
 	private @Nullable Object selectedKey;
 	private ItemStack lastItem = ItemStack.EMPTY;
-	private boolean hadBook;
 	private @Nullable Object confirmRemoveKey;
 	private int confirmRemoveUntil;
 	private int ticks;
 
-	private enum Kind { BOOK, ENCHANTMENT, UPGRADE }
+	private enum Kind { ENCHANTMENT, UPGRADE }
 
 	/** One tile. {@code key} identifies it across frames so the selection sticks while the item changes. */
 	private record Entry(Kind kind, Object key, @Nullable Holder<Enchantment> enchantment, int registryId,
@@ -102,10 +101,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		if (item.isEmpty()) {
 			return entries;
 		}
-		ItemStack book = this.menu.book();
-		if (!book.isEmpty()) {
-			entries.add(new Entry(Kind.BOOK, "book", null, -1, null, 0, 1, EnchantRules.checkBook(item, book), null));
-		}
 		Registry<Enchantment> registry = this.minecraft.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 		List<Holder<Enchantment>> options = EnchantRules.options(item, registry);
 		options.sort(Comparator.comparing(h -> h.value().description().getString()));
@@ -120,6 +115,18 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 			entries.add(new Entry(Kind.UPGRADE, upgrade, null, -1, upgrade, done, 1, EnchantRules.checkUpgrade(item, upgrade), null));
 		}
 		return entries;
+	}
+
+	private List<Cost> payCosts(Entry entry) {
+		return entry.kind == Kind.ENCHANTMENT ? this.menu.addCosts(entry.enchantment, entry.add) : entry.add.costs();
+	}
+
+	private boolean usesVoucher(Entry entry) {
+		return entry.kind == Kind.ENCHANTMENT && entry.add.ok() && this.menu.voucherSlot(entry.enchantment) >= 0;
+	}
+
+	private boolean canAdd(Entry entry) {
+		return entry.add.ok() && this.menu.canPay(this.minecraft.player, this.payCosts(entry));
 	}
 
 	private @Nullable Entry selected(List<Entry> entries) {
@@ -141,11 +148,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 			this.scroll = 0;
 			this.selectedKey = null;
 		}
-		boolean hasBook = !this.menu.book().isEmpty();
-		if (hasBook && !this.hadBook) {
-			this.selectedKey = "book";
-		}
-		this.hadBook = hasBook;
 		if (this.ticks > this.confirmRemoveUntil) {
 			this.confirmRemoveKey = null;
 		}
@@ -201,7 +203,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 
 	private Component title(Entry entry) {
 		return switch (entry.kind) {
-			case BOOK -> Component.translatable("superawesomecraft.enchanting.apply_book");
 			case UPGRADE -> Component.translatable("superawesomecraft.enchanting.add_slot", entry.upgrade.title());
 			case ENCHANTMENT -> entry.enchantment.value().description();
 		};
@@ -209,7 +210,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 
 	private Component description(Entry entry) {
 		return switch (entry.kind) {
-			case BOOK -> Component.translatable("superawesomecraft.enchanting.apply_book_tooltip");
 			case UPGRADE -> Component.translatable(entry.level > 0
 				? "superawesomecraft.enchanting.upgrade_done" : "superawesomecraft.enchanting.upgrade_detail");
 			case ENCHANTMENT -> {
@@ -270,7 +270,7 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		graphics.fill(x, y, x + TILE_W, y + TILE_H - 1, fill);
 		this.bevel(graphics, x, y, TILE_W, TILE_H - 1, 0xFFB8AE95, 0xFF4A4438);
 
-		List<Cost> costs = entry.add.ok() ? entry.add.costs() : List.of();
+		List<Cost> costs = entry.add.ok() ? this.payCosts(entry) : List.of();
 		int iconsW = costs.size() * 13;
 		String name = this.font.plainSubstrByWidth(this.title(entry).getString(), (int) ((TILE_W - 6 - iconsW) / SMALL));
 		int nameColor = entry.locked() ? TEXT_DIM : entry.level > 0 && entry.kind == Kind.ENCHANTMENT ? TEXT_ON : TEXT_LIGHT;
@@ -281,8 +281,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 				? Component.translatable(entry.add.status().translationKey())
 				: Component.translatable("superawesomecraft.enchanting.tile_level", entry.level, entry.maxLevel);
 			case UPGRADE -> Component.translatable(entry.level > 0 ? "superawesomecraft.enchanting.tile_done" : "superawesomecraft.enchanting.tile_slot");
-			case BOOK -> Component.translatable(entry.add.ok() ? "superawesomecraft.enchanting.tile_free"
-				: entry.add.status().translationKey());
 		};
 		this.small(graphics, second, x + 3, y + 12, entry.locked() ? 0xFFE08080 : selected ? 0xFF5A2E3E : TEXT_DIM);
 
@@ -322,15 +320,21 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		int labelX = x + SlotEnchantingMenu.MATERIAL_X + 19;
 		int labelW = x + PANEL_X + PANEL_W - 3 - labelX;
 		if (entry.add.ok()) {
-			List<Cost> costs = entry.add.costs();
-			for (int i = 0; i < costs.size() && i < 2; i++) {
+			List<Cost> costs = this.payCosts(entry);
+			int row = 0;
+			if (this.usesVoucher(entry)) {
+				this.smallWrapped(graphics, Component.translatable("superawesomecraft.enchanting.voucher"), labelX,
+					y + SlotEnchantingMenu.MATERIAL_Y + 1, labelW, GREEN, 2);
+				row = 1;
+			}
+			for (int i = 0; i < costs.size() && row + i < 2; i++) {
 				Cost cost = costs.get(i);
 				boolean enough = this.minecraft.player.hasInfiniteMaterials() || this.menu.materialCount(cost) >= cost.count();
 				Component label = Component.translatable("superawesomecraft.enchanting.cost", cost.count(), new ItemStack(cost.display()).getHoverName());
-				this.smallWrapped(graphics, label, labelX, y + SlotEnchantingMenu.MATERIAL_Y + 1 + i * SlotEnchantingMenu.MATERIAL_GAP,
+				this.smallWrapped(graphics, label, labelX, y + SlotEnchantingMenu.MATERIAL_Y + 1 + (row + i) * SlotEnchantingMenu.MATERIAL_GAP,
 					labelW, enough ? TEXT_LIGHT : RED, 2);
 			}
-			if (costs.isEmpty()) {
+			if (costs.isEmpty() && !this.usesVoucher(entry)) {
 				this.small(graphics, Component.translatable("superawesomecraft.enchanting.free"), labelX, y + SlotEnchantingMenu.MATERIAL_Y + 4, GREEN);
 			}
 		} else {
@@ -342,13 +346,13 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		Component action = Component.translatable(switch (entry.kind) {
 			case ENCHANTMENT -> "superawesomecraft.enchanting.button.enchant";
 			case UPGRADE -> "superawesomecraft.enchanting.button.add_slot";
-			case BOOK -> "superawesomecraft.enchanting.button.apply";
 		});
-		this.button(graphics, x + ACTION_X, y + BUTTON_Y, ACTION_W, action, this.menu.canPay(this.minecraft.player, entry.add), false, mouseX, mouseY);
+		this.button(graphics, x + ACTION_X, y + BUTTON_Y, ACTION_W, action, this.canAdd(entry), false, mouseX, mouseY);
 		if (entry.remove != null) {
 			boolean confirming = entry.key.equals(this.confirmRemoveKey);
 			Component remove = Component.translatable(confirming ? "superawesomecraft.enchanting.button.confirm" : "superawesomecraft.enchanting.button.remove");
-			this.button(graphics, x + REMOVE_X, y + BUTTON_Y, REMOVE_W, remove, this.menu.canPay(this.minecraft.player, entry.remove), confirming, mouseX, mouseY);
+			this.button(graphics, x + REMOVE_X, y + BUTTON_Y, REMOVE_W, remove,
+				entry.remove.ok() && this.menu.canPay(this.minecraft.player, entry.remove.costs()), confirming, mouseX, mouseY);
 		}
 	}
 
@@ -370,9 +374,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 			int w = (int) (this.font.width(slots) * SMALL);
 			this.small(graphics, slots, SlotEnchantingMenu.ITEM_X + 8 - w / 2, SlotEnchantingMenu.ITEM_Y + 20, TEXT);
 		}
-		Component book = Component.translatable("superawesomecraft.enchanting.book_slot");
-		int w = (int) (this.font.width(book) * SMALL);
-		this.small(graphics, book, SlotEnchantingMenu.BOOK_X + 8 - w / 2, SlotEnchantingMenu.BOOK_Y + 20, TEXT);
 	}
 
 	// Input
@@ -396,7 +397,6 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 				return this.press(switch (entry.kind) {
 					case ENCHANTMENT -> SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, entry.registryId);
 					case UPGRADE -> SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_UPGRADE, entry.upgrade.ordinal());
-					case BOOK -> SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_BOOK, 0);
 				});
 			}
 			if (entry.remove != null && mx >= REMOVE_X && mx < REMOVE_X + REMOVE_W) {

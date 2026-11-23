@@ -53,19 +53,21 @@ public class EnchantingScreenClientTest implements FabricClientGameTest {
 				player.containerMenu.broadcastChanges();
 			});
 			context.waitTicks(5);
-			// Select the second tile.
+			// Select the first tile (Bane of Arthropods).
 			context.runOnClient(client -> {
 				SlotEnchantingScreen screen = (SlotEnchantingScreen) client.gui.screen();
 				int left = (screen.width - 256) / 2;
 				int top = (screen.height - 222) / 2;
-				screen.mouseClicked(new MouseButtonEvent(left + 70, top + 12 + 23, new MouseButtonInfo(0, 0)), false);
+				screen.mouseClicked(new MouseButtonEvent(left + 70, top + 12, new MouseButtonInfo(0, 0)), false);
 			});
 			context.waitTicks(2);
 			context.takeScreenshot("enchanting-selected");
 
 			singleplayer.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				player.containerMenu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(new ItemStack(Items.AMETHYST_SHARD, 32));
+				var bane = server.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.BANE_OF_ARTHROPODS);
+				player.containerMenu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(
+					net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new net.minecraft.world.item.enchantment.EnchantmentInstance(bane, 2)));
 				player.containerMenu.broadcastChanges();
 			});
 			context.waitTicks(5);

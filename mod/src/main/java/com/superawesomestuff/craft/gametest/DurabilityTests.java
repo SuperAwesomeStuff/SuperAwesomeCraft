@@ -71,4 +71,16 @@ public class DurabilityTests {
 			CraftingInput.of(2, 1, List.of(sword, new ItemStack(Items.NETHERITE_INGOT))), helper.getLevel()), "ingots don't");
 		helper.succeed();
 	}
+
+	@GameTest
+	public void gearVanillaCantRepairGetsAMaterial(GameTestHelper helper) {
+		for (var pair : List.of(List.of(Items.BOW, Items.STRING), List.of(Items.CROSSBOW, Items.STRING),
+			List.of(Items.TRIDENT, Items.PRISMARINE_SHARD), List.of(Items.SHIELD, Items.IRON_INGOT), List.of(Items.FISHING_ROD, Items.STRING))) {
+			ItemStack tool = new ItemStack(pair.get(0));
+			tool.setDamageValue(10);
+			helper.assertTrue(MaterialRepairRecipe.INSTANCE.matches(CraftingInput.of(2, 1, List.of(tool, new ItemStack(pair.get(1)))),
+				helper.getLevel()), pair.get(0) + " repairs with " + pair.get(1));
+		}
+		helper.succeed();
+	}
 }

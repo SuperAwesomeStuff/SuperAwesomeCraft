@@ -31,7 +31,7 @@ Written down before the playtest so it can actually fail:
 ### The table
 
 - The Enchanting Table uses the vanilla shape with **Amethyst Blocks for the Obsidian and Lapis Lazuli for the Diamonds** (1 Book, 2 Lapis, 4 Amethyst Blocks), so enchanting starts in the iron age, before diamonds.
-- **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. The screen copies Ascendant Arcana's: the item goes in on the left, you scroll a list of enchantment tiles in the middle, the selected one is described (with its numbers) top right, and you put its materials into two slots bottom right, which lights up the Enchant button. Removing an enchantment needs a second click to confirm. Books can't go in the item slot; found books go in their own slot and are applied.
+- **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. The screen copies Ascendant Arcana's: the item goes in on the left, you scroll a list of enchantment tiles in the middle, the selected one is described (with its numbers) top right, and you put its materials into two slots bottom right, which lights up the Enchant button. Removing an enchantment needs a second click to confirm. Books can't go in the item slot; found books go in a material slot as vouchers (below).
 - Enchanted books are never applied at the anvil. The anvil only renames, for free.
 
 ### Slots
@@ -78,7 +78,7 @@ Durability returns, but it's never a big deal:
 
 - **Gear never breaks.** At 0 durability it stops working until it's repaired. Nothing is lost.
 - **Repair in the crafting grid**: the item plus the material it was made from, in any arrangement, free and with no XP. **Each item restores 50%.** Netherite gear repairs with **Diamonds**, since Netherite Ingots are too dear to spend on repairs.
-- Items keep **vanilla durability** (a diamond pickaxe has 1,561 uses). Every repairable item's tooltip says what repairs it, which helps with odd ones like chainmail, tridents and fishing rods.
+- Items keep **vanilla durability** (a diamond pickaxe has 1,561 uses). Every repairable item's tooltip says what repairs it. Gear vanilla can't repair gets a material: bows, crossbows and fishing rods use String, tridents Prismarine Shards, shields, shears and flint and steel Iron Ingots, brushes Copper Ingots.
 - **Unbreaking returns** and uses a slot, so fewer repairs competes with other enchantments.
 - **Mending is gone.** It would cancel the repair cost, the way Unbreakable did in the playtest.
 
@@ -112,7 +112,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ### Found books, Villagers and curses
 
-- **A found enchanted book applies its enchantment at the table for no materials, but it still uses slots.**
+- **A found enchanted book is a voucher.** Put it in a material slot and it pays one level's material of an enchantment it holds, then loses that level (a used-up book becomes a plain Book). Blaze Rods for levels IV and V are still needed, and the enchantment still needs a slot.
 - **Random sources (loot, fishing, mob drops) cap every enchantment at level III**, the highest level that doesn't need Blaze Rods, so found books are an early boost without skipping the Nether.
 - **Librarians sell Convenience books only.**
 - **Curses come only from loot, don't use a slot, and can be removed at the table for a material cost.**
@@ -139,7 +139,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.2, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.3, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

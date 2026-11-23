@@ -125,30 +125,28 @@ public class EnchantingTests {
 		helper.succeed();
 	}
 
-	@GameTest
-	public void foundBookAppliesFreeButNeedsASlot(GameTestHelper helper) {
-		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-		book.set(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS,
-			net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
-		net.minecraft.world.item.enchantment.EnchantmentHelper.updateEnchantments(book,
-			m -> m.set(ench(helper, Enchantments.KNOCKBACK), 2));
-		helper.assertValueEqual(book.getOrDefault(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS,
-			net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY).size(), 1, "book enchantments");
-
-		ItemStack full = new ItemStack(Items.IRON_SWORD);
-		add(helper, full, Enchantments.SHARPNESS, 1);
-		add(helper, full, Enchantments.LOOTING, 1);
-		helper.assertValueEqual(EnchantRules.checkBook(full, book).status(), Status.NO_SLOT, "full sword");
-
-		ItemStack sword = new ItemStack(Items.IRON_SWORD);
-		helper.assertTrue(EnchantRules.checkBook(sword, book).ok(), "empty sword takes the book");
-		EnchantRules.applyBook(sword, book);
-		helper.assertValueEqual(EnchantRules.enchantments(sword).getLevel(ench(helper, Enchantments.KNOCKBACK)), 2, "knockback level");
-		helper.succeed();
-	}
-
 	private static ResourceKey<Enchantment> sac(String name) {
 		return ResourceKey.create(Registries.ENCHANTMENT, com.superawesomestuff.craft.SuperAwesomeCraft.id(name));
+	}
+
+	@GameTest
+	public void booksAreVouchersForOneLevelEach(GameTestHelper helper) {
+		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+		SlotEnchantingMenu menu = new SlotEnchantingMenu(1, player.getInventory(), ContainerLevelAccess.NULL);
+		menu.getSlot(SlotEnchantingMenu.ITEM_SLOT).set(new ItemStack(Items.IRON_SWORD));
+		ItemStack book = net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(
+			new net.minecraft.world.item.enchantment.EnchantmentInstance(ench(helper, Enchantments.KNOCKBACK), 2));
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book);
+		int knockback = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+			.getId(ench(helper, Enchantments.KNOCKBACK).value());
+		int button = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, knockback);
+
+		helper.assertTrue(menu.clickMenuButton(player, button), "the book pays for level I");
+		helper.assertTrue(menu.clickMenuButton(player, button), "and for level II");
+		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.KNOCKBACK)), 2, "knockback level");
+		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem().is(Items.BOOK), "the used-up book is a plain book");
+		helper.assertFalse(menu.clickMenuButton(player, button), "nothing left to pay with");
+		helper.succeed();
 	}
 
 	@GameTest
@@ -274,6 +272,7 @@ public class EnchantingTests {
 	public void booksCannotBeEnchanted(GameTestHelper helper) {
 		helper.assertFalse(SlotEnchantingMenu.canEnchant(new ItemStack(Items.BOOK)), "book");
 		helper.assertFalse(SlotEnchantingMenu.canEnchant(new ItemStack(Items.ENCHANTED_BOOK)), "enchanted book");
+		helper.assertTrue(SlotEnchantingMenu.canEnchant(new ItemStack(Items.SHIELD)), "shield");
 		helper.assertTrue(SlotEnchantingMenu.canEnchant(new ItemStack(Items.IRON_SWORD)), "sword");
 		helper.assertFalse(EnchantRules.checkUpgrade(new ItemStack(Items.BOOK), SlotUpgrade.OVERWORLD).ok(), "no slot upgrades on books");
 		helper.succeed();

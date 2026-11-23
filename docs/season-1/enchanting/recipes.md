@@ -60,7 +60,7 @@ Rare materials (4 per level) are in **bold**. Everything else is 32 per level.
 | **Nautilus Shells** | Riptide |
 
 - **Removing a curse:** 32 Gold Ingots.
-- **Found books:** free to apply, but they still use a slot.
+- **Found books:** vouchers. In a material slot, a book pays one level's material of an enchantment it holds and loses that level. Blaze Rods and slots still apply.
 - **Repair:** in the crafting grid, the item plus its own material. Each material item restores 50%.
 
 ## What a finished item costs

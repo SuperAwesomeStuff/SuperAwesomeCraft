@@ -224,51 +224,6 @@ public final class EnchantRules {
 		EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.removeIf(enchantment::equals));
 	}
 
-	// Found books
-
-	/** A found book applies for free, but every enchantment on it must fit: slots, compatibility and caps. */
-	public static Check checkBook(ItemStack stack, ItemStack book) {
-		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
-		if (stack.isEmpty() || stored.isEmpty()) {
-			return Check.fail(Status.EMPTY);
-		}
-		ItemStack preview = stack.copy();
-		boolean changed = false;
-		for (Object2IntMap.Entry<Holder<Enchantment>> entry : stored.entrySet()) {
-			Holder<Enchantment> enchantment = entry.getKey();
-			int target = entry.getIntValue();
-			if (!enchantment.value().isSupportedItem(preview)) {
-				return Check.fail(Status.UNSUPPORTED);
-			}
-			int level = enchantments(preview).getLevel(enchantment);
-			if (level >= target) {
-				continue;
-			}
-			if (level == 0 && !isCurse(enchantment)) {
-				if (usedSlots(preview) >= totalSlots(preview)) {
-					return Check.fail(Status.NO_SLOT);
-				}
-				for (Holder<Enchantment> other : enchantments(preview).keySet()) {
-					if (!compatible(enchantment, other)) {
-						return Check.fail(Status.INCOMPATIBLE);
-					}
-				}
-			}
-			EnchantmentHelper.updateEnchantments(preview, mutable -> mutable.set(enchantment, target));
-			changed = true;
-		}
-		return changed ? new Check(Status.OK, List.of()) : Check.fail(Status.ALREADY_APPLIED);
-	}
-
-	public static void applyBook(ItemStack stack, ItemStack book) {
-		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
-		EnchantmentHelper.updateEnchantments(stack, mutable -> {
-			for (Object2IntMap.Entry<Holder<Enchantment>> entry : stored.entrySet()) {
-				mutable.upgrade(entry.getKey(), entry.getIntValue());
-			}
-		});
-	}
-
 	// Slot upgrades
 
 	public static Check checkUpgrade(ItemStack stack, SlotUpgrade upgrade) {
