@@ -1,0 +1,53 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.superawesomecraft.rebounding"
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 10
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "chest",
+    "legs"
+  ],
+  "supported_items": "#superawesomecraft:enchantable/body_armor",
+  "weight": 2,
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "attacker",
+        "enchanted": "victim",
+        "effect": {
+          "type": "minecraft:apply_impulse",
+          "direction": [
+            0.0,
+            0.25,
+            -1.0
+          ],
+          "coordinate_scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "magnitude": {
+            "type": "minecraft:linear",
+            "base": 0.6,
+            "per_level_above_first": 0.4
+          }
+        },
+        "requirements": {
+          "type": "minecraft:damage_source_properties",
+          "predicate": {
+            "is_direct": true
+          }
+        }
+      }
+    ]
+  }
+}

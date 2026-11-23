@@ -6,6 +6,7 @@
 		"AnvilMenuMixin",
 		"EnchantingTableBlockMixin",
 		"EnchantmentHelperMixin",
+		"ExcavatingSpeedMixin",
 		"ItemStackMixin",
 		"PlayerMixin",
 		"RandomEnchantingMixin",

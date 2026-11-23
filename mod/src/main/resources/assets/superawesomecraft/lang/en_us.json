@@ -20,5 +20,15 @@
   "superawesomecraft.enchanting.status.incompatible": "Conflicts",
   "superawesomecraft.enchanting.status.group_full": "Cap reached",
   "superawesomecraft.enchanting.status.already_applied": "Already has it",
-  "superawesomecraft.enchanting.status.empty": "Nothing to do"
+  "superawesomecraft.enchanting.status.empty": "Nothing to do",
+  "enchantment.superawesomecraft.bane_of_illagers": "Bane of Illagers",
+  "enchantment.superawesomecraft.frost_aspect": "Frost Aspect",
+  "enchantment.superawesomecraft.reach": "Reach",
+  "enchantment.superawesomecraft.step_assist": "Step Assist",
+  "enchantment.superawesomecraft.rebounding": "Rebounding",
+  "enchantment.superawesomecraft.bulwark": "Bulwark",
+  "enchantment.superawesomecraft.beheading": "Beheading",
+  "enchantment.superawesomecraft.smelting": "Smelting",
+  "enchantment.superawesomecraft.excavating": "Excavating",
+  "enchantment.superawesomecraft.felling": "Felling"
 }

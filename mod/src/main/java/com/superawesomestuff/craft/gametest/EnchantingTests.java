@@ -150,6 +150,53 @@ public class EnchantingTests {
 		helper.succeed();
 	}
 
+	private static ResourceKey<Enchantment> sac(String name) {
+		return ResourceKey.create(Registries.ENCHANTMENT, com.superawesomestuff.craft.SuperAwesomeCraft.id(name));
+	}
+
+	@GameTest
+	public void newEnchantmentsExistAndFollowTheRules(GameTestHelper helper) {
+		for (String name : new String[]{"bane_of_illagers", "frost_aspect", "reach", "step_assist", "rebounding", "bulwark",
+			"beheading", "smelting", "excavating", "felling"}) {
+			ench(helper, sac(name));
+		}
+		ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
+		add(helper, sword, Enchantments.SHARPNESS, 4);
+		add(helper, sword, sac("bane_of_illagers"), 1);
+		expect(helper, sword, Enchantments.BREACH, Status.GROUP_FULL);
+		add(helper, sword, sac("frost_aspect"), 1);
+		expect(helper, sword, Enchantments.FIRE_ASPECT, Status.INCOMPATIBLE);
+
+		ItemStack axe = new ItemStack(Items.IRON_AXE);
+		add(helper, axe, Enchantments.BREACH, 1);
+
+		ItemStack pick = new ItemStack(Items.DIAMOND_PICKAXE);
+		add(helper, pick, sac("smelting"), 1);
+		expect(helper, pick, Enchantments.SILK_TOUCH, Status.INCOMPATIBLE);
+		helper.succeed();
+	}
+
+	@GameTest
+	public void fellingCutsTheWholeTreeUnlessCrouching(GameTestHelper helper) {
+		for (int y = 1; y <= 4; y++) {
+			helper.setBlock(1, y, 1, net.minecraft.world.level.block.Blocks.OAK_LOG);
+			helper.setBlock(3, y, 1, net.minecraft.world.level.block.Blocks.OAK_LOG);
+		}
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		player.setGameMode(GameType.SURVIVAL);
+		ItemStack axe = new ItemStack(Items.IRON_AXE);
+		axe.enchant(ench(helper, sac("felling")), 1);
+		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, axe);
+
+		player.gameMode.destroyBlock(helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1)));
+		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, 1, 4, 1);
+
+		player.setShiftKeyDown(true);
+		player.gameMode.destroyBlock(helper.absolutePos(new net.minecraft.core.BlockPos(3, 1, 1)));
+		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.OAK_LOG, 3, 4, 1);
+		helper.succeed();
+	}
+
 	@GameTest
 	public void randomSourcesCapAtThreeAndDropMending(GameTestHelper helper) {
 		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);

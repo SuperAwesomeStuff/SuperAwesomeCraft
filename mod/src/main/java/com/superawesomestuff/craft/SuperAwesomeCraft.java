@@ -3,6 +3,7 @@ package com.superawesomestuff.craft;
 import com.superawesomestuff.craft.enchanting.ModComponents;
 import com.superawesomestuff.craft.enchanting.ModMenus;
 import com.superawesomestuff.craft.enchanting.RandomEnchantLimits;
+import com.superawesomestuff.craft.enchanting.ToolAbilities;
 import com.superawesomestuff.craft.durability.MaterialRepairRecipe;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
@@ -22,6 +23,7 @@ public class SuperAwesomeCraft implements ModInitializer {
 		ModComponents.init();
 		ModMenus.init();
 		RandomEnchantLimits.init();
+		ToolAbilities.init();
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("material_repair"), MaterialRepairRecipe.SERIALIZER);
 		LOGGER.info("Super Awesome Craft loaded");
 	}
