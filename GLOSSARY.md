@@ -71,13 +71,9 @@ _Avoid_: Reagent, ingredient
 A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted. Under review: raw stats may come from enchantments or tool tiers instead.
 _Avoid_: Relic, gem, upgrade part
 
-**Upgrade slot**:
-One unit of an item's enchanting room for stat enchantments. One enchantment level uses one upgrade slot. How many an item has depends on its material, plus one-off Era upgrades.
-_Avoid_: Capacity, modifier slot, enchanting power
-
-**Ability slot**:
-The room on an item for an enchantment that changes what it does, such as Silk Touch, Fortune or Excavating. Most items have one.
-_Avoid_: Socket, special slot
+**Slot**:
+Room on an item for one enchantment, at any level. How many an item has depends on its material, plus up to three one-off upgrades.
+_Avoid_: Capacity, modifier slot, upgrade slot, ability slot, enchanting power
 
 **Travel cart**:
 The fast minecart variant built for getting around. The vanilla minecart is unchanged.

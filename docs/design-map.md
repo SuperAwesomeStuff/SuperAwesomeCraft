@@ -67,7 +67,7 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - No XP. Mobs keep their hidden XP value for Sculk Catalysts. The anvil only renames, for free.
 - **Leaning:**
   - Durability stays but gear never breaks; repair in the crafting grid with its own material, 50% per item. Unbreaking stays, Mending is gone.
-  - Enchanting with upgrade and ability slots, starting early (Table: Book, 2 Lapis, 4 Amethyst Blocks). Slot count from material, extra slots from one-off Era upgrades with a cap. Stat levels cost bulk materials, higher levels Era materials; abilities cost themed recipes. Damage enchantments mix on one weapon and Protections on one armour piece, since slots already limit stacking. About a dozen new enchantments (Excavating, Felling, Reach, Magnetism, Smelting, Harvesting, Step Assist, Beheading, Bane of Illagers, Frost Aspect, Rebounding, Bulwark), each doing something no vanilla one does; Breach also goes on swords, axes and spears. See [Season 1 enchanting](season-1/enchanting/README.md).
+  - Enchanting with slots, starting early (Table: Book, 2 Lapis, 4 Amethyst Blocks). Slot count from material, one slot per enchantment at any level, three one-off slot upgrades. Each level costs a pile of one material; levels IV and V also need Blaze Rods. Damage enchantments mix on one weapon under a shared cap of V levels, Protections on one armour piece under a shared cap of IV. About a dozen new enchantments (Excavating, Felling, Reach, Magnetism, Smelting, Harvesting, Step Assist, Beheading, Bane of Illagers, Frost Aspect, Rebounding, Bulwark), each doing something no vanilla one does; Breach also goes on swords, axes and spears. See [Season 1 enchanting](season-1/enchanting/README.md).
 - **Ideas:**
   - Every system can be learned in-game without a wiki or recipe viewer (recipe book, tooltips). Ascendant Arcana's Relics fail this.
   - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use Catalysts.
@@ -87,7 +87,6 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - **Parallel materials:** each Era has two or three gear materials, each with its own armor, tools or weapons and a distinct situational bonus rather than bigger numbers. No set is locked behind an activity a player might dislike, and sets aren't built around a playstyle. Instead they give variety within one: a fighter might swap between sets for different fights, a miner for different jobs. Since gear never breaks, owning several sets is itself a goal. This could also answer the raw-stats question: stats come from the material.
 - **Open:**
   - Where do raw stats come from? Augments felt like a redundant second system in an Ascendant Arcana playtest. Alternatives: stat enchantments, or stats from each Era's tool tier. See [vision.md](vision.md#gear).
-  - How many slots does each material start with, and what does each Era's slot upgrade cost?
   - How much health does each Heart upgrade give?
 
 ## World
