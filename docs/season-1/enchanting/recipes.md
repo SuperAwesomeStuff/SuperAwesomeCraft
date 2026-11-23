@@ -18,7 +18,7 @@
 4. **Levels IV and V also need 4 Blaze Rods each.**
 5. **Three upgrades add one slot each**, once per item: a **Diamond Block with a Gold Block** (Overworld), a **Nether Star** (Nether) and **4 Shulker Shells** (End).
 6. **Removing an enchantment** frees its slot. The materials are lost.
-7. **Damage enchantments share a cap of V levels per weapon, and Protections a cap of IV per armour piece.** Split them however you like (Sharpness III + Smite I + Bane I = 5); each still takes a slot, and the 4th and 5th levels in the group need the Blaze Rods. Only contradicting enchantments are exclusive, such as Silk Touch and Fortune.
+7. **Damage enchantments can share a weapon, and Protections can share armour**, each in its own slot. Only contradicting enchantments are exclusive, such as Silk Touch and Fortune.
 
 That's the whole system: slots from material, one material per enchantment, and Blaze Rods for the top levels.
 

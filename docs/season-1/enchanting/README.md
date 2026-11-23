@@ -30,7 +30,7 @@ Written down before the playtest so it can actually fail:
 
 ### The table
 
-- The Enchanting Table is **1 Book, 2 Lapis Lazuli and 4 Amethyst Blocks**, so enchanting starts in the iron age, before diamonds.
+- The Enchanting Table uses the vanilla shape with **Amethyst Blocks for the Obsidian and Lapis Lazuli for the Diamonds** (1 Book, 2 Lapis, 4 Amethyst Blocks), so enchanting starts in the iron age, before diamonds.
 - **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. Put an item in, pick an enchantment, see its recipe (missing items in red), then pay.
 - Enchanted books are never applied at the anvil. The anvil only renames, for free.
 
@@ -45,17 +45,13 @@ Every item has a limited number of slots, so you have to choose what goes on it.
 
 A diamond pickaxe fits Efficiency, Unbreaking and one of Silk Touch, Fortune or Excavating, so builder comfort fits on a diamond tool, and the third slot is the real choice.
 
-### Mixing damage and protection enchantments: a shared cap
+### Mixing damage and protection enchantments
 
-Vanilla makes the damage enchantments and the four Protections exclusive. Here they can be mixed, but **each group shares one level cap**, so mixing spreads the same strength rather than stacking it:
+Vanilla makes the damage enchantments and the four Protections exclusive. Here **any of them can go on the same item**, because each one already takes a slot: a sword with Sharpness and Smite gives up a slot that could hold Looting or Unbreaking. There is no shared level cap; playtesting showed the slot cost is enough.
 
-- **Damage enchantments share a cap of V per weapon:** Sharpness, Smite, Bane of Arthropods, Bane of Illagers, Breach and Density. Sharpness V, or Sharpness III with Smite I and Bane of Arthropods I, both total 5.
-- **Protections share a cap of IV per armour piece:** Protection, Blast, Fire and Projectile. Protection IV, or Protection II with Blast Protection II, both total 4.
-- **Each enchantment in the mix still takes its own slot**, so a three-way split costs three slots where Sharpness V costs one. Mixing is a trade, not a free bonus.
-- **Levels count together for Blaze Rods:** the 4th and 5th levels in a shared cap need Blaze Rods, whichever enchantment they go on. A split can't reach the cap without the Nether.
-- Examples: a diamond sword with Sharpness III (+2 damage against everything) or Sharpness I with Smite II (+1 against everything, +6 against undead). An armour set with Protection II and Blast Protection II on every piece gets 32% against everything and vanilla's 80% cap against explosions, traded against general Protection IV (64% against everything).
+- **Damage:** Sharpness, Smite, Bane of Arthropods, Bane of Illagers, Breach and Density.
+- **Protection:** Protection, Blast, Fire and Projectile. Vanilla's 80% cap on enchantment protection still applies.
 - **Exclusivity stays only where effects contradict:** Silk Touch with Fortune or Smelting, Fire Aspect with Frost Aspect, Riptide with Loyalty or Channeling, Depth Strider with Frost Walker, Multishot with Piercing.
-- The table screen shows the shared cap ("Damage 3 / 5"), since vanilla players will expect these to be exclusive.
 
 ### Prices
 
@@ -81,14 +77,14 @@ Some thresholds matter more than the levels between them. They're placed on purp
 Durability returns, but it's never a big deal:
 
 - **Gear never breaks.** At 0 durability it stops working until it's repaired. Nothing is lost.
-- **Repair in the crafting grid**: the item plus the material it was made from, in any arrangement, free and with no XP. **Each item restores 50%.**
+- **Repair in the crafting grid**: the item plus the material it was made from, in any arrangement, free and with no XP. **Each item restores 50%.** Netherite gear repairs with **Diamonds**, since Netherite Ingots are too dear to spend on repairs.
 - Items keep **vanilla durability** (a diamond pickaxe has 1,561 uses).
 - **Unbreaking returns** and uses a slot, so fewer repairs competes with other enchantments.
 - **Mending is gone.** It would cancel the repair cost, the way Unbreakable did in the playtest.
 
 ### New enchantments
 
-- **Excavating** (picks and shovels): digs 3×3. Every block costs durability and digging is slower, so it can't instant-mine. **Crouch to dig a single block.**
+- **Excavating** (picks and shovels): digs the 3×3 around the face of the block you hit. Every block costs durability and digging is slower, so it can't instant-mine. It only kicks in (and only slows you down) on blocks the tool is good at, so a pickaxe on dirt digs one block at normal speed. **Crouch to dig a single block.**
 - **Felling** (axes): cuts a whole tree. Every log costs durability. Crouch to cut one log.
 
 Two rules for anything new: **it must do something no existing enchantment does** (nothing that's a better or sideways copy of a vanilla one), and **if it does the same thing as a vanilla enchantment, it uses that name** and is just allowed on more items. Season 1 ships a broad list and the playtest shows which ones get used. Candidates and sources: [enchantment candidates](../../research/enchantment-candidates.md).
@@ -97,20 +93,20 @@ Two rules for anything new: **it must do something no existing enchantment does*
 | --- | --- | --- | --- | --- |
 | **Excavating** | Pick, shovel | I | Convenience | Digs 3×3 (above) |
 | **Felling** | Axe | I | Convenience | Cuts a whole tree (above) |
-| **Reach** | Any tool | II | Convenience | +1 block reach per level, for blocks only, never for hitting mobs |
+| **Reach** | Chestplate | II | Convenience | +1 block reach per level for breaking and placing blocks. Never affects hitting mobs |
 | **Magnetism** | Any tool, weapon | I | Convenience | Pulls the drops from *your own* breaks and kills to you, not every item nearby, so hoppers and farms behave as in vanilla |
 | **Smelting** | Pick, shovel, axe | I | Convenience | Mined blocks drop their smelted form (sand to glass, ore to ingot). No bonus drops. Exclusive with Silk Touch |
 | **Harvesting** | Hoe | I | Convenience | Tills 3×3, and right-clicking a ripe crop harvests and replants it |
 | **Step Assist** | Boots | I | Convenience | Step up full blocks without jumping |
 | **Beheading** | Sword, axe | III | Convenience | Chance for a kill to drop the mob's head. No bonus to Wither Skeleton skulls (that's a Power shortcut to the Wither) |
-| **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Shares the damage cap of V |
+| **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Can sit beside the other damage enchantments |
 | **Frost Aspect** | Sword, axe, spear, mace | II | Power | Slows the target instead of burning it. Exclusive with Fire Aspect |
-| **Rebounding** | Chestplate, leggings | III | Power | Knocks melee attackers away. Can sit beside Thorns, which damages instead |
+| **Rebounding** | Chestplate | III | Power | Knocks melee attackers away. Can sit beside Thorns, which damages instead |
 | **Bulwark** | Shield | II | Power | No knockback while blocking, and a chance to disable the attacker's weapon. Shields' first real choice |
 
 **Vanilla enchantments on more items** (same name, same effect, nothing new to learn):
 
-- **Breach** on swords, axes and spears as well as maces: armour piercing. It shares the damage cap of V, so levels in Breach are levels not in Sharpness: strong against armoured targets, wasted against unarmoured ones.
+- **Breach** on swords, axes and spears as well as maces: armour piercing. It takes its own slot beside Sharpness: strong against armoured targets, wasted against unarmoured ones.
 
 Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful way to fly and mine in a vanilla client), and anything the research flags as overpowered (bonus ore from stone, extra fishing loot, a second Looting, raw max health).
 
@@ -156,7 +152,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 - **Amounts:** are 32 and 4 per level right? The [recipes](recipes.md) draft is a first pass to tune in the playtest.
 - **Fortune III and Looting III** in the Overworld: is 96 lapis enough of a brake on income multipliers?
-- **Shared caps:** do players actually split levels, or does everyone take Sharpness V and Protection IV anyway? Does Breach in a split turn out too strong?
+- **Mixing:** with no shared cap, does a sword with three damage enchantments or armour with every Protection turn out too strong, or is the slot cost enough?
 - **New enchantments:** which ones need Java and can wait if time runs short (Magnetism, Smelting, Harvesting, Excavating, Felling and Bulwark's weapon disable all need code).
 - **More vanilla on more items:** Looting and Quick Charge on bows, Multishot on bows, Infinity on crossbows, Thorns on shields?
 - **Repairs:** is 50% per item right for every material, Netherite included?
