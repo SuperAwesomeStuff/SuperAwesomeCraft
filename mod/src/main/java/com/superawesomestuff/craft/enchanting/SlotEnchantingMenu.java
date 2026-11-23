@@ -38,7 +38,7 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 	public static final int ACTION_UPGRADE = 3;
 
 	public static final int ITEM_X = 18;
-	public static final int ITEM_Y = 40;
+	public static final int ITEM_Y = 52;
 	public static final int MATERIAL_X = 169;
 	public static final int MATERIAL_Y = 68;
 	public static final int MATERIAL_GAP = 20;
