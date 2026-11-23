@@ -1,0 +1,108 @@
+{
+  "values": [
+    {
+      "id": "minecraft:wooden_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_spear",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_spear",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_spear",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_boots",
+      "required": false
+    },
+    {
+      "id": "minecraft:leather_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:leather_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:leather_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:leather_boots",
+      "required": false
+    }
+  ]
+}

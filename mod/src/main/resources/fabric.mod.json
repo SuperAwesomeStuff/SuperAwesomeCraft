@@ -20,7 +20,8 @@
 			"com.superawesomestuff.craft.client.SuperAwesomeCraftClient"
 		],
 		"fabric-gametest": [
-			"com.superawesomestuff.craft.gametest.NoExperienceTests"
+			"com.superawesomestuff.craft.gametest.NoExperienceTests",
+			"com.superawesomestuff.craft.gametest.EnchantingTests"
 		]
 	},
 	"mixins": [

@@ -1,0 +1,120 @@
+{
+  "values": [
+    {
+      "id": "minecraft:copper_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_spear",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_spear",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_boots",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_boots",
+      "required": false
+    },
+    {
+      "id": "minecraft:chainmail_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:chainmail_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:chainmail_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:chainmail_boots",
+      "required": false
+    },
+    {
+      "id": "minecraft:bow",
+      "required": false
+    },
+    {
+      "id": "minecraft:crossbow",
+      "required": false
+    },
+    {
+      "id": "minecraft:shield",
+      "required": false
+    },
+    {
+      "id": "minecraft:fishing_rod",
+      "required": false
+    },
+    {
+      "id": "minecraft:turtle_helmet",
+      "required": false
+    }
+  ]
+}

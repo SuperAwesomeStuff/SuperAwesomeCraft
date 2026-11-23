@@ -1,5 +1,7 @@
 package com.superawesomestuff.craft;
 
+import com.superawesomestuff.craft.enchanting.ModComponents;
+import com.superawesomestuff.craft.enchanting.ModMenus;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
@@ -13,6 +15,8 @@ public class SuperAwesomeCraft implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModComponents.init();
+		ModMenus.init();
 		LOGGER.info("Super Awesome Craft loaded");
 	}
 
