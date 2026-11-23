@@ -14,7 +14,7 @@ Eras are now dimensions, which gives a simpler gate. **Each Era ends at a Strong
 ## Consequences
 
 - No per-player unlock state. The only gate is whether a portal exists or can be built.
-- Catch-up easing comes from the world: Villager trades for an Era's materials appear once it's unlocked, and players carry materials back for each other.
+- Catch-up easing comes from players: they carry materials, blocks and crafting stations back for each other. *(Amended November 2026: the portal is the only world-level unlock. Nothing else, such as Villager trades, unlocks automatically for the whole server; progress is shared through things that exist in the world.)*
 - Late joiners and slower players arrive in a world where later dimensions are already open. Gear and Heart upgrades, not access, are what they lack.
 - Era-gated blocks are gated by tools anyone can craft once the dimension is open, not by player conditions.
 - Fast players can open dimensions before others are ready. Accepted: being able to play together matters more.

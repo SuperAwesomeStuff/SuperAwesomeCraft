@@ -6,7 +6,7 @@
 
 Every mechanic should serve this line. When judging a feature, ask what it lets someone contribute that others will feel. Three pillars sit under it:
 
-- **Progress is shared.** What one player unlocks, the world gets.
+- **Progress is shared by building and giving.** What one player achieves helps others through things that exist in the world: an opened portal, a beacon, items handed over. There are no hidden server-wide unlocks, and nobody has to follow the group: a player who goes off alone can, and pays their own way. (The one shared requirement so far is the materials for the reset ritual.)
 - **Always a next horizon.** There is no single max-gear endpoint.
 - **Convenience is cheap, Power is earned.** Building never waits on combat.
 
@@ -62,7 +62,7 @@ The journey: travel to the next Stronghold, fight through it, win the climax fig
 
 - **Several Strongholds per Era** exist in each world, placed by learnable rules (see Readable world generation below), so they're consistently findable.
 - **Fighting a Stronghold again:** find another uncleared one, or perform a ritual at a cleared one to reset its climax fight, like respawning the Ender Dragon. Loot is per player.
-- **Catch-up easing:** once the world has unlocked an Era, Villagers start offering trades for its materials. Players who've been to a dimension can also bring back blocks, materials and crafting stations for others.
+- **Catch-up easing:** players who've been to a dimension bring back blocks, materials and crafting stations for others. Nothing unlocks automatically for the whole server. **Idea:** a Villager starts trading an Era's materials once a player gives it some, so catch-up trades come from something a player did in one place.
 
 **Decided: one Era per dimension.** Overworld → Nether → a new sky dimension (Aether-like) → End. Each dimension has its own ores, tool tier, Heart upgrades and Stronghold. The End is rebuilt as a real dungeon with a climax fight, not just the Dragon.
 
@@ -74,7 +74,7 @@ The journey: travel to the next Stronghold, fight through it, win the climax fig
 
 | Convenience (cheap, early, no combat needed) | Power (earned through Eras) |
 | --- | --- |
-| Mining speed, Silk Touch, Techniques (vein-mining, tree-felling, builder modes), storage (early Shulkers), mobility, reach, bulk block access | Damage, protection, survivability, Heart upgrades, encounter-specific gear |
+| Mining speed, Silk Touch, builder tools, storage (early Shulkers), mobility, reach, bulk block access | Damage, protection, survivability, Heart upgrades, encounter-specific gear |
 
 Gear tiers should offer horizontal choices with distinct abilities, not one best set.
 
@@ -83,16 +83,11 @@ Gear tiers should offer horizontal choices with distinct abilities, not one best
 Everything here except no XP is preliminary. The final shape gets settled when Season 1 is designed and playtested.
 
 - **Decided: no XP.** Experience, the XP bar and XP orbs are removed. Nothing costs levels. Mobs still carry their hidden XP value so Sculk Catalysts spread exactly as in vanilla (technical parity). The anvil keeps only renaming, for free; combining enchantments moves to the new enchanting.
-- **Leaning: no durability.** Durability is stripped from every item (not marked Unbreakable). Tools, weapons and armor never wear out. Mending, Unbreaking and all repair go away. Replacement sinks: Era materials for upgrades and enchanting, owning several specialized tools, consumables in Strongholds, and Settlement building. The main risk to playtest is ore demand collapsing. Background: [durability research](research/durability.md).
-- **Leaning: enchanting with fixed recipes and capacity**, after Ascendant Arcana. Each enchantment level has a fixed material recipe, with higher levels needing later-Era materials. Each item has a capacity budget that limits how much it can carry, so gear involves choices rather than one maxed loadout. A library of enchanted books (Chiseled Bookshelves) powers the table. The vanilla Enchanting Table is replaced; contraptions don't depend on it. Background: [Ascendant Arcana research](research/ascendant-arcana.md).
-- **Leaning: tools level with use instead of a separate skills system.** There are no player-level skills. Background: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
-  - A tool's **Familiarity** rises to a hard cap of 5, mostly from doing new things, plus a daily allowance. Levels unlock slots for toggleable **Techniques** (Convenience only).
-  - Enchantment capacity and stat slots come from materials and Eras, never from use, so grinding can't buy power.
-  - Techniques learned are kept forever in the player's **Codex**. Maxing any tool of a type grants **Mastery**: new tools of that type start at level 2 and level faster. Upgrading a tool's tier keeps its progress.
-  - Weapons and armor don't level; combat Power comes from Eras.
-  - Catch-up: the low cap, Mastery, faster levelling once anyone on the server has mastered a tool type, and levelled tools can be given to new players.
+- **Leaning: durability that's never a big deal.** Gear keeps vanilla durability but never breaks: at 0 it stops working until repaired. Repair is free in the crafting grid, the item plus its own material, 50% per item. Unbreaking stays as an enchantment; Mending is gone. Repairs are a gentle, steady use for materials, and no investment is ever lost. Background: [durability research](research/durability.md).
+- **Leaning: enchanting with slots.** Built on four problems from the September 2026 playtest: gear maxed out within hours, everyone ended up with the same gear, enchanting could be bought with Emeralds, and XP is gone as a cost. The Enchanting Table is a Book, 2 Lapis and 4 Amethyst Blocks, so it starts early, and all enchanting happens there. Each item has **upgrade slots** (one per stat level; how many depends on the material) and usually one **ability slot** (Silk Touch, Fortune, Excavating and similar compete for it). Extra slots are expensive one-off upgrades tied to each Era, with a cap. Stat levels cost common materials in bulk, with Era materials for higher levels; abilities cost small themed recipes; Power and Yield can't be bought from Villagers. Enchantments can be removed to free the slot, losing the materials. Because slots already limit stacking, the damage enchantments can be mixed on one weapon and the Protections on one armour piece; exclusivity stays only where effects contradict (Silk Touch and Fortune, for example). About a dozen new enchantments, drawn from Tinkers' Construct and other mods, each doing something no vanilla enchantment does; where one does the same thing as a vanilla enchantment it keeps the vanilla name (Breach on swords, for example). Details: [Season 1 enchanting](season-1/enchanting/README.md). Background: [Tinkers' Construct](research/tinkers-construct.md).
+- **Removed for now: tool levelling** (Familiarity, Techniques, Codex, Mastery). Background if it comes back: [tool levelling](research/tool-levelling.md), [skills systems](research/skills-systems.md).
 - **Open: where raw stats come from** (speed, damage, protection). Slotted **Augments**, like Ascendant Arcana's Relics, were the plan, but a creative playtest of Ascendant Arcana made them look like a second system doing enchanting's job with different materials, and their recipes can't be found without a recipe viewer. Options:
-  1. Stat enchantments return and cost Capacity like any other, so Capacity carries the trade-off (close to Super Awesome Enchanting).
+  1. Stat enchantments stay, with fixed recipes like any other (the Season 1 draft assumes this).
   2. Stats come from each Era's tool tier, and enchanting covers only behaviour.
   3. A stat upgrade stays, but it is discoverable in-game: in the vanilla recipe book, with tooltips that explain it.
 
@@ -128,7 +123,7 @@ There is no single currency everything converts into. Each playstyle earns rewar
 The game is built one Season at a time (see Constraints). Only the next Season is designed in detail.
 
 - **Season 0 (no playtest):** a Fabric client-and-server mod skeleton, a one-click modpack (Modrinth pack), a dev server on the home server PC, and the playtest scripts pointed at it. Targets the latest Minecraft version Fabric supports when work starts.
-- **Season 1, Gear:** no XP, no durability, Catalyst enchanting with Capacity (and whatever answers the raw-stats question), and Familiarity with Techniques for the pickaxe, axe and shovel. Everything else stays vanilla. The question: without a single "max gear" endpoint, do people keep playing past where they quit last time?
+- **Season 1, Gear:** no XP, durability that never breaks gear, and slot enchanting that starts early. Everything else stays vanilla. The question: when enchanting is a long climb with real choices that runs through every Era, do people keep playing past where they quit last time?
 - **Later, in some order:** rails and the Travel cart, the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
 
 ## Constraints
@@ -147,8 +142,6 @@ The game is built one Season at a time (see Constraints). Only the next Season i
 - How is Settlement prosperity measured without dictating how people build?
 - What replaces the Emerald economy, and what are the limits on buyer income?
 - What are the target hours played for each Era?
-- What replaces durability and XP as sinks for ore and time, if durability goes?
-- Where do raw stats come from: Augments, enchantments under Capacity, or tool tiers?
-- What are the Techniques for each tool type, including builder and explorer tools?
+- Where do raw stats come from: Augments, enchantments, or tool tiers?
 - How much health do Heart upgrades give per dimension, and how does healing scale?
 - Which of Super Awesome Enchanting and Super Awesome Villagers carry over, and how do they change?

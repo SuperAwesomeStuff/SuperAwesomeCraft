@@ -12,10 +12,9 @@ SuperAwesomeCraft
 │   ├── Strongholds (dungeons, climax fights, rituals)
 │   └── Catch-up easing (trades, carrying stuff back)
 ├── Gear ───────────── Convenience vs Power
-│   ├── No XP, no durability
-│   ├── Enchanting (Catalysts, Capacity, library)
+│   ├── No XP, durability that never breaks gear
+│   ├── Enchanting (slots, starts early)
 │   ├── Raw stats (Augments? enchantments? tool tiers?)
-│   ├── Tool levelling (Familiarity, Techniques, Codex, Mastery)
 │   └── Heart upgrades
 ├── World ──────────── readable generation, per-player loot, Era-gated blocks
 ├── Getting around ─── mounts, glider, rails and Travel cart, graves
@@ -25,7 +24,7 @@ SuperAwesomeCraft
 
 ## Vision statement
 
-- **Decided:** "Every playstyle pushes the world forward." Pillars: progress is shared; always a next horizon; Convenience is cheap, Power is earned. See [vision.md](vision.md#vision-statement).
+- **Decided:** "Every playstyle pushes the world forward." Pillars: progress is shared by building and giving (no hidden server-wide unlocks); always a next horizon; Convenience is cheap, Power is earned. See [vision.md](vision.md#vision-statement).
 
 ## How we build it
 
@@ -40,7 +39,7 @@ SuperAwesomeCraft
   - Each Era ends at a Stronghold whose climax fight opens the first portal to the next dimension. Later portals are built from that dimension's materials.
   - Progression belongs to the world: once a portal exists, anyone can use it ([ADR-0003](adr/0003-world-progression-through-portals.md)).
   - Several Strongholds of each kind per world; re-fight by finding another or by a ritual.
-  - Catch-up easing: Villager trades for an Era's materials appear once the world unlocks it.
+  - Catch-up easing comes from players carrying things back, not automatic server-wide unlocks.
 - **Ideas:**
   - Each Stronghold sits in the dimension before the one it leads to (Nether Stronghold in the Overworld, and so on).
   - The vanilla Overworld Stronghold becomes the Nether Stronghold. Its portal room becomes the climax arena, and something replaces Eyes of Ender for finding it.
@@ -67,24 +66,28 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Convenience is cheap and early; Power is earned through Eras.
   - No XP. Mobs keep their hidden XP value for Sculk Catalysts. The anvil only renames, for free.
 - **Leaning:**
-  - No durability. Mending and Unbreaking are gone.
-  - Tools level instead of a separate skills system: Familiarity (cap 5) unlocks Technique slots; Codex and Mastery are per player. Weapons and armor don't level.
-  - Enchanting after Ascendant Arcana: fixed Catalyst recipes per level, a Capacity budget per item, and a library of Chiseled Bookshelves powering the table.
+  - Durability stays but gear never breaks; repair in the crafting grid with its own material, 50% per item. Unbreaking stays, Mending is gone.
+  - Enchanting with upgrade and ability slots, starting early (Table: Book, 2 Lapis, 4 Amethyst Blocks). Slot count from material, extra slots from one-off Era upgrades with a cap. Stat levels cost bulk materials, higher levels Era materials; abilities cost themed recipes. Damage enchantments mix on one weapon and Protections on one armour piece, since slots already limit stacking. About a dozen new enchantments (Excavating, Felling, Reach, Magnetism, Smelting, Harvesting, Step Assist, Beheading, Bane of Illagers, Frost Aspect, Rebounding, Bulwark), each doing something no vanilla one does; Breach also goes on swords, axes and spears. See [Season 1 enchanting](season-1/enchanting/README.md).
 - **Ideas:**
   - Every system can be learned in-game without a wiki or recipe viewer (recipe book, tooltips). Ascendant Arcana's Relics fail this.
   - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use Catalysts.
-  - Library power unlocks rarer enchantments; treasure enchantments need their book stored in the library. Books come from loot, librarians and fishing.
+  - A Villager starts trading an Era's materials once a player gives it some.
   - In Season 1, librarians sell Catalysts and new-system books; other trades stay vanilla.
-  - Familiarity comes from firsts (each new block type, biome or dimension), a daily allowance of normal use, and milestones. Mining player-placed blocks gives nothing.
-  - Reaching a Technique's level records it in your Codex; any tool of that type with a free slot can then use it.
-  - Builder's wand and explorer tools as levelled tools of their own.
+  - From the retired [library design](season-1/enchanting/retired/library.md), in case shared progress needs a boost later:
+    - **Library tab:** a chest-like tab in the table showing every Chiseled Bookshelf nearby.
+    - **Chipping in:** a table holds a half-paid recipe that anyone can add materials to.
+    - **Spares:** duplicate books make something cheaper.
+    - **Biome recipes:** some enchantments need a material from one biome (Packed Ice, Prismarine, Soul Soil), so recipes send people exploring.
+  - **Endless Convenience scaling:** Convenience enchantments (Efficiency VI and up) keep going with steeply rising costs and shrinking gains, for players who love growth with no cap. Power stays capped.
+  - More enchantments from the [candidate list](research/enchantment-candidates.md) once the playtest shows what gets used: Exchanging (swap blocks in place), Vein Mining (reuses Felling), Night Vision on helmets, Grapple on fishing rods, Cleaving on axes, Bane of Enders for the End Era, Grounding Shot for the sky Era.
+  - Vanilla enchantments on more items, under their own names: Looting and Quick Charge on bows, Multishot on bows, Infinity on crossbows, Thorns on shields.
+  - Parked: tool levelling (Familiarity, Techniques, Codex, Mastery). Background: [tool levelling](research/tool-levelling.md).
+  - Builder's wand and explorer tools.
   - Heart upgrades found while exploring each dimension, like Terraria's Life Crystals. Healing scales with max health.
-  - **Parallel materials:** each Era has two or three gear materials, each with its own armor, tools or weapons and a distinct situational bonus rather than bigger numbers. No set is locked behind an activity a player might dislike, and sets aren't built around a playstyle. Instead they give variety within one: a fighter might swap between sets for different fights, a miner for different jobs. With no durability, owning several sets is itself a goal. This could also answer the raw-stats question: stats come from the material.
+  - **Parallel materials:** each Era has two or three gear materials, each with its own armor, tools or weapons and a distinct situational bonus rather than bigger numbers. No set is locked behind an activity a player might dislike, and sets aren't built around a playstyle. Instead they give variety within one: a fighter might swap between sets for different fights, a miner for different jobs. Since gear never breaks, owning several sets is itself a goal. This could also answer the raw-stats question: stats come from the material.
 - **Open:**
-  - Where do raw stats come from? Augments felt like a redundant second system in an Ascendant Arcana playtest. Alternatives: stat enchantments under Capacity, or stats from each Era's tool tier. See [vision.md](vision.md#gear).
-  - What replaces durability and XP as sinks for ore and time?
-  - What are the Techniques per tool type?
-  - What are the Capacity numbers per material?
+  - Where do raw stats come from? Augments felt like a redundant second system in an Ascendant Arcana playtest. Alternatives: stat enchantments, or stats from each Era's tool tier. See [vision.md](vision.md#gear).
+  - How many slots does each material start with, and what does each Era's slot upgrade cost?
   - How much health does each Heart upgrade give?
 
 ## World

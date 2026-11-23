@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Season 1 Enchanting: Three Options</title>
+<style>
+  :root {
+    --bg: #14121a;
+    --panel: #1d1a26;
+    --panel2: #252131;
+    --text: #e9e6f0;
+    --muted: #a39db3;
+    --line: #353047;
+    --a: #f0b44c;
+    --a-soft: rgba(240,180,76,.12);
+    --b: #4cc9b4;
+    --b-soft: rgba(76,201,180,.12);
+    --c: #b483f5;
+    --c-soft: rgba(180,131,245,.12);
+    --good: #7bd88f;
+    --bad: #f28b82;
+    --tip-bg: #100010;
+    --tip-border: #28005f;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  a { color: inherit; }
+  header.hero {
+    padding: 64px 24px 40px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(240,180,76,.18), transparent 55%),
+      radial-gradient(ellipse at 50% 0%, rgba(76,201,180,.16), transparent 55%),
+      radial-gradient(ellipse at 80% 0%, rgba(180,131,245,.18), transparent 55%);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 2.6rem; letter-spacing: -.5px; }
+  .hero p { margin: 0 auto; max-width: 720px; color: var(--muted); font-size: 1.1rem; }
+  .badge {
+    display: inline-block; margin-bottom: 16px; padding: 4px 12px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted); font-size: .85rem; letter-spacing: .5px; text-transform: uppercase;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;
+    padding: 10px; background: rgba(20,18,26,.92); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav a {
+    text-decoration: none; padding: 6px 14px; border-radius: 8px; color: var(--muted); font-weight: 600; font-size: .95rem;
+  }
+  nav a:hover { background: var(--panel2); color: var(--text); }
+  nav a.na { color: var(--a); } nav a.nb { color: var(--b); } nav a.nc { color: var(--c); }
+  main { max-width: 1040px; margin: 0 auto; padding: 24px; }
+  section { padding: 40px 0 16px; border-bottom: 1px solid var(--line); }
+  section:last-child { border-bottom: none; }
+  h2 { font-size: 1.9rem; margin: 0 0 8px; }
+  h3 { font-size: 1.3rem; margin: 32px 0 8px; }
+  h4 { font-size: 1.05rem; margin: 20px 0 6px; }
+  p.lead { color: var(--muted); font-size: 1.1rem; margin-top: 0; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 820px) { .grid3, .grid2 { grid-template-columns: 1fr; } .hero h1 { font-size: 2rem; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px;
+  }
+  .card h3 { margin-top: 0; }
+  .card.a { border-top: 4px solid var(--a); }
+  .card.b { border-top: 4px solid var(--b); }
+  .card.c { border-top: 4px solid var(--c); }
+  .card .tag { font-size: .8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .a .tag, .ta { color: var(--a); } .b .tag, .tb { color: var(--b); } .c .tag, .tc { color: var(--c); }
+  .pitch { font-size: 1.05rem; }
+  .sys-head {
+    border-radius: 16px; padding: 28px; margin-bottom: 8px; border: 1px solid var(--line);
+  }
+  .sys-head.a { background: linear-gradient(135deg, var(--a-soft), transparent 70%); }
+  .sys-head.b { background: linear-gradient(135deg, var(--b-soft), transparent 70%); }
+  .sys-head.c { background: linear-gradient(135deg, var(--c-soft), transparent 70%); }
+  .sys-head h2 { margin-bottom: 4px; }
+  .sys-head .one-liner { font-size: 1.2rem; margin: 8px 0 0; }
+  .story { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+  .story li {
+    position: relative; padding: 14px 16px 14px 60px; margin-bottom: 10px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  }
+  .story li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 16px; top: 14px; width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 800; color: #14121a;
+  }
+  .story.a li::before { background: var(--a); }
+  .story.b li::before { background: var(--b); }
+  .story.c li::before { background: var(--c); }
+  .story li strong.when { display: block; margin-bottom: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .95rem; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; background: var(--panel2); }
+  tr:last-child td { border-bottom: none; }
+  .tablewrap { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
+  .tablewrap table { margin: 0; }
+  /* Minecraft-style tooltip */
+  .tip {
+    display: inline-block; font-family: "Consolas", "Courier New", monospace; font-size: .92rem; line-height: 1.5;
+    background: var(--tip-bg); color: #fff; padding: 10px 14px; border-radius: 4px;
+    border: 2px solid var(--tip-border); box-shadow: 0 0 0 2px var(--tip-bg), 0 8px 24px rgba(0,0,0,.5);
+    margin: 10px 0; min-width: 260px;
+  }
+  .tip .name { color: #55ffff; }
+  .tip .ench { color: #aaaaaa; }
+  .tip .gold { color: #ffaa00; }
+  .tip .green { color: #55ff55; }
+  .tip .grey { color: #777; }
+  .tip .lock { color: #ff5555; }
+  .tip .aqua { color: #55ffff; }
+  .tip .purple { color: #d080ff; }
+  .tips-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+  .proscons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  @media (max-width: 820px) { .proscons { grid-template-columns: 1fr; } }
+  .pros, .cons { border-radius: 12px; padding: 16px 18px; border: 1px solid var(--line); }
+  .pros { background: rgba(123,216,143,.07); }
+  .cons { background: rgba(242,139,130,.07); }
+  .pros h4 { color: var(--good); margin-top: 0; }
+  .cons h4 { color: var(--bad); margin-top: 0; }
+  .pros ul, .cons ul { margin: 0; padding-left: 20px; }
+  .pros li, .cons li { margin-bottom: 6px; }
+  .callout {
+    border-left: 4px solid var(--muted); background: var(--panel); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 14px 0;
+  }
+  .callout.a { border-color: var(--a); } .callout.b { border-color: var(--b); } .callout.c { border-color: var(--c); }
+  .chip { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: .82rem; background: var(--panel2); border: 1px solid var(--line); margin: 2px 2px 2px 0; }
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 820px) { .fit { grid-template-columns: 1fr; } }
+  .meter { display: flex; gap: 3px; }
+  .meter span { width: 16px; height: 8px; border-radius: 2px; background: var(--line); }
+  .meter.a span.on { background: var(--a); } .meter.b span.on { background: var(--b); } .meter.c span.on { background: var(--c); }
+  .qlist { counter-reset: q; list-style: none; padding: 0; }
+  .qlist li { counter-increment: q; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 14px 56px; margin-bottom: 10px; position: relative; }
+  .qlist li::before { content: "Q" counter(q); position: absolute; left: 14px; top: 14px; font-weight: 800; color: var(--muted); }
+  .qlist .opts { color: var(--muted); font-size: .92rem; margin-top: 4px; }
+  footer { text-align: center; color: var(--muted); font-size: .9rem; padding: 32px 24px 48px; }
+  .small { font-size: .9rem; color: var(--muted); }
+  .mat { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="badge">Season 1 · Not decided yet</div>
+  <h1>Enchanting: three options</h1>
+  <p>Season 1 replaces vanilla enchanting. Here are three complete designs. Read them, argue about them, and tell us what you like and what you don't. We'll either pick one or mix the best parts and go round again.</p>
+</header>
+
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#same">Same in all three</a>
+  <a class="na" href="#a">A · Capacity</a>
+  <a class="nb" href="#b">B · The Archive</a>
+  <a class="nc" href="#c">C · Runes</a>
+  <a href="#compare">Side by side</a>
+  <a href="#questions">Your feedback</a>
+</nav>
+
+<main>
+
+<!-- ================= OVERVIEW ================= -->
+<section id="overview">
+  <h2>The short version</h2>
+  <p class="lead">Last season, people hit full Netherite (or killed the Dragon) and then had nothing left to want. All three designs try to fix that by giving you something to chase <em>after</em> full Netherite, without making the early game a grind.</p>
+
+  <div class="grid3">
+    <div class="card a">
+      <div class="tag">Option A</div>
+      <h3>Catalysts and Capacity</h3>
+      <p class="pitch">Every weapon and armour piece has a <strong>points budget</strong>. Strong enchantments cost more points, so you can't have everything on one item. Books found in dungeons unlock the higher levels <strong>for everyone</strong>.</p>
+      <p class="small">Feels like: building a loadout on a points budget.</p>
+    </div>
+    <div class="card b">
+      <div class="tag">Option B</div>
+      <h3>The Archive</h3>
+      <p class="pitch">The whole server <strong>researches enchantments together</strong> by donating materials. Everything researched belongs to everyone. You pick which enchantments go in your item's few <strong>slots</strong>, and do a personal trip to push your favourite items to max.</p>
+      <p class="small">Feels like: a server-wide tech tree everyone chips into.</p>
+    </div>
+    <div class="card c">
+      <div class="tag">Option C</div>
+      <h3>Runes</h3>
+      <p class="pitch">Enchantments are <strong>physical runes</strong> you carve, keep and pop into <strong>sockets</strong> on your gear. Swapping is free and nothing is ever lost. You can give spare runes to friends.</p>
+      <p class="small">Feels like: collecting and slotting gems, like Monster Hunter or Hollow Knight charms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHARED ================= -->
+<section id="same">
+  <h2>What's the same in all three</h2>
+  <p class="lead">These rules apply whichever option we pick, so you don't need to compare them.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">The big changes</h4>
+      <ul>
+        <li><strong>No XP.</strong> Nothing costs levels. (Already built.)</li>
+        <li><strong>No durability.</strong> Your gear never breaks, so a build is something you keep.</li>
+        <li><strong>Mending and Unbreaking are gone</strong>, since nothing breaks.</li>
+        <li><strong>The Enchanting Table does everything.</strong> Same block, new screen. Every recipe and cost is shown before you pay, so you never need a wiki.</li>
+        <li><strong>The anvil only renames</strong> (free). No more "too expensive".</li>
+        <li><strong>Tools have their own system</strong> (Familiarity and Techniques: vein-mining, tree-felling and so on), separate from enchanting.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">Comfort is cheap, power is earned</h4>
+      <p>Enchantments are split into three groups:</p>
+      <ul>
+        <li><strong>Convenience</strong> (Efficiency, Silk Touch, Feather Falling, Depth Strider, Respiration, Aqua Affinity, Soul Speed, Swift Sneak, Frost Walker, Lure, Loyalty, Riptide): <strong>cheap, available on day one, no fighting needed</strong>, and they never use up your budget.</li>
+        <li><strong>Yield</strong> (Fortune, Looting, Luck of the Sea): the top level needs a far-off material, because extra loot snowballs.</li>
+        <li><strong>Power</strong> (Sharpness, Protection, Power and the rest): uses your item's budget. This is where the choices are.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Loot, fishing and villagers</h3>
+  <ul>
+    <li><strong>Anything random gives at most level II</strong> of a Power or Yield enchantment: fishing, chest loot, mob gear and villager trades. An AFK fish farm still works, but it won't hand out Looting III.</li>
+    <li><strong>Villagers never sell Power or Yield books.</strong> Librarians sell comfort enchantments only.</li>
+    <li><strong>Every player gets their own chest loot</strong> (an existing mod like Lootr). Nobody can loot the Ancient City first and leave the rest of you with empty chests.</li>
+    <li>Master Cartographers sell an <strong>Ancient City map</strong>.</li>
+    <li>Loot you find with enchantments already on it keeps working as found.</li>
+  </ul>
+
+  <h3>Four new enchantments</h3>
+  <p>Vanilla armour has very few choices, so every option adds these:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Enchantment</th><th>Goes on</th><th>What it does</th><th>Max</th></tr>
+    <tr><td><strong>Warding</strong></td><td>Armour</td><td>Like Fire Protection, but for magic: witch potions, evoker fangs, poison and Harming.</td><td>IV</td></tr>
+    <tr><td><strong>Steadfast</strong></td><td>Armour</td><td>5% knockback resistance per level.</td><td>III</td></tr>
+    <tr><td><strong>Venom</strong></td><td>Swords, axes, spears</td><td>Poisons on hit. Great on illagers, creepers and players; useless on spiders and undead (they're immune).</td><td>II</td></tr>
+    <tr><td><strong>Frostbite</strong></td><td>Swords, spears, tridents</td><td>Slows the target on hit. Can't be combined with Fire Aspect.</td><td>II</td></tr>
+  </table></div>
+
+  <h3>The five far-off materials</h3>
+  <p>All three options have a personal upgrade you do <em>after</em> full Netherite (A calls it <strong>Attunement</strong>, B calls it <strong>Masterwork</strong>, C calls it <strong>Gilding</strong>). They all use the same five materials from the places most of us skipped last season, and each one gives the item a small bonus effect:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Material</th><th>Where you get it</th><th>Bonus effect on the item</th></tr>
+    <tr><td><strong>Echoing</strong> · 4 Echo Shards</td><td>Ancient City</td><td>You don't set off Sculk sensors or shriekers (Wardens can still hear you).</td></tr>
+    <tr><td><strong>Tidal</strong> · 1 Heart of the Sea</td><td>Buried treasure</td><td>You move more easily in water and hold your breath about 50% longer.</td></tr>
+    <tr><td><strong>Voidtouched</strong> · 4 Shulker Shells</td><td>End Cities</td><td>If dropped, the item can't burn, be blown up or despawn.</td></tr>
+    <tr><td><strong>Dragonsworn</strong> · 8 Dragon's Breath</td><td>The Ender Dragon (respawn it)</td><td>Your Ender Pearls don't hurt you.</td></tr>
+    <tr><td><strong>Tempest</strong> · 1 Heavy Core</td><td>Ominous Trial Chamber vault</td><td>Wind Charges launch you 50% higher.</td></tr>
+  </table></div>
+  <p class="small">Each item can use each material once and never needs more than three, so nobody is stuck waiting on the rare Heavy Core. The bonus effects are comfort perks, never extra damage or protection.</p>
+
+  <h3>The material ladder</h3>
+  <p>Higher enchantment levels cost materials from further up this ladder:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Tier</th><th>Where</th><th>Examples</th></tr>
+    <tr><td>1</td><td>Surface and caves, first evening</td><td>Lapis, Copper, Iron, Redstone, Amethyst, String, Bones</td></tr>
+    <tr><td>2</td><td>Deep caves, oceans, structures</td><td>Diamonds, Gold, Prismarine, Nautilus Shells, Breeze Rods</td></tr>
+    <tr><td>3</td><td>The Nether</td><td>Quartz, Blaze Rods, Ghast Tears, Wither Skeleton Skulls, Netherite Scrap</td></tr>
+    <tr><td>4</td><td>Far and dangerous</td><td>Echo Shards, Hearts of the Sea, Shulker Shells, Dragon's Breath, Heavy Cores</td></tr>
+  </table></div>
+
+  <div class="callout">
+    <strong>Honest caveat for all three:</strong> Season 1 doesn't add new bosses, so extra power after full Netherite mostly makes vanilla mobs easier. The real pull to far-off places is partly the bonus effects above. Death is still vanilla (graves come in a later season).
+  </div>
+</section>
+
+<!-- ================= A ================= -->
+<section id="a">
+  <div class="sys-head a">
+    <div class="tag ta" style="font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:.85rem">Option A</div>
+    <h2>Catalysts and Capacity</h2>
+    <p class="one-liner">Pay a fixed recipe for each enchantment level and fit it into your item's <strong>Capacity</strong>. Books found in the world unlock the higher levels for everyone, and far-off trips raise your Capacity.</p>
+  </div>
+
+  <h3>What playing it looks like</h3>
+  <ol class="story a">
+    <li><strong class="when">First evening</strong>You craft an Enchanting Table. The screen lists everything your pickaxe can take, each with its recipe. You put Efficiency II and Silk Touch on it for some Redstone and Amethyst. Tools have no budget, so there's nothing to think about.</li>
+    <li><strong class="when">First week</strong>Your diamond sword shows <strong>Capacity 0/10</strong>. Sharpness V costs 5 and Looting III costs 9, so you can't have both. You make one Looting sword for the mob farm and one Sharpness + Fire Aspect sword for fighting. Sharpness III is greyed out until someone finds a Sharpness book in a dungeon. A friend finds one, registers it at a table, and chat says <em>"[friend] added Sharpness to the library (9/22)"</em>. Now everyone can make Sharpness III and IV.</li>
+    <li><strong class="when">After full Netherite</strong>Looting III needs Echo Shards, so you buy an Ancient City map and go. You bring back extra shards and <strong>Attune</strong> your chestplate: its Capacity goes from 8 to 10, so it now fits Protection IV <em>and</em> Steadfast II, and you're silent to Sculk while wearing it.</li>
+  </ol>
+
+  <h3>How it works</h3>
+
+  <h4>1. Capacity: your item's points budget</h4>
+  <p>Weapons and armour have a Capacity. Only Power and Yield enchantments spend it; comfort enchantments are free. Pickaxes, shovels, hoes and fishing rods have <strong>no Capacity</strong> at all. Axes count as weapons (<em>"anything you hit things with has Capacity"</em>).</p>
+  <div class="tips-row">
+    <div class="tip">
+      <div class="name">Diamond Sword</div>
+      <div class="ench">Sharpness V</div>
+      <div class="ench">Fire Aspect II</div>
+      <div class="ench">Knockback I</div>
+      <div class="gold">Capacity 10/10</div>
+    </div>
+    <div class="tip">
+      <div class="name">Diamond Chestplate</div>
+      <div class="ench">Fire Protection IV</div>
+      <div class="ench">Thorns II</div>
+      <div class="gold">Capacity 8/8</div>
+      <div class="grey">A Nether build</div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="tablewrap"><table>
+      <tr><th>Material</th><th>Weapons</th><th>Armour</th></tr>
+      <tr><td>Wood, stone, leather, chain, copper</td><td>4</td><td>3</td></tr>
+      <tr><td>Iron, gold, turtle</td><td>7</td><td>6</td></tr>
+      <tr><td>Diamond</td><td>10</td><td>8</td></tr>
+      <tr><td>Netherite</td><td>12</td><td>9</td></tr>
+      <tr><td colspan="3" class="small">Mace 10 · Bow 7 · Trident 6 · Crossbow 4</td></tr>
+    </table></div>
+    <div class="tablewrap"><table>
+      <tr><th>Cost per level</th><th>Enchantments (examples)</th></tr>
+      <tr><td>1</td><td>Sharpness, Smite, Power, Fire/Blast/Projectile Protection, Warding, Steadfast, Knockback, Sweeping Edge</td></tr>
+      <tr><td>2</td><td>Protection, Fire Aspect, Thorns, Breach, Venom, Frostbite</td></tr>
+      <tr><td>3</td><td>Looting, Flame, Channeling</td></tr>
+      <tr><td>4</td><td>Infinity, Multishot</td></tr>
+    </table></div>
+  </div>
+  <p>General Protection costs twice as much as a specialised one, so armour has a real choice: broad defence, or a specialised one with room for Thorns or Steadfast. No item can ever hold everything it could use, even fully upgraded, so you'll want <strong>more than one build</strong> (a farming sword and a fighting sword, a Nether chestplate and an Overworld one).</p>
+
+  <h4>2. Recipes: pick, pay, done</h4>
+  <p>Each level has a fixed recipe shown on screen. No randomness. Higher levels use materials from further up the ladder. Buying level III when you have nothing pays for I, II and III in one click. Some examples:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Enchantment</th><th>I</th><th>II</th><th>III</th><th>IV</th><th>V</th></tr>
+    <tr><td>Efficiency</td><td>2 Redstone</td><td>4 Redstone</td><td>1 Redstone Block</td><td>2 Redstone Blocks</td><td>4 Redstone Blocks</td></tr>
+    <tr><td>Sharpness</td><td>4 Amethyst</td><td>8 Amethyst</td><td>2 Diamonds</td><td>2 Breeze Rods</td><td>Wither Skull + 4 Quartz</td></tr>
+    <tr><td>Protection</td><td>4 Iron</td><td>2 Diamonds</td><td>Nautilus Shell + 4 Prismarine</td><td>Netherite Scrap + 2 Diamonds</td><td></td></tr>
+    <tr><td>Looting</td><td>2 Gold, 4 Bones</td><td>Gold Block, 2 Ghast Tears</td><td>4 Echo Shards</td><td></td><td></td></tr>
+    <tr><td>Fortune</td><td>4 Copper, 2 Iron</td><td>4 Quartz, 2 Gold</td><td>4 Echo Shards <em>or</em> 1 Heart of the Sea</td><td></td><td></td></tr>
+  </table></div>
+
+  <h4>3. The library: found books unlock levels for everyone</h4>
+  <p>Levels I and II are open from the start. <strong>Level III and up of an enchantment unlock for the whole server</strong> once someone registers a book of it that they found in a structure chest (dungeons, mineshafts, shipwrecks, strongholds, Bastions, Ancient Cities). The top level also needs its expensive recipe.</p>
+  <ul>
+    <li>Registering is one click on the table's Library tab. You get the book straight back, and chat announces it with your name.</li>
+    <li>Unlocks are <strong>instant and permanent</strong>, and they count at every table in the world.</li>
+    <li>Fishers and mob farmers help too: <strong>3 ordinary books of an enchantment from 2 different players</strong> count as one found book.</li>
+    <li>A found book from somewhere far-off (Ancient City, End City or ominous vault) also <strong>halves that enchantment's top-level recipe for everyone</strong>, so late-game trips still help the server.</li>
+  </ul>
+  <div class="tip">
+    <div class="name">Diamond Sword</div>
+    <div class="lock">🔒 Sharpness III</div>
+    <div class="grey">Unlocks when the library has a Sharpness book</div>
+    <div class="grey">found in a structure chest, or 3 other Sharpness</div>
+    <div class="grey">books from 2 players (1/3 so far).</div>
+  </div>
+
+  <h4>4. Changing your build: Extract</h4>
+  <p>Pull one enchantment off an item onto a plain book, for free, and put it on something else or give it to a friend. <strong>The catch:</strong> top levels (Sharpness V, Looting III, Protection IV and so on) come off <strong>one level lower</strong>, so you pay the top step again on the new item. The screen warns you before you confirm. Smithing diamond to netherite keeps everything, so you never need to extract for that.</p>
+  <div class="callout a">This is A's identity: <strong>the top of every build is consumed</strong>. Lower levels move freely and can be handed down to newer players.</div>
+
+  <h4>5. Attunement: the long goal</h4>
+  <p>Each weapon or armour piece can be Attuned up to <strong>three times</strong>, with a <strong>different</strong> far-off material each time. Each Attunement gives <strong>+2 Capacity</strong> and that material's bonus effect. A fully Attuned netherite sword (18) fits Sharpness V, Looting III and Fire Aspect II, but still not everything. Tools can be Attuned for the effect only.</p>
+
+  <h4>Other details</h4>
+  <ul>
+    <li>The grindstone refuses items with Power or Yield enchantments, so you can't misclick away something you paid for (use Extract instead).</li>
+    <li>Wind Burst can't be made until someone registers a Wind Burst book from an ominous vault.</li>
+  </ul>
+
+  <div class="proscons">
+    <div class="pros">
+      <h4>What's good about it</h4>
+      <ul>
+        <li>The closest to enchanting we've had before (Super Awesome Enchanting, Ascendant Arcana), with the bad parts removed.</li>
+        <li>Easy first hour: tools have no budget, and every lock tells you exactly what unlocks it.</li>
+        <li>Real build choices: you'll want several specialised items, not one god sword.</li>
+        <li>Explorers matter: finding a book in a dungeon unlocks levels for everyone, with your name in chat.</li>
+        <li>The simplest of the three to build.</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>The catches</h4>
+      <ul>
+        <li>Moving a top level to another item costs the top step again.</li>
+        <li>Lots of recipes (about 130), though the screen shows each one.</li>
+        <li>The library probably fills up in the first week or two, so the shared part goes quiet later on.</li>
+        <li>A fast player could finish their items and run out of goals.</li>
+        <li>Some arithmetic: you're adding up points.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= B ================= -->
+<section id="b">
+  <div class="sys-head b">
+    <div class="tag tb" style="font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:.85rem">Option B</div>
+    <h2>The Archive</h2>
+    <p class="one-liner">Every enchantment is known at level I from day one. The server <strong>researches higher levels together</strong> by filling material bills, and everything researched belongs to everyone. You pick what goes in your item's few <strong>slots</strong>, and <strong>Masterwork</strong> your favourite items for the final level.</p>
+  </div>
+
+  <h3>What playing it looks like</h3>
+  <ol class="story b">
+    <li><strong class="when">First evening</strong>Every Enchanting Table opens the <strong>Archive</strong>, a book of every enchantment. Comfort enchantments are known at every level, so Efficiency and Silk Touch go on your pick for free. Everything else is known at level I, so you slot Looting I on your sword.</li>
+    <li><strong class="when">First week</strong>The <strong>Research</strong> page shows bills. <em>Fire Aspect II</em> needs Blaze Rods, Magma Cream and Coal. You drop in spare Coal, someone else adds the Blaze Rods, and when the bar fills, <strong>everyone's</strong> Fire Aspect becomes Fire Aspect II. The <em>World Sharpness</em> bill slowly fills with iron and gold that would otherwise sit in chests.</li>
+    <li><strong class="when">After full Netherite</strong>Your sword has its slots and World Sharpness is at III. You <strong>Masterwork</strong> it with Echo Shards: everything on it goes up a step (Sharpness IV, Looting III), you're silent to Sculk while holding it, and it carries your name. Later, a Heart of the Sea Masterwork lets you swim faster too.</li>
+  </ol>
+
+  <h3>How it works</h3>
+
+  <h4>1. Research: shared bills</h4>
+  <p>Every level above I has a <strong>bill</strong>: a list of materials anyone can donate to, at any table. When a bill fills, that level is known <strong>for the whole server</strong>, everyone's slotted enchantments upgrade automatically, and chat names every contributor.</p>
+  <ul>
+    <li>Research takes each enchantment to <strong>one level below its max</strong> (Looting II, Smite IV, Fire Protection III). The last level is personal, through Masterwork. Two-level enchantments (Fire Aspect, Knockback, Punch, Venom, Frostbite) research all the way.</li>
+    <li>Every bill needs at least three different materials from at least two tiers, so no single farm can fill one.</li>
+    <li>The page <strong>features three bills</strong> at a time so effort isn't spread thin, but anyone can donate to any bill. It also shows which bills take which materials, so a player holding Rotten Flesh can see where it helps.</li>
+    <li>Enchanted books you find can pay a little toward their own enchantment's bill, so loot is never junk.</li>
+    <li>The whole Archive is about 49 bills, sized to roughly the playtime the whole group put in last season.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Research</th><th>Example bill</th></tr>
+    <tr><td>Fire Aspect II</td><td>8 Blaze Rods, 16 Magma Cream, 32 Coal</td></tr>
+    <tr><td>Looting II</td><td>2 Gold Blocks, 64 Bones, 8 Ghast Tears</td></tr>
+    <tr><td>Fortune II</td><td>32 Quartz, 2 Gold Blocks, 8 Lapis Blocks</td></tr>
+    <tr><td>Smite IV</td><td>4 Echo Shards <em>or</em> 4 Shulker Shells, 64 Bones, 32 Rotten Flesh</td></tr>
+    <tr><td>World Sharpness I</td><td>64 Iron, 32 Amethyst, 8 Gold</td></tr>
+    <tr><td>World Sharpness IV</td><td>Nether Star <em>or</em> 4 Echo Shards, 8 Diamond Blocks, 16 Breeze Rods</td></tr>
+  </table></div>
+
+  <h4>2. World stats: Sharpness, Protection and Power for everyone</h4>
+  <p>This is B's biggest twist. <strong>Sharpness, Protection and Power aren't enchantments you put on items.</strong> The server researches them once, and every player's swords, armour and bows get them automatically.</p>
+  <div class="tablewrap"><table>
+    <tr><th>World stat</th><th>Applies to</th><th>Server can research</th><th>With your Masterwork</th></tr>
+    <tr><td>World Sharpness</td><td>Your swords, axes, spears</td><td>I to IV</td><td>Up to V</td></tr>
+    <tr><td>World Protection</td><td>Your armour</td><td>I to III</td><td>Up to IV</td></tr>
+    <tr><td>World Power</td><td>Your bows</td><td>I to IV</td><td>Up to V</td></tr>
+  </table></div>
+  <p>Specialising is a choice: put Smite on a sword and it loses World Sharpness (like vanilla, where they don't combine). The game shows you the numbers first.</p>
+  <div class="tips-row">
+    <div class="tip">
+      <div class="name">Diamond Sword</div>
+      <div class="aqua">Sharpness III (world)</div>
+      <div class="ench">Looting II</div>
+      <div class="ench">Fire Aspect II</div>
+      <div class="gold">Slots ●●</div>
+    </div>
+    <div class="tip">
+      <div class="purple">Swap in Smite IV?</div>
+      <div class="lock">Loses Sharpness III (+2 damage)</div>
+      <div class="green">Gains Smite IV (+10 damage to undead)</div>
+      <div class="grey">[Confirm] [Cancel]</div>
+    </div>
+  </div>
+
+  <h4>3. Slots: your personal choice</h4>
+  <p>Each slot holds one enchantment at the highest level the server knows (or lower, if you prefer). <strong>Swapping is free</strong>, any time, at any table. Comfort enchantments don't use slots.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Item</th><th>Slots</th></tr>
+    <tr><td>Swords, axes, spears</td><td>1 (up to iron) · 2 (diamond) · 3 (netherite)</td></tr>
+    <tr><td>Bow, mace</td><td>2</td></tr>
+    <tr><td>Crossbow, trident</td><td>1</td></tr>
+    <tr><td>Armour</td><td>1 (netherite: 2): Thorns, Steadfast, or a specialised Protection</td></tr>
+    <tr><td>Pickaxe, shovel, hoe, fishing rod</td><td>1: Fortune or Luck of the Sea</td></tr>
+  </table></div>
+  <p>Netherite gets an extra slot, so upgrading to netherite is a personal step forward before any Masterwork. Example diamond sword loadouts: Looting II + Fire Aspect II for the mob farm; Smite IV + Knockback II for a skeleton spawner; Venom II + Sweeping Edge II for a raid.</p>
+
+  <h4>4. Masterwork: your personal final step</h4>
+  <p>Each item can be Masterworked up to <strong>twice</strong>, with a different far-off material each time. Each gives that material's bonus effect. The <strong>first</strong> one also takes everything on the item, world stats included, up its <strong>final level</strong>: World Sharpness V, Smite V, Looting III, Protection IV. This is the only way to reach max levels, so the top of power is always earned by your own trip. The item gets stamped with your name.</p>
+  <ul>
+    <li>The final step applies to whatever was slotted when you Masterworked. Moving it to different enchantments later costs a small tier 2 material.</li>
+    <li>Pickaxes can be Masterworked too: that's how you get Fortune III, and a Heart of the Sea works, so you never need to fight for it.</li>
+  </ul>
+
+  <div class="callout b">B reads "power is earned" at the <strong>group</strong> level: someone who never fights still gets World Sharpness IV, because the group earned it. Only the final level is personal. If that feels wrong in play, a prepared fix is that world stats only apply to players who've contributed to bills.</div>
+
+  <div class="proscons">
+    <div class="pros">
+      <h4>What's good about it</h4>
+      <ul>
+        <li>The most "we built this together" option. Every stack of Bones counts, and you're named in the credits.</li>
+        <li>Best for slower players and late joiners: you get everything the server knows the moment you arrive.</li>
+        <li>A fast player can't out-gear everyone; what they fund helps the whole group.</li>
+        <li>Easiest first hour: everything works at level I, swaps are free, and nothing can be lost.</li>
+        <li>Gives a real use for the stacks of iron and gold sitting in chests.</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>The catches</h4>
+      <ul>
+        <li>Less personal: most of your power comes from the group, and gear-focused players might feel their effort is diluted.</li>
+        <li>Free swapping makes slots feel more like a loadout than a build.</li>
+        <li>Armour has very few choices (one slot on most armour).</li>
+        <li>The second Masterwork only adds a bonus effect, not power.</li>
+        <li>Once the Archive is finished, there's not much left to donate to.</li>
+        <li>The biggest of the three to build.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= C ================= -->
+<section id="c">
+  <div class="sys-head c">
+    <div class="tag tc" style="font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:.85rem">Option C</div>
+    <h2>Runes</h2>
+    <p class="one-liner">Every Power and Yield enchantment is a <strong>rune</strong>: an item you carve, keep, and slot into your gear's <strong>sockets</strong>. Runes come out intact whenever you like, so your collection <em>is</em> your progress. The top rank of each rune is <strong>Grand</strong> and needs a socket <strong>Gilded</strong> with a far-off material.</p>
+  </div>
+
+  <p><strong>Four new words:</strong> <span class="chip">rune</span> <span class="chip">socket</span> <span class="chip">Gilded</span> <span class="chip">Grand</span>. Everything else is vanilla.</p>
+
+  <h3>What playing it looks like</h3>
+  <ol class="story c">
+    <li><strong class="when">First evening</strong>You put your pick in the Enchanting Table and click Efficiency II and Silk Touch for a few Redstone and Amethyst. Comfort enchantments go straight on and don't use a socket. Then you carve your first rune, <strong>Looting I</strong>, from Bones, Gold, Lapis and Amethyst.</li>
+    <li><strong class="when">First week</strong>Your diamond sword has <strong>3 sockets</strong>. You slot Sharpness IV, Looting II and Knockback I. For the Wither you swap Sharpness IV for Smite IV from your Rune Pouch. Nothing is lost; the Sharpness rune goes back in the pouch. You hand a spare Looting II to a friend for their farm sword, with your name on it.</li>
+    <li><strong class="when">After full Netherite</strong>Sharpness V is a <strong>Grand</strong> rune, and its recipe says <em>"needs a Gilded socket"</em> before you carve it. You Gild a socket with a Heart of the Sea (which also lets you swim faster), then carve the Grand rune. Your old spare Sharpness IV goes to a friend who just reached diamond.</li>
+  </ol>
+
+  <h3>How it works</h3>
+
+  <h4>1. Runes</h4>
+  <p>A rune is one enchantment at one rank, like <em>Looting Rune II</em>. Its tooltip says what it does, what it fits on and who carved it. Each enchantment family has its own colour, and Grand runes get a gold frame.</p>
+  <ul>
+    <li><strong>Carving rank I:</strong> the enchantment's material plus 2 Lapis and 1 Amethyst.</li>
+    <li><strong>Ranking up:</strong> a rune of the rank below plus the next material. The lower rune gets used up, so having Sharpness IV on two items means carving it twice.</li>
+    <li><strong>Grand runes</strong> are the top rank of every enchantment with three or more levels (Sharpness V, Protection IV, Looting III, Fortune III, Thorns III and so on). They need a far-off or Nether material and only fit in a <strong>Gilded</strong> socket.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Rune</th><th>Recipe</th></tr>
+    <tr><td>Looting I</td><td>4 Bones, 2 Gold, 2 Lapis, 1 Amethyst</td></tr>
+    <tr><td>Looting II</td><td>Looting I + Gold Block + 2 Ghast Tears</td></tr>
+    <tr><td>Looting III <span class="tc">(Grand)</span></td><td>Looting II + 4 Echo Shards</td></tr>
+    <tr><td>Sharpness V <span class="tc">(Grand)</span></td><td>Sharpness IV + Wither Skull + 4 Quartz</td></tr>
+    <tr><td>Protection IV <span class="tc">(Grand)</span></td><td>Protection III + Netherite Scrap + 2 Diamonds</td></tr>
+    <tr><td>Fortune III <span class="tc">(Grand)</span></td><td>Fortune II + 4 Echo Shards <em>or</em> 1 Heart of the Sea</td></tr>
+  </table></div>
+
+  <h4>2. Sockets</h4>
+  <p>Every weapon, armour piece and tool has sockets. You drag runes in and out at the table: <strong>free, instant, nothing lost</strong>. Every item has fewer sockets than useful runes, so there's always a choice.</p>
+  <div class="tips-row">
+    <div class="tip">
+      <div class="name">Diamond Sword</div>
+      <div class="gold">[Sharpness V ✦]</div>
+      <div class="ench">[Looting II] [ ]</div>
+      <div class="grey">✦ Gilded: Tidal (swim faster)</div>
+    </div>
+    <div class="tip">
+      <div class="purple">Sharpness Rune V</div>
+      <div class="gold">Grand · needs a Gilded socket</div>
+      <div class="grey">+0.5 damage over Sharpness IV</div>
+      <div class="grey">Carved by you</div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th>Basic</th><th>Iron / gold</th><th>Diamond / netherite</th></tr>
+      <tr><td>Swords, spears</td><td>1</td><td>2</td><td>3</td></tr>
+      <tr><td>Axes</td><td>1</td><td>1</td><td>2</td></tr>
+      <tr><td>Armour</td><td>1</td><td>2</td><td>2</td></tr>
+      <tr><td>Pickaxe, shovel, hoe</td><td>1</td><td>1</td><td>1</td></tr>
+    </table></div>
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th>Sockets</th></tr>
+      <tr><td>Bow</td><td>3</td></tr>
+      <tr><td>Mace</td><td>2</td></tr>
+      <tr><td>Crossbow, trident, fishing rod</td><td>1</td></tr>
+    </table></div>
+  </div>
+
+  <h4>3. Gilding: the long goal</h4>
+  <p>Gild one socket with one of the five far-off materials. Each material can Gild only one socket per item, and each gives its bonus effect. Grand runes need a Gilded socket. <strong>Nobody has to Gild</strong>: Protection III, Sharpness IV and Looting II fit ordinary sockets, so solid gear never needs a far-off trip. A pickaxe's single socket counts as already Gilded, so Fortune III only costs its own recipe.</p>
+
+  <h4>4. Sharing: first carvings and gifts</h4>
+  <ul>
+    <li><strong>First carvings:</strong> the first time anyone carves a middle rank (say, the world's first Sharpness IV), that rank's materials are <strong>halved for everyone</strong>, and chat names the carver. The table shows a server-wide count (<em>First carvings 12/46</em>). The world's first Grand runes get a chat shout-out too.</li>
+    <li><strong>Gifting:</strong> any rune can be given away, Grand ones included, with the carver's name on it. The receiver still needs their own Gilded socket for a Grand rune, so a gift doesn't skip the trip.</li>
+  </ul>
+
+  <h4>5. The Rune Pouch</h4>
+  <p>A bundle that holds up to 64 runes (Leather and String). It shows how many of the 31 enchantments you have a rune for. <strong>A dropped pouch can't burn, be blown up or despawn</strong>, so your whole collection isn't lost to one lava pool. Runes socketed in gear still drop with that gear when you die, as normal.</p>
+
+  <h4>Other details</h4>
+  <ul>
+    <li>Putting an enchanted book in the table breaks it into runes. Found loot gear's enchantments count as runes and can be pulled out.</li>
+    <li>The grindstone refuses items with runes, so you can't misclick your collection away.</li>
+    <li>Comfort enchantments are cheap and never use a socket: <em>"Comfort uses no socket; power is a rune."</em></li>
+  </ul>
+
+  <div class="proscons">
+    <div class="pros">
+      <h4>What's good about it</h4>
+      <ul>
+        <li>The most fun to tinker with: carving, collecting and slotting physical runes.</li>
+        <li>Nothing is ever lost when you change your mind. Experimenting is free.</li>
+        <li>Your collection is visible progress, and the pouch counter is a goal in itself.</li>
+        <li>Generous players shine: spare runes equip friends straight away, with your name on them.</li>
+        <li>The pouch protects you from the worst "I lost everything" moment.</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>The catches</h4>
+      <ul>
+        <li>The most new things to learn (four new words, ranking up, Gilding, the pouch).</li>
+        <li>Once everyone has their runes, carving could slow down (the "collection plateau").</li>
+        <li>The shared part (first carvings) will mostly happen early and probably go to whoever plays most.</li>
+        <li>A Grand rune lost in lava takes its Gilding with it.</li>
+        <li>Lots of new art and UI to build (runes, pouch, sockets).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPARE ================= -->
+<section id="compare">
+  <h2>Side by side</h2>
+  <div class="tablewrap"><table>
+    <tr><th></th><th class="ta">A · Capacity</th><th class="tb">B · The Archive</th><th class="tc">C · Runes</th></tr>
+    <tr><td><strong>Your item's budget</strong></td><td>Capacity points</td><td>A few slots</td><td>A few sockets, some Gilded</td></tr>
+    <tr><td><strong>Where the cost goes</strong></td><td>Personal: you pay for every level</td><td>Shared: bills anyone can fill</td><td>Personal, but you keep the rune and can reuse it</td></tr>
+    <tr><td><strong>Changing your build</strong></td><td>Extract to a book (top level drops one level)</td><td>Free swap, any time</td><td>Pull runes out intact, free</td></tr>
+    <tr><td><strong>Sharpness and Protection</strong></td><td>Enchantments that cost Capacity</td><td>Server-wide stats everyone gets</td><td>Runes that take a socket</td></tr>
+    <tr><td><strong>How you help everyone</strong></td><td>Register found books to unlock levels</td><td>Donate to research bills</td><td>First carvings halve costs; give runes away</td></tr>
+    <tr><td><strong>The long goal</strong></td><td>Attunement (+Capacity) on every item</td><td>Research, then Masterwork for the final level</td><td>Growing your collection; Gilding</td></tr>
+    <tr><td><strong>Max level comes from</strong></td><td>An expensive recipe, paid on every item</td><td>Your own Masterwork trip</td><td>A Grand rune plus a Gilded socket</td></tr>
+    <tr><td><strong>Best for</strong></td><td>Build planners, explorers</td><td>Team players, slower players, late joiners</td><td>Collectors, tinkerers, generous friends</td></tr>
+    <tr><td><strong>Biggest risk</strong></td><td>A fast player finishes and is done</td><td>Gear-focused players feel diluted</td><td>The collection plateaus</td></tr>
+    <tr><td><strong>Things to learn</strong></td><td><div class="meter a"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div></td><td><div class="meter b"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div></td><td><div class="meter c"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div></td></tr>
+    <tr><td><strong>Group feeling</strong></td><td><div class="meter a"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div></td><td><div class="meter b"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div></td><td><div class="meter c"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div></td></tr>
+    <tr><td><strong>Personal progress feeling</strong></td><td><div class="meter a"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div></td><td><div class="meter b"><span class="on"></span><span class="on"></span><span></span><span></span><span></span></div></td><td><div class="meter c"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div></td></tr>
+    <tr><td><strong>Safe to experiment</strong></td><td><div class="meter a"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div></td><td><div class="meter b"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div></td><td><div class="meter c"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div></td></tr>
+    <tr><td><strong>Work to build</strong></td><td>Large (least of the three)</td><td>Largest</td><td>Large (most art and UI)</td></tr>
+  </table></div>
+  <p class="small">The bars are rough impressions, not measurements.</p>
+
+  <h3>You'll probably like…</h3>
+  <div class="grid3">
+    <div class="card a"><div class="tag">A</div><p>…if you enjoy planning builds on a budget, owning several specialised items, and you like the idea that finding a dungeon book helps the whole server.</p></div>
+    <div class="card b"><div class="tag">B</div><p>…if you want enchanting to feel like a group project, you play less than others and don't want to fall behind, or you like donating to a shared goal.</p></div>
+    <div class="card c"><div class="tag">C</div><p>…if you love collecting things, swapping loadouts for different fights, and giving stuff to friends.</p></div>
+  </div>
+
+  <div class="callout">
+    <strong>Mixing is allowed.</strong> These are packages, but parts can move between them. For example: C's runes with B's shared research, or A's Capacity with C's free swapping. If you love one piece of an option and hate the rest, say so.
+  </div>
+</section>
+
+<!-- ================= QUESTIONS ================= -->
+<section id="questions">
+  <h2>Your feedback</h2>
+  <p class="lead">Answer as many as you like. "I don't care" is a useful answer too.</p>
+  <ol class="qlist">
+    <li>Which option would you most like to play? Which would you least like to play?<div class="opts">A · B · C · a mix</div></li>
+    <li>Should enchanting progress mostly belong to <strong>you</strong> or to <strong>the group</strong>?<div class="opts">Mostly mine · A mix · Mostly the group's</div></li>
+    <li>Which budget feels best on an item?<div class="opts">Points (A) · A few slots (B) · Sockets you fill with runes (C)</div></li>
+    <li>How do you feel about Sharpness, Protection and Power being <strong>server-wide stats</strong> everyone gets (B), instead of something you put on each item?</li>
+    <li>Should changing your mind be <strong>completely free</strong> (B, C), or should moving your best enchantments cost something (A)?</li>
+    <li>Would you actually go to the Ancient City, End Cities, buried treasure and so on for the bonus effects (silent to Sculk, swim faster, free pearls)? Which effect sounds best?</li>
+    <li>Do you want <strong>several specialised items</strong> (a farming sword, a fighting sword, a Nether chestplate), or one main item for each slot?</li>
+    <li>Do the four new enchantments (Warding, Steadfast, Venom, Frostbite) sound fun? Any you'd add or cut?</li>
+    <li>Builders and casual players: does any option make you feel like you'd <strong>have to fight</strong> to be comfortable?</li>
+    <li>What part of any option did you <strong>hate</strong>? What part did you <strong>love</strong>?</li>
+    <li>Anything confusing? If you couldn't explain an option to someone else in one sentence, tell us which.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  Season 1 enchanting · three candidate designs · nothing here is final.<br>
+  Full design notes live in the project docs under <code>docs/season-1/enchanting/</code>.
+</footer>
+
+</body>
+</html>

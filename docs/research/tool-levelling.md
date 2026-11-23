@@ -32,9 +32,9 @@ This page assumes the brief's premise that a **client mod is allowed**. [ADR-000
   - **Slotless** modifiers and **traits** come from materials.
 - **Starting slots** (official FAQ). Small tools start with 3 upgrade slots and large tools with 2. Most tools have 1 ability slot. Armor sets start with different mixes: Plate has strong defense slots, Slime has many upgrade and ability slots.
 - **How slots are gained. There is no XP; it is all materials and one-off milestone modifiers** (official FAQ):
-  - A Book and Quill (Writable), a music disc (Harmonious), a mob head (Recapitated) or a fourth rare item (Resurrected) each gives +1 upgrade slot, up to +4. *(unverified: which item maps to Resurrected)*
+  - A Book and Quill (Writable), a music disc (Harmonious), a mob head (Recapitated) or Resurrected (which needs a rare ore block modifier applied first) each gives +1 upgrade slot, up to +4. See [Tinkers' Construct](tinkers-construct.md).
   - Rose gold gives +1 per rose gold part.
-  - **Gilded** trades 1 ability slot for 2 upgrade slots (golden apple), and can be repeated.
+  - **Gilded** trades 1 ability slot for 2 upgrade slots (a gilded blackstone block in the 1.20.1 data), and can be repeated.
   - **Draconic** and **Rebalanced** are the only ways to add ability slots. Rebalanced grants one extra slot of a type you choose.
   - Defense slots come from Balanced or an armor trim.
   - The caps are explicit: "most melee, harvest and ranged tools have a maximum of 10 upgrade slots, 2 ability slots, and rebalanced's bonus," or 15 upgrade slots with Gilded.

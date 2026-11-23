@@ -21,11 +21,11 @@ The opening of the next Era for everyone on the server when any player first cle
 _Avoid_: Personal unlock, gate condition
 
 **Catch-up easing**:
-What becomes available to everyone once the world has unlocked an Era, such as new Villager trades for that Era's materials, so players who haven't cleared a Stronghold can still use what it opened.
+Help for players who are behind that comes from other players' actions in the world, such as materials, blocks and crafting stations carried back from a new dimension, or copied enchanted books. Never an automatic server-wide unlock.
 _Avoid_: Rubber-banding
 
 **Convenience**:
-Quality-of-life capability such as mining speed, Techniques, storage, mobility and block access. Available early and without combat.
+Quality-of-life capability such as mining speed, builder tools, storage, mobility and block access. Available early and without combat.
 _Avoid_: Utility gear
 
 **Power**:
@@ -71,22 +71,13 @@ _Avoid_: Reagent, ingredient
 A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted. Under review: raw stats may come from enchantments or tool tiers instead.
 _Avoid_: Relic, gem, upgrade part
 
-**Capacity**:
-The budget an item has for enchantments. Each enchantment level uses some of it, so an item can't carry everything.
+**Upgrade slot**:
+One unit of an item's enchanting room for stat enchantments. One enchantment level uses one upgrade slot. How many an item has depends on its material, plus one-off Era upgrades.
+_Avoid_: Capacity, modifier slot, enchanting power
 
-**Familiarity**:
-A tool's level, gained by using it and capped at 5. Levels unlock Technique slots, never Power.
-_Avoid_: Tool XP, Proficiency, skill
-
-**Technique**:
-A toggleable Convenience ability slotted into a levelled tool, such as vein-mining or tree-felling.
-_Avoid_: Modifier, ability
-
-**Codex**:
-A per-player record of the Techniques and recipes a player has learned. It's kept forever.
-
-**Mastery**:
-A per-player bonus for maxing Familiarity on any tool of a type. New tools of that type start at level 2 and level faster.
+**Ability slot**:
+The room on an item for an enchantment that changes what it does, such as Silk Touch, Fortune or Excavating. Most items have one.
+_Avoid_: Socket, special slot
 
 **Travel cart**:
 The fast minecart variant built for getting around. The vanilla minecart is unchanged.
