@@ -25,7 +25,7 @@ import org.jspecify.annotations.Nullable;
 /** The Season 1 enchanting table: every enchantment the item can take, its cost, and buttons to add or remove it. */
 public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchantingMenu> {
 	private static final int WIDTH = 252;
-	private static final int HEIGHT = 226;
+	private static final int HEIGHT = 236;
 	private static final int LIST_X = 36;
 	private static final int LIST_Y = 30;
 	private static final int LIST_W = 208;
@@ -169,6 +169,8 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 	@Override
 	protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
 		super.extractLabels(graphics, xm, ym);
+		graphics.centeredText(this.font, Component.translatable("superawesomecraft.enchanting.book_slot"),
+			SlotEnchantingMenu.BOOK_X + 8, SlotEnchantingMenu.BOOK_Y + 20, TEXT);
 		ItemStack item = this.menu.item();
 		if (item.isEmpty()) {
 			graphics.text(this.font, Component.translatable("superawesomecraft.enchanting.hint"), LIST_X, 18, TEXT, false);

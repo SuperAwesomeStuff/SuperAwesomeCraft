@@ -1,5 +1,6 @@
 {
   "superawesomecraft.durability.broken": "Broken: repair it in a crafting grid with its material",
+  "superawesomecraft.enchanting.book_slot": "Book",
   "superawesomecraft.enchanting.hint": "Put an item in to enchant it",
   "superawesomecraft.enchanting.slots": "Slots %s / %s",
   "superawesomecraft.enchanting.group.damage": "Damage %s / %s",

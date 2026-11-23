@@ -22,6 +22,15 @@ loom {
 			vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/gametest/junit.xml"
 			runDir "build/gametest"
 		}
+
+		// Opens the game in a real client, drives the enchanting screen and saves screenshots to
+		// build/clientgametest/screenshots. Needs a display.
+		clientGametest {
+			client()
+			name = "Client Game Test"
+			vmArg "-Dfabric.client.gametest"
+			runDir "build/clientgametest"
+		}
 	}
 
 	mods {

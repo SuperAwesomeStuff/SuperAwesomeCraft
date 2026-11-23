@@ -19,6 +19,9 @@
 		"client": [
 			"com.superawesomestuff.craft.client.SuperAwesomeCraftClient"
 		],
+		"fabric-client-gametest": [
+			"com.superawesomestuff.craft.client.gametest.EnchantingScreenClientTest"
+		],
 		"fabric-gametest": [
 			"com.superawesomestuff.craft.gametest.NoExperienceTests",
 			"com.superawesomestuff.craft.gametest.EnchantingTests",
