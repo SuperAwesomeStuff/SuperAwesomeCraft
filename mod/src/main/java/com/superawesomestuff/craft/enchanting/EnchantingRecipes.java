@@ -284,7 +284,6 @@ public final class EnchantingRecipes {
 		d.rising(Items.LAPIS_LAZULI, "fortune", "looting", "luck_of_the_sea");
 		d.rising(Items.EMERALD, "sac:bane_of_illagers");
 		d.rising(Items.AMETHYST_SHARD, "sharpness", "power");
-		d.rising(Items.POINTED_DRIPSTONE, "breach");
 		d.rising(Items.FLINT, "piercing");
 		d.rising(Items.STRING, "lure", "multishot");
 		d.rising(Items.GOLD_INGOT, "density");
@@ -305,11 +304,9 @@ public final class EnchantingRecipes {
 		d.rising(Items.SOUL_SOIL, "soul_speed");
 		d.rare(Items.COBWEB, "silk_touch");
 		d.rare(Items.BLAZE_ROD, "fire_aspect", "flame", "sac:smelting");
-		// Any rusting stage of lightning rod counts.
-		perLevel.put(Identifier.withDefaultNamespace("channeling"), Cost.of(
-			TagKey.create(Registries.ITEM, SuperAwesomeCraft.id("lightning_rods")), Items.LIGHTNING_ROD.asList().getFirst(), RARE));
+		perLevel.put(Identifier.withDefaultNamespace("channeling"), Cost.of(Items.HEART_OF_THE_SEA, 1));
 		d.rare(Items.TNT, "sac:excavating");
-		d.rare(Items.DIAMOND, "infinity");
+		d.rare(Items.DIAMOND, "breach", "infinity");
 		d.rare(Items.ENDER_PEARL, "sac:reach", "loyalty");
 		d.rare(Items.BREEZE_ROD, "lunge", "wind_burst");
 		d.rare(Items.ECHO_SHARD, "swift_sneak");

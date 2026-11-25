@@ -36,7 +36,6 @@ That's the whole system: slots from material, one material per enchantment that 
 | Lapis Lazuli | Fortune, Looting, Luck of the Sea |
 | Emeralds | Bane of Illagers |
 | Amethyst Shards | Sharpness, Power |
-| Pointed Dripstone | Breach |
 | Flint | Piercing |
 | String | Lure, Multishot |
 | Gold Ingots | Density |
@@ -62,13 +61,14 @@ That's the whole system: slots from material, one material per enchantment that 
 | --- | --- |
 | Blaze Rods | Fire Aspect, Flame, Smelting |
 | Cobwebs | Silk Touch |
-| Lightning Rods (any rust stage) | Channeling |
 | TNT | Excavating |
-| Diamonds | Infinity |
+| Diamonds | Breach, Infinity |
 | Ender Pearls | Reach, Loyalty |
 | Breeze Rods | Lunge, Wind Burst |
 | Echo Shards | Swift Sneak |
 | Nautilus Shells | Riptide |
+
+**One-off:** Channeling costs 1 Heart of the Sea (it has only one level).
 
 - **Removing a curse:** 32 Gold Ingots.
 - **Found books:** vouchers. In a material slot, a book pays one level's material of an enchantment it holds and loses that level. Blaze Rods and slots still apply.
@@ -88,13 +88,13 @@ That's the whole system: slots from material, one material per enchantment that 
 2. **Rising cost instead of a flat pile.** Level I is cheap (16), so trying an enchantment is easy, but each level asks for 16 more. A farm makes level I trivial, not level V. The user asked for this to apply to every common material.
 3. **One rule for high levels:** levels IV and V need Blaze Rods. Efficiency is the exception, so mining speed (Convenience) never waits on the Nether. Instant-mining stone still needs Haste II from a beacon, which needs the Wither.
 4. **Fortune stays Overworld.** It only goes to III, so it never needs Blaze Rods. It will be the first thing people chase, and it shouldn't send anyone rushing to a blaze spawner.
-5. **Materials don't repeat on one item's list** where it can be avoided: Smite isn't Gold because the mace shows Density, Unbreaking moved to Copper so axes don't show Iron twice (Felling), and Channeling uses Lightning Rods so tridents don't show Copper twice.
+5. **Materials don't repeat on one item's list** where it can be avoided: Smite isn't Gold because the mace shows Density, Unbreaking moved to Copper so axes don't show Iron twice (Felling).
 6. **The End lives in the last slot upgrade**, not in enchantment levels. Max gear needs Shulker Shells, which keeps the long climb.
 
 ## Things that changed from earlier decisions
 
 - **Rising costs replace 32 per level.** High levels of common enchantments cost more than before (Sharpness V: 240 Amethyst, was 160); low levels cost less.
 - **Efficiency IV and V no longer need Blaze Rods.** Instant mining still lands on the beacon (Haste II).
-- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Pointed Dripstone for Breach, Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, Lightning Rods for Channeling.
+- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Diamonds for Breach (it ignores armour, so it costs a rare material), Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, a Heart of the Sea for Channeling.
 - **Emeralds are a material for one enchantment** (Bane of Illagers), so trading can buy that one. Accepted because it's niche.
 - **No separate ability slot.** Silk Touch, Fortune and Excavating compete for ordinary slots, and vanilla exclusivity still stops Silk Touch with Fortune.
