@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.mixin;
 
+import com.superawesomestuff.craft.enchanting.BookMerging;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
@@ -19,8 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * No XP: the anvil only renames, for free. Combining and repairing are disabled; combining
- * enchantments moves to the new enchanting in Season 1.
+ * No XP: the anvil renames for free and combines two enchanted books for free (vanilla's book rules, see
+ * {@link BookMerging}). Everything else it used to combine or repair is disabled; enchanting gear happens at the table.
  */
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
@@ -38,8 +39,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
 	@Inject(method = "createResult", at = @At("TAIL"))
 	private void superawesomecraft$renameOnly(CallbackInfo ci) {
-		if (!this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT).isEmpty()) {
-			this.resultSlots.setItem(0, ItemStack.EMPTY);
+		ItemStack right = this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT);
+		if (!right.isEmpty()) {
+			this.resultSlots.setItem(0, BookMerging.merge(this.inputSlots.getItem(AnvilMenu.INPUT_SLOT), right));
 		}
 
 		this.cost.set(0);

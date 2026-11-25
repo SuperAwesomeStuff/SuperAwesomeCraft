@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Excavating digs 3x3 but slower, so it can never instant-mine. Blocks the tool isn't good at (a pickaxe on dirt) and
- * crouching mine one block at normal speed.
+ * Excavating digs 3x3 but slower, unless the tool would instant-mine the block anyway. Blocks the tool isn't good at
+ * (a pickaxe on dirt) and crouching mine one block at normal speed.
  */
 @Mixin(Player.class)
 public abstract class ExcavatingSpeedMixin {
@@ -18,7 +18,7 @@ public abstract class ExcavatingSpeedMixin {
 	private void superawesomecraft$slowerExcavating(BlockState state, CallbackInfoReturnable<Float> cir) {
 		Player player = (Player) (Object) this;
 		if (ToolAbilities.excavates(player, state)) {
-			cir.setReturnValue(cir.getReturnValue() * ToolAbilities.EXCAVATING_SPEED);
+			cir.setReturnValue(ToolAbilities.excavatingSpeed(cir.getReturnValue(), state.getBlock().defaultDestroyTime()));
 		}
 	}
 }

@@ -15,6 +15,9 @@ public final class ModEnchantments {
 	public static final ResourceKey<Enchantment> FELLING = key("felling");
 	public static final ResourceKey<Enchantment> SMELTING = key("smelting");
 	public static final ResourceKey<Enchantment> BEHEADING = key("beheading");
+	public static final ResourceKey<Enchantment> MAGNETISM = key("magnetism");
+	public static final ResourceKey<Enchantment> HARVESTING = key("harvesting");
+	public static final ResourceKey<Enchantment> BULWARK = key("bulwark");
 
 	private ModEnchantments() {
 	}

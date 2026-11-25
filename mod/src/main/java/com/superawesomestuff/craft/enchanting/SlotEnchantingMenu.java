@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 /**
  * The Season 1 enchanting table, laid out like Ascendant Arcana's. Slots: the item, and two material slots the player
  * fills from their inventory to pay for the selected enchantment. An enchanted book in a material slot is a voucher: it
- * pays one level's material of an enchantment it holds, and loses that level. Actions arrive as menu button ids:
+ * pays one level's material of an enchantment it holds, up to the book's own level, and loses that level. Actions arrive as menu button ids:
  * {@code action * 1000 + argument}.
  */
 public class SlotEnchantingMenu extends AbstractContainerMenu {
@@ -99,12 +99,17 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 
 	// Book vouchers
 
-	/** The material slot holding a book with at least one level of {@code enchantment}, or -1. */
+	/**
+	 * The material slot holding a book that can pay for the next level of {@code enchantment}, or -1. A book pays only up
+	 * to its own level: taking an item to level III needs a book of level III or higher. That way cheap low-level books
+	 * (from Villagers, say) can't pay for the expensive top levels.
+	 */
 	public int voucherSlot(Holder<Enchantment> enchantment) {
+		int target = EnchantRules.enchantments(this.item()).getLevel(enchantment) + 1;
 		for (int i = FIRST_MATERIAL_SLOT; i <= LAST_MATERIAL_SLOT; i++) {
 			ItemStack stack = this.table.getItem(i);
 			if (stack.is(Items.ENCHANTED_BOOK)
-				&& stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) > 0) {
+				&& stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) >= target) {
 				return i;
 			}
 		}

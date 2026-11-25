@@ -73,7 +73,7 @@
   "superawesomecraft.enchanting.desc.minecraft.swift_sneak": "Sneak 15% faster per level.",
   "superawesomecraft.enchanting.desc.minecraft.binding_curse": "Can't be taken off once worn.",
   "superawesomecraft.enchanting.desc.minecraft.vanishing_curse": "Disappears when you die.",
-  "superawesomecraft.enchanting.desc.superawesomecraft.excavating": "Digs 3x3 around the face you hit, slower. Crouch for one block.",
+  "superawesomecraft.enchanting.desc.superawesomecraft.excavating": "Digs 3x3 around the face you hit, slower unless it's instant. Crouch for one block.",
   "superawesomecraft.enchanting.desc.superawesomecraft.felling": "Cuts the whole tree. Crouch for one log.",
   "superawesomecraft.enchanting.desc.superawesomecraft.smelting": "Mined blocks drop smelted: sand to glass.",
   "superawesomecraft.enchanting.desc.superawesomecraft.beheading": "10% chance per level for a mob head.",
@@ -82,7 +82,7 @@
   "superawesomecraft.enchanting.desc.superawesomecraft.bane_of_illagers": "+2.5 damage per level to illagers.",
   "superawesomecraft.enchanting.desc.superawesomecraft.frost_aspect": "Slows targets. Not with Fire Aspect.",
   "superawesomecraft.enchanting.desc.superawesomecraft.rebounding": "Knocks melee attackers away from you.",
-  "superawesomecraft.enchanting.desc.superawesomecraft.bulwark": "-50% knockback per level while held.",
+  "superawesomecraft.enchanting.desc.superawesomecraft.bulwark": "-50% knockback per level. 15% per level to disarm a melee attacker you block.",
   "superawesomecraft.enchanting.no_item_title": "Enchanting",
   "superawesomecraft.enchanting.tile_level": "Level %s/%s",
   "superawesomecraft.enchanting.tile_slot": "+1 slot",
@@ -91,5 +91,9 @@
   "superawesomecraft.enchanting.button.confirm": "Sure?",
   "superawesomecraft.durability.repair": "Repair with: %s",
   "superawesomecraft.durability.repair_any": "%s or similar",
-  "superawesomecraft.enchanting.voucher": "Book pays this level"
+  "superawesomecraft.enchanting.voucher": "Book pays this level",
+  "enchantment.superawesomecraft.magnetism": "Magnetism",
+  "enchantment.superawesomecraft.harvesting": "Harvesting",
+  "superawesomecraft.enchanting.desc.superawesomecraft.magnetism": "What you mine or kill goes straight to your inventory.",
+  "superawesomecraft.enchanting.desc.superawesomecraft.harvesting": "Tills 3x3. Right-click ripe crops to harvest and replant."
 }

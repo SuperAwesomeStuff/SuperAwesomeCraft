@@ -1,6 +1,7 @@
 package com.superawesomestuff.craft;
 
 import com.superawesomestuff.craft.enchanting.EnchantingRecipesSync;
+import com.superawesomestuff.craft.enchanting.Harvesting;
 import com.superawesomestuff.craft.enchanting.ModComponents;
 import com.superawesomestuff.craft.enchanting.ModMenus;
 import com.superawesomestuff.craft.enchanting.RandomEnchantLimits;
@@ -27,6 +28,7 @@ public class SuperAwesomeCraft implements ModInitializer {
 		RepairMaterials.init();
 		RandomEnchantLimits.init();
 		ToolAbilities.init();
+		Harvesting.init();
 		EnchantingRecipesSync.init();
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("material_repair"), MaterialRepairRecipe.SERIALIZER);
 		LOGGER.info("Super Awesome Craft loaded");

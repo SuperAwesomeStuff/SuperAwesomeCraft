@@ -32,7 +32,7 @@ Written down before the playtest so it can actually fail:
 
 - The Enchanting Table uses the vanilla shape with **Amethyst Blocks for the Obsidian and Lapis Lazuli for the Diamonds** (1 Book, 2 Lapis, 4 Amethyst Blocks), so enchanting starts in the iron age, before diamonds.
 - **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. The screen copies Ascendant Arcana's: the item goes in on the left, you scroll a list of enchantment tiles in the middle, the selected one is described (with its numbers) top right, and you put its materials into two slots bottom right, which lights up the Enchant button. Removing an enchantment needs a second click to confirm. Books can't go in the item slot; found books go in a material slot as vouchers (below).
-- Enchanted books are never applied at the anvil. The anvil only renames, for free.
+- Enchanted books are never applied to gear at the anvil. The anvil renames for free, and combines two enchanted books for free with vanilla's book rules (two equal levels make the next level; different levels keep the higher).
 
 ### Slots
 
@@ -40,7 +40,7 @@ Every item has a limited number of slots, so you have to choose what goes on it.
 
 - **Every enchantment uses one slot, at any level.** Efficiency I and Efficiency V both take one.
 - **The material sets the slots:** wood, stone, gold and leather 1; copper, iron, chainmail, bows, crossbows, shields, fishing rods and turtle shells 2; diamond, tridents and maces 3; Netherite 4. Smithing an item to Netherite keeps its enchantments and gains the extra slot.
-- **Three one-off upgrades add a slot each**, once per item: a Diamond Block with a Gold Block (Overworld), a Wither Skeleton Skull (Nether) and a Chorus Flower (End). That caps a Netherite item at 7.
+- **Three one-off upgrades add a slot each**, once per item: a Diamond Block with a Gold Block (Overworld), a Wither Skeleton Skull (Nether) and 4 Shulker Shells (End). That caps a Netherite item at 7.
 - **Removing an enchantment at the table (or a grindstone) frees its slot, but the materials are lost.** A bad choice is never permanent, but swapping back and forth isn't free.
 
 A diamond pickaxe fits Efficiency, Unbreaking and one of Silk Touch, Fortune or Excavating, so builder comfort fits on a diamond tool, and the third slot is the real choice.
@@ -59,9 +59,9 @@ Every recipe is in [slots and recipes](recipes.md), which also has the one-scree
 
 - **Each enchantment has one material, and each level costs more of it**: 16 for level I, then 16 more per level (Redstone for Efficiency, Amethyst for Sharpness, Lapis for Fortune, Copper for Unbreaking). A few rare materials cost a flat 4 per level (Blaze Rods for Fire Aspect, Ender Pearls for Reach, TNT for Excavating). This follows how Tinkers' Construct prices its stat modifiers (45 Redstone a level for Haste, 36 Quartz for Sharpness), with a rising cost so farms make low levels cheap but not high ones.
 - **Levels IV and V also need 4 Blaze Rods each**, so the top levels wait for the Nether. Efficiency is the exception: mining speed is Convenience.
-- **The End lives in the last slot upgrade** (a Chorus Flower), so maxed gear still needs the End.
+- **The End lives in the last slot upgrade** (4 Shulker Shells), so maxed gear still needs the End.
 - Materials are mined, dropped, found or simple to craft (TNT), and share themes so they're easy to remember: redstone is speed, lapis is luck, slime is push, blaze rods are fire. Where possible no material repeats on one item's list.
-- **Villagers can sell the bulk materials, but never Blaze Rods, Wither Skeleton Skulls, Chorus Flowers, books for combat or loot enchantments, or enchanted gear.** The climb is protected by slots and the Era materials, not by every ingredient.
+- **Villagers can sell the bulk materials, but never Blaze Rods, Wither Skeleton Skulls, Shulker Shells, books for combat or loot enchantments, or enchanted gear.** The climb is protected by slots and the Era materials, not by every ingredient.
 
 ### Breakpoints
 
@@ -69,7 +69,7 @@ Some thresholds matter more than the levels between them. They're placed on purp
 
 - **Instant-mining stone stays as in vanilla:** a diamond pickaxe with Efficiency V reaches 34 mining speed, stone needs 45, and Haste II from a full beacon lifts it to about 48. Deepslate never instant-mines. Efficiency V is all Overworld, but Haste II needs the Wither, so this lands on the group's beacon: a block players build, which helps whoever stands near it.
 - **Protection IV and Feather Falling IV** need Blaze Rods, so they arrive with the Nether.
-- **Excavating** costs TNT, so builders get it early.
+- **Excavating** costs TNT, so builders get it early. Its slowdown never applies when the tool would instant-mine the block anyway, so Efficiency V with Haste II still instant-mines stone in a 3×3.
 - **Fortune III and Looting III** only go to III, so they're Overworld: 96 Lapis each. Fortune III will be the first thing people chase, and it shouldn't send anyone rushing to a blaze spawner. Watch them in the playtest, since they multiply income.
 
 ### Durability
@@ -94,15 +94,15 @@ Two rules for anything new: **it must do something no existing enchantment does*
 | **Excavating** | Pick, shovel | I | Convenience | Digs 3×3 (above) |
 | **Felling** | Axe | I | Convenience | Cuts a whole tree (above) |
 | **Reach** | Chestplate | II | Convenience | +1 block reach per level for breaking and placing blocks. Never affects hitting mobs |
-| **Magnetism** | Any tool, weapon | I | Convenience | Pulls the drops from *your own* breaks and kills to you, not every item nearby, so hoppers and farms behave as in vanilla |
+| **Magnetism** | Any tool, weapon | I | Convenience | Drops from blocks you mine and mobs you kill in melee go straight into your inventory (what doesn't fit drops as normal). Only *your own* breaks and kills, so hoppers and farms behave as in vanilla |
 | **Smelting** | Pick, shovel, axe | I | Convenience | Mined blocks drop their smelted form (sand to glass, ore to ingot). No bonus drops. Exclusive with Silk Touch |
-| **Harvesting** | Hoe | I | Convenience | Tills 3×3, and right-clicking a ripe crop harvests and replants it |
+| **Harvesting** | Hoe | I | Convenience | Tills 3×3 (crouch for one block), and right-clicking a ripe crop harvests it and replants it with one of its own seeds |
 | **Step Assist** | Boots | I | Convenience | Step up full blocks without jumping |
 | **Beheading** | Sword, axe | III | Convenience | 10% chance per level for a player's kill to drop the mob's head. Vanilla heads (zombie, skeleton, wither skeleton, creeper, piglin, dragon) always work. With the Vanilla Tweaks *More Mob Heads* data pack installed, every mob it covers works too, with the right variant ([research](../../research/more-mob-heads.md)) |
 | **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Can sit beside the other damage enchantments |
 | **Frost Aspect** | Sword, axe, spear, mace | II | Power | Slows the target instead of burning it. Exclusive with Fire Aspect |
 | **Rebounding** | Chestplate | III | Power | Knocks melee attackers away. Can sit beside Thorns, which damages instead |
-| **Bulwark** | Shield | II | Power | No knockback while blocking, and a chance to disable the attacker's weapon. Shields' first real choice |
+| **Bulwark** | Shield | II | Power | -50% knockback per level while held, and blocking a melee hit has a 15% chance per level to disarm the attacker for 5 seconds (a player's weapon goes on cooldown; a mob's hits do nothing). Shields' first real choice |
 
 **Vanilla enchantments on more items** (same name, same effect, nothing new to learn):
 
@@ -112,7 +112,8 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ### Found books, Villagers and curses
 
-- **A found enchanted book is a voucher.** Put it in a material slot and it pays one level's material of an enchantment it holds, then loses that level (a used-up book becomes a plain Book). Blaze Rods for levels IV and V are still needed, and the enchantment still needs a slot.
+- **A found enchanted book is a voucher.** Put it in a material slot and it pays one level's material of an enchantment it holds, then loses that level (a used-up book becomes a plain Book). **A book only pays up to its own level:** taking a pick from Unbreaking I to II needs a book of Unbreaking II or higher. So cheap low-level books (from Librarians, say) can't skip the expensive top levels. Blaze Rods for levels IV and V are still needed, and the enchantment still needs a slot.
+- **Books combine at the anvil for free**, with vanilla's rules, so two level I books make a level II book.
 - **Random sources (loot, fishing, mob drops) cap every enchantment at level III**, the highest level that doesn't need Blaze Rods, so found books are an early boost without skipping the Nether.
 - **Librarians sell Convenience books only.**
 - **Curses come only from loot, don't use a slot, and can be removed at the table for a material cost.**
@@ -139,7 +140,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.11, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.12):** the slot rules, the table screen, every recipe, the slot upgrades, found books as vouchers (up to their own level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.
@@ -154,7 +155,6 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 - **Amounts:** are 32 and 4 per level right? The [recipes](recipes.md) draft is a first pass to tune in the playtest.
 - **Fortune III and Looting III** in the Overworld: is 96 lapis enough of a brake on income multipliers?
 - **Mixing:** with no shared cap, does a sword with three damage enchantments or armour with every Protection turn out too strong, or is the slot cost enough?
-- **New enchantments:** which ones need Java and can wait if time runs short (Magnetism, Smelting, Harvesting, Excavating, Felling and Bulwark's weapon disable all need code).
 - **More vanilla on more items:** Looting and Quick Charge on bows, Multishot on bows, Infinity on crossbows, Thorns on shields?
 - **Repairs:** is 50% per item right for every material, Netherite included?
 

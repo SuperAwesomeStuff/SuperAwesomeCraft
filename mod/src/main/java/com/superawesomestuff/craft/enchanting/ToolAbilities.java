@@ -33,8 +33,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 /**
- * Season 1 tool enchantments with Java behaviour: Excavating (3x3), Felling (whole trees), Smelting (smelted drops) and
- * Beheading (see {@link Beheading}). Area abilities break each extra block through the normal break path, so every block costs
+ * Season 1 tool enchantments with Java behaviour: Excavating (3x3), Felling (whole trees), Smelting (smelted drops),
+ * Magnetism (drops straight to the inventory) and Beheading (see {@link Beheading}). Area abilities break each extra block through the normal break path, so every block costs
  * durability and drops normally. Crouching turns Excavating and Felling off.
  */
 public final class ToolAbilities {
@@ -55,7 +55,16 @@ public final class ToolAbilities {
 		LootTableEvents.MODIFY_DROPS.register((table, context, drops) -> {
 			smelt(context, drops);
 			Beheading.onDrops(table, context, drops);
+			magnetise(context, drops);
 		});
+	}
+
+	/**
+	 * Excavating's mining speed: slower, except when the tool would mine the block instantly anyway (vanilla instant-mines
+	 * when speed reaches 30 times the block's hardness), so Efficiency V with Haste II still instant-mines stone.
+	 */
+	public static float excavatingSpeed(float speed, float hardness) {
+		return speed >= hardness * 30.0F ? speed : speed * EXCAVATING_SPEED;
 	}
 
 	/** True when the player's Excavating tool is digging a block it's good at, so the 3x3 (and its slowdown) applies. */
@@ -148,6 +157,31 @@ public final class ToolAbilities {
 			}
 		}
 		return result;
+	}
+
+	/** Magnetism: drops from blocks you mine and mobs you kill go into your inventory. What doesn't fit drops as normal. */
+	private static void magnetise(LootContext context, List<ItemStack> drops) {
+		ServerPlayer player = null;
+		ItemInstance tool = null;
+		if (context.hasParameter(LootContextParams.BLOCK_STATE)
+			&& context.getOptional(LootContextParams.THIS_ENTITY) instanceof ServerPlayer breaker) {
+			player = breaker;
+			tool = context.getOptional(LootContextParams.TOOL);
+		} else if (context.getOptional(LootContextParams.DAMAGE_SOURCE) instanceof net.minecraft.world.damagesource.DamageSource source
+			&& source.getEntity() instanceof ServerPlayer killer && source.getDirectEntity() == killer) {
+			player = killer;
+			tool = source.getWeaponItem();
+		}
+		if (player == null || tool == null || ModEnchantments.level(context.getLevel().registryAccess(), tool, ModEnchantments.MAGNETISM) <= 0) {
+			return;
+		}
+		for (ListIterator<ItemStack> it = drops.listIterator(); it.hasNext(); ) {
+			ItemStack drop = it.next();
+			player.getInventory().add(drop);
+			if (drop.isEmpty()) {
+				it.remove();
+			}
+		}
 	}
 
 	private static void smelt(LootContext context, List<ItemStack> drops) {

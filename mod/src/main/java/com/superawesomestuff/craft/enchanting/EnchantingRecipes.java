@@ -316,7 +316,7 @@ public final class EnchantingRecipes {
 		Map<SlotUpgrade, List<Cost>> upgrades = new EnumMap<>(SlotUpgrade.class);
 		upgrades.put(SlotUpgrade.OVERWORLD, List.of(Cost.of(Items.DIAMOND_BLOCK, 1), Cost.of(Items.GOLD_BLOCK, 1)));
 		upgrades.put(SlotUpgrade.NETHER, List.of(Cost.of(Items.WITHER_SKELETON_SKULL, 1)));
-		upgrades.put(SlotUpgrade.END, List.of(Cost.of(Items.CHORUS_FLOWER, 1)));
+		upgrades.put(SlotUpgrade.END, List.of(Cost.of(Items.SHULKER_SHELL, 4)));
 
 		return new Table(Map.copyOf(perLevel), 4, Cost.of(Items.BLAZE_ROD, 4), java.util.Set.of(Identifier.withDefaultNamespace("efficiency")),
 			Cost.of(Items.GOLD_INGOT, 32), Map.copyOf(upgrades));

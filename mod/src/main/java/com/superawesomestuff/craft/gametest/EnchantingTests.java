@@ -136,22 +136,86 @@ public class EnchantingTests {
 	}
 
 	@GameTest
-	public void booksAreVouchersForOneLevelEach(GameTestHelper helper) {
+	public void booksPayOneLevelUpToTheirOwnLevel(GameTestHelper helper) {
 		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 		SlotEnchantingMenu menu = new SlotEnchantingMenu(1, player.getInventory(), ContainerLevelAccess.NULL);
 		menu.getSlot(SlotEnchantingMenu.ITEM_SLOT).set(new ItemStack(Items.IRON_SWORD));
-		ItemStack book = net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(
-			new net.minecraft.world.item.enchantment.EnchantmentInstance(ench(helper, Enchantments.KNOCKBACK), 2));
-		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book);
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book(helper, Enchantments.KNOCKBACK, 2));
 		int knockback = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
 			.getId(ench(helper, Enchantments.KNOCKBACK).value());
 		int button = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, knockback);
 
-		helper.assertTrue(menu.clickMenuButton(player, button), "the book pays for level I");
-		helper.assertTrue(menu.clickMenuButton(player, button), "and for level II");
-		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.KNOCKBACK)), 2, "knockback level");
-		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem().is(Items.BOOK), "the used-up book is a plain book");
-		helper.assertFalse(menu.clickMenuButton(player, button), "nothing left to pay with");
+		helper.assertTrue(menu.clickMenuButton(player, button), "a Knockback II book pays for level I");
+		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.KNOCKBACK)), 1, "knockback level");
+		helper.assertValueEqual(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem()
+			.get(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS).getLevel(ench(helper, Enchantments.KNOCKBACK)), 1, "the book lost a level");
+		helper.assertFalse(menu.clickMenuButton(player, button), "a Knockback I book can't pay for level II");
+
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book(helper, Enchantments.KNOCKBACK, 2));
+		helper.assertTrue(menu.clickMenuButton(player, button), "a Knockback II book pays for level II");
+		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem().is(Items.ENCHANTED_BOOK), "one level is left on the book");
+		helper.succeed();
+	}
+
+	private static ItemStack book(GameTestHelper helper, ResourceKey<Enchantment> key, int level) {
+		return net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(
+			new net.minecraft.world.item.enchantment.EnchantmentInstance(ench(helper, key), level));
+	}
+
+	@GameTest
+	public void anvilCombinesBooksWithVanillaRules(GameTestHelper helper) {
+		var stored = net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS;
+		ItemStack two = com.superawesomestuff.craft.enchanting.BookMerging.merge(book(helper, Enchantments.EFFICIENCY, 1), book(helper, Enchantments.EFFICIENCY, 1));
+		helper.assertValueEqual(two.get(stored).getLevel(ench(helper, Enchantments.EFFICIENCY)), 2, "I + I = II");
+		ItemStack higher = com.superawesomestuff.craft.enchanting.BookMerging.merge(book(helper, Enchantments.EFFICIENCY, 3), book(helper, Enchantments.EFFICIENCY, 1));
+		helper.assertTrue(higher.isEmpty(), "III + I would just keep III, so the anvil offers nothing rather than eat a book");
+		ItemStack capped = com.superawesomestuff.craft.enchanting.BookMerging.merge(book(helper, Enchantments.SILK_TOUCH, 1), book(helper, Enchantments.SILK_TOUCH, 1));
+		helper.assertTrue(capped.isEmpty(), "Silk Touch can't go past I, so nothing changes");
+		ItemStack mixed = com.superawesomestuff.craft.enchanting.BookMerging.merge(book(helper, Enchantments.SILK_TOUCH, 1), book(helper, Enchantments.FORTUNE, 1));
+		helper.assertTrue(mixed.isEmpty(), "Fortune conflicts with Silk Touch and is left out");
+		ItemStack two_kinds = com.superawesomestuff.craft.enchanting.BookMerging.merge(book(helper, Enchantments.UNBREAKING, 1), book(helper, Enchantments.EFFICIENCY, 2));
+		helper.assertValueEqual(two_kinds.get(stored).size(), 2, "different enchantments join");
+		helper.assertTrue(com.superawesomestuff.craft.enchanting.BookMerging.merge(new ItemStack(Items.DIAMOND_PICKAXE), book(helper, Enchantments.EFFICIENCY, 1)).isEmpty(), "gear can't be enchanted at the anvil");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void excavatingStillInstantMinesWhenFastEnough(GameTestHelper helper) {
+		float stone = net.minecraft.world.level.block.Blocks.STONE.defaultDestroyTime();
+		// Diamond pickaxe (8) + Efficiency V (26) = 34, times 1.4 for Haste II = 47.6: instant on stone (needs 45).
+		helper.assertValueEqual(com.superawesomestuff.craft.enchanting.ToolAbilities.excavatingSpeed(47.6F, stone), 47.6F, "instant stays instant");
+		helper.assertValueEqual(com.superawesomestuff.craft.enchanting.ToolAbilities.excavatingSpeed(34.0F, stone), 34.0F * 0.3F, "slower otherwise");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void magnetismSendsMinedBlocksToTheInventory(GameTestHelper helper) {
+		helper.setBlock(1, 1, 1, net.minecraft.world.level.block.Blocks.COBBLESTONE);
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		player.setGameMode(GameType.SURVIVAL);
+		ItemStack pick = new ItemStack(Items.IRON_PICKAXE);
+		pick.enchant(ench(helper, sac("magnetism")), 1);
+		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, pick);
+		player.gameMode.destroyBlock(helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1)));
+		helper.assertValueEqual(player.getInventory().countItem(Items.COBBLESTONE), 1, "cobblestone in the inventory");
+		helper.assertItemEntityNotPresent(Items.COBBLESTONE);
+		helper.succeed();
+	}
+
+	@GameTest
+	public void harvestingReplantsRipeCrops(GameTestHelper helper) {
+		helper.setBlock(1, 0, 1, net.minecraft.world.level.block.Blocks.FARMLAND);
+		helper.setBlock(1, 1, 1, net.minecraft.world.level.block.Blocks.WHEAT.defaultBlockState()
+			.setValue(net.minecraft.world.level.block.CropBlock.AGE, 7));
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		ItemStack hoe = new ItemStack(Items.IRON_HOE);
+		hoe.enchant(ench(helper, sac("harvesting")), 1);
+		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, hoe);
+		net.minecraft.core.BlockPos pos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1));
+		com.superawesomestuff.craft.enchanting.Harvesting.harvest(helper.getLevel(), player, pos, helper.getLevel().getBlockState(pos), hoe,
+			net.minecraft.world.InteractionHand.MAIN_HAND);
+		helper.assertValueEqual(helper.getLevel().getBlockState(pos).getValue(net.minecraft.world.level.block.CropBlock.AGE), 0, "replanted");
+		helper.assertItemEntityPresent(Items.WHEAT);
 		helper.succeed();
 	}
 

@@ -64,7 +64,7 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
 
 - **Decided:**
   - Convenience is cheap and early; Power is earned through Eras.
-  - No XP. Mobs keep their hidden XP value for Sculk Catalysts. The anvil only renames, for free.
+  - No XP. Mobs keep their hidden XP value for Sculk Catalysts. The anvil renames and combines enchanted books, both free.
 - **Leaning:**
   - Durability stays but gear never breaks; repair in the crafting grid with its own material, 50% per item. Unbreaking stays, Mending is gone.
   - Enchanting with slots, starting early (Table: Book, 2 Lapis, 4 Amethyst Blocks). Slot count from material, one slot per enchantment at any level, three one-off slot upgrades. Each enchantment has one material that costs more each level (16, then 16 more per level); levels IV and V also need Blaze Rods, except Efficiency. Damage enchantments mix on one weapon and Protections on one armour piece, each in its own slot. About a dozen new enchantments (Excavating, Felling, Reach, Magnetism, Smelting, Harvesting, Step Assist, Beheading, Bane of Illagers, Frost Aspect, Rebounding, Bulwark), each doing something no vanilla one does; Breach also goes on swords, axes and spears. See [Season 1 enchanting](season-1/enchanting/README.md).
