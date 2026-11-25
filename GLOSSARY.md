@@ -1,35 +1,85 @@
-# Super Awesome Craft
+# SuperAwesomeCraft
 
 A Minecraft total conversion for a small friends server. Vanilla's moment-to-moment play stays familiar; progression, economy and shared goals are replaced.
 
-## Language
+## Design
 
-**Era**:
-A stage of progression with its own dimension, materials and power tier. The whole world advances to the next Era when any player clears one of its Strongholds.
-_Avoid_: Tier, chapter, age
+**Season**:
+One build-and-playtest cycle that replaces one part of vanilla and answers one design question. Parts not yet built stay vanilla.
+_Avoid_: Update, version, phase
 
-**Stronghold**:
-The dungeon that ends an Era, named for the dimension its portal leads to (a Nether Stronghold holds the first portal to the Nether). It contains group encounters and ends in a Climax fight; winning it opens the Stronghold's portal. A world has several of each, placed by learnable rules, and a cleared one can be fought again.
-_Avoid_: Stronghold, gate dungeon, boss arena
-
-**Climax fight**:
-The final encounter of an Stronghold. It takes place in an arena the game designed, which players cannot relocate or cheese.
-_Avoid_: Boss fight
-
-**World unlock**:
-The opening of the next Era for everyone on the server when any player first clears one of its Strongholds. No player is ever blocked from content another player can reach.
-_Avoid_: Personal unlock, gate condition
-
-**Catch-up easing**:
-Help for players who are behind that comes from other players' actions in the world, such as materials, blocks and crafting stations carried back from a new dimension, or copied enchanted books. Never an automatic server-wide unlock.
-_Avoid_: Rubber-banding
+**Motivation**:
+A reason a player plays, such as huge projects, collecting or power. Players combine several; the design targets motivations, not archetypes.
+_Avoid_: Archetype, player type, class
 
 **Convenience**:
-Quality-of-life capability such as mining speed, builder tools, storage, mobility and block access. Available early and without combat.
-_Avoid_: Utility gear
+Quality-of-life capability such as mining speed, builder tools, storage, mobility and block access. Cheap, early and available without combat.
+_Avoid_: Utility gear, comfort
 
 **Power**:
 Combat capability such as damage, protection, survivability and Heart upgrades. Earned through Eras.
+
+**Technical parity**:
+The rule that vanilla mechanics behave exactly as in vanilla: physics, redstone timing, mob AI, spawning and item movement. It protects how mechanics behave, not whether a resource or system exists; changed behavior ships as a separate variant beside the vanilla one.
+_Avoid_: Vanilla compatibility
+
+## Progression
+
+**Era**:
+A stage of progression tied to one dimension, with its own materials and power tier.
+_Avoid_: Tier, chapter, age
+
+**Stronghold**:
+The dungeon that ends an Era, named for the dimension its portal leads to (a Nether Stronghold holds the first portal to the Nether). A world has several of each kind, and a cleared one can be fought again.
+_Avoid_: Era Gate, gate dungeon, boss arena
+
+**Climax fight**:
+The final encounter of a Stronghold, held in an arena the game designed. Winning it opens the Stronghold's portal.
+_Avoid_: Boss fight, final fight
+
+**Portal**:
+The way into an Era's dimension, and the only thing that unlocks for the whole world. The first one is opened by a Climax fight; later ones are built from that dimension's materials.
+_Avoid_: World unlock, gate
+
+**Catch-up easing**:
+Help for players who are behind that comes from other players carrying things back, such as materials, blocks and crafting stations from a new dimension. Never an automatic server-wide unlock.
+_Avoid_: Rubber-banding
+
+**Heart upgrade**:
+A permanent increase to a player's max health, found while exploring an Era's dimension.
+_Avoid_: Life crystal
+
+## Gear
+
+**Slot**:
+Room on an item for one enchantment, at any level. How many an item has depends on its material, plus up to three Slot upgrades.
+_Avoid_: Capacity, modifier slot, upgrade slot, ability slot, enchanting power
+
+**Slot upgrade**:
+A one-off upgrade that adds a Slot to an item, each paid with a material from a different Era.
+
+**Augment**:
+A proposed slotted part that adds a raw stat, such as speed, damage or protection, to an item. Raw stats may come from enchantments or tool tiers instead.
+_Avoid_: Relic, gem, upgrade part
+
+## World and getting around
+
+**Per-player loot**:
+Generated loot containers that roll separately for each player who opens them. The first player to arrive never empties them for others.
+_Avoid_: Shared loot, instanced chests
+
+**Grave**:
+A container holding a player's items after death. It never despawns, and Convenience tools can locate it, reclaim it, or return the player to it.
+_Avoid_: Corpse, gravestone
+
+**Travel cart**:
+The fast minecart variant built for getting around, beside the unchanged vanilla minecart.
+_Avoid_: Fast minecart, locomotion cart
+
+**Gold rail**:
+A stronger powered rail that boosts only Travel carts beyond vanilla speed.
+
+## Settlements and social
 
 **Settlement**:
 A player-built place that Villagers move into and use. Its Prosperity unlocks trades and services, and it draws Raids.
@@ -41,50 +91,5 @@ A Settlement's level of development, derived from what has been built and how it
 **Raid**:
 A wave-based group encounter against a Settlement that scales with its Prosperity. It never destroys player blocks.
 
-**Motivation**:
-A reason a player plays, such as huge projects, collecting or power. Players combine several; the design targets motivations, not archetypes.
-_Avoid_: Archetype, player type, class
-
-**Per-player loot**:
-Generated loot containers that roll separately for each player who opens them. The first player to arrive never empties them for others.
-_Avoid_: Shared loot, instanced chests
-
-**Technical parity**:
-The rule that vanilla mechanics behave exactly as in vanilla: physics, redstone timing, mob AI, spawning and item movement. It protects how mechanics behave, not whether a resource or system exists. Changed behavior ships as a separate variant, such as the Travel cart beside the unchanged minecart.
-_Avoid_: Vanilla compatibility
-
-**Grave**:
-A container holding a player's items after death. It never despawns, and Convenience tools can locate it, reclaim it, or return the player to it.
-
 **Collection Log**:
 A per-player record of distinct items, creatures and places discovered, with rewards for breadth.
-
-**Heart upgrade**:
-A permanent increase to a player's max health, found while exploring an Era's dimension.
-_Avoid_: Life crystal
-
-**Catalyst**:
-A material consumed to apply an enchantment level.
-_Avoid_: Reagent, ingredient
-
-**Augment**:
-A slotted part that adds a raw stat, such as speed, damage or protection, to an item. Found or crafted. Under review: raw stats may come from enchantments or tool tiers instead.
-_Avoid_: Relic, gem, upgrade part
-
-**Slot**:
-Room on an item for one enchantment, at any level. How many an item has depends on its material, plus up to three one-off upgrades.
-_Avoid_: Capacity, modifier slot, upgrade slot, ability slot, enchanting power
-
-**Travel cart**:
-The fast minecart variant built for getting around. The vanilla minecart is unchanged.
-_Avoid_: Fast minecart, locomotion cart
-
-**Gold rail**:
-A stronger powered rail that only boosts Travel carts beyond vanilla speed. Powered rails are crafted from copper.
-
-**Season**:
-One build-and-playtest cycle that replaces one part of vanilla and answers one design question. Parts not yet built stay vanilla.
-_Avoid_: Update, version, phase
-
-**Portal**:
-The way into an Era's dimension. The first one sits at the end of a Stronghold; later ones are built from materials gathered in that dimension.

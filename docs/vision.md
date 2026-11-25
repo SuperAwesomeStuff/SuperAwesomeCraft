@@ -53,7 +53,7 @@ The design targets **motivations**, not fixed archetypes, because every real pla
 The game advances through a small number of **Eras**. Each Era ends at a **Stronghold**, named for the dimension it leads to: the Nether Stronghold holds the first portal to the Nether, and so on. It's a dungeon with group encounters, ending in a climax fight in an arena built into it. Clearing it gives:
 
 - the Stronghold's portal opens: the first way into the next dimension, for the whole world (see [ADR-0003](adr/0003-world-progression-through-portals.md)),
-- new materials, Catalysts and trades,
+- new materials and trades,
 - the next tier of power.
 
 Progression belongs to the world. Once a portal to a new dimension exists, anyone can walk through it and do anything there. Nothing checks whether a player personally cleared a Stronghold.

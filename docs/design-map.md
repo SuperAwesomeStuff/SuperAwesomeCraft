@@ -7,7 +7,7 @@ Systems wanted for the Season 1 playtest are gathered in the [playtest wishlist]
 ```
 SuperAwesomeCraft
 ├── How we build it ── Seasons, Fabric client+server mod, modpack
-├── Progression ────── Eras = dimensions, Strongholds, portals, world unlock
+├── Progression ────── Eras = dimensions, Strongholds, portals
 │   ├── Overworld → Nether → Sky dimension → End
 │   ├── Strongholds (dungeons, climax fights, rituals)
 │   └── Catch-up easing (trades, carrying stuff back)
@@ -70,9 +70,9 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Enchanting with slots, starting early (Table: Book, 2 Lapis, 4 Amethyst Blocks). Slot count from material, one slot per enchantment at any level, three one-off slot upgrades. Each enchantment has one material that costs more each level (16, then 16 more per level); levels IV and V also need Blaze Rods, except Efficiency. Damage enchantments mix on one weapon and Protections on one armour piece, each in its own slot. About a dozen new enchantments (Excavating, Felling, Reach, Magnetism, Smelting, Harvesting, Step Assist, Beheading, Bane of Illagers, Frost Aspect, Rebounding, Bulwark), each doing something no vanilla one does; Breach also goes on swords, axes and spears. See [Season 1 enchanting](season-1/enchanting/README.md).
 - **Ideas:**
   - Every system can be learned in-game without a wiki or recipe viewer (recipe book, tooltips). Ascendant Arcana's Relics fail this.
-  - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use Catalysts.
+  - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use the enchanting materials.
   - A Villager starts trading an Era's materials once a player gives it some.
-  - In Season 1, librarians sell Catalysts and new-system books; other trades stay vanilla.
+  - In Season 1, librarians sell enchanting materials and new-system books; other trades stay vanilla.
   - A Season 1 Villager trade rework in the spirit of the Super Awesome Villagers datapack (not brainstormed yet). Enchanted books are uncapped and combine at the anvil, so book prices should keep a high-level book (Efficiency V from 16 level I books) a reasonable cost, not a shortcut.
   - From the retired [library design](season-1/enchanting/retired/library.md), in case shared progress needs a boost later:
     - **Library tab:** a chest-like tab in the table showing every Chiseled Bookshelf nearby.

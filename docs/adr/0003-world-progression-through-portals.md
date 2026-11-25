@@ -2,7 +2,7 @@
 
 **Status:** Accepted. Supersedes [ADR-0002](0002-personal-progression-with-catch-up-easing.md).
 
-ADR-0002 made progression personal: clearing an Stronghold unlocked the next Era only for the player who cleared it. In practice, that means a player whose friends say "come with us" gets stopped by a condition they haven't met, and has to go and earn something that's right in front of them. Per-player gate checks also have to be built and maintained on every piece of gated content.
+ADR-0002 made progression personal: clearing a Stronghold unlocked the next Era only for the player who cleared it. In practice, that means a player whose friends say "come with us" gets stopped by a condition they haven't met, and has to go and earn something that's right in front of them. Per-player gate checks also have to be built and maintained on every piece of gated content.
 
 Eras are now dimensions, which gives a simpler gate. **Each Era ends at a Stronghold whose climax fight opens the first portal to the next dimension. Inside, players gather materials to build more portals. Once a portal exists in the world, anyone can use it and do anything on the other side.** Nothing checks whether a player personally cleared a Stronghold. Progression belongs to the world, like Terraria's.
 
