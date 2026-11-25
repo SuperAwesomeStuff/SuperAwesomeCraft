@@ -49,7 +49,6 @@ That's the whole system: slots from material, one material per enchantment that 
 | Magma Blocks | Fire Protection |
 | Cactus | Thorns |
 | Wind Charges | Sweeping Edge |
-| Pufferfish | Respiration |
 | Prismarine Crystals | Aqua Affinity |
 | Prismarine Shards | Depth Strider, Impaling |
 | Snow Blocks | Frost Walker, Frost Aspect |
@@ -63,6 +62,7 @@ That's the whole system: slots from material, one material per enchantment that 
 | Cobwebs | Silk Touch |
 | TNT | Excavating |
 | Obsidian | Blast Protection |
+| Pufferfish | Respiration |
 | Diamonds | Breach, Infinity |
 | Ender Pearls | Reach, Loyalty |
 | Breeze Rods | Lunge, Wind Burst |
@@ -96,7 +96,7 @@ That's the whole system: slots from material, one material per enchantment that 
 
 - **Rising costs replace 32 per level.** High levels of common enchantments cost more than before (Sharpness V: 240 Amethyst, was 160); low levels cost less.
 - **Efficiency IV and V no longer need Blaze Rods.** Instant mining still lands on the beacon (Haste II).
-- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Diamonds for Breach (it ignores armour, so it costs a rare material), Obsidian for Blast Protection, Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, Pufferfish for Respiration (they make Water Breathing), Prismarine Crystals for Aqua Affinity, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, a Heart of the Sea for Channeling.
+- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Diamonds for Breach (it ignores armour, so it costs a rare material), Obsidian for Blast Protection, Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, 4 Pufferfish a level for Respiration (they make Water Breathing), Prismarine Crystals for Aqua Affinity, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, a Heart of the Sea for Channeling.
 - **Slot upgrades:** a Wither Skeleton Skull replaces the Nether Star (the Nether upgrade no longer needs the Wither), and a Chorus Flower replaces 4 Shulker Shells.
 - **Emeralds are a material for one enchantment** (Bane of Illagers), so trading can buy that one. Accepted because it's niche.
 - **No separate ability slot.** Silk Touch, Fortune and Excavating compete for ordinary slots, and vanilla exclusivity still stops Silk Touch with Fortune.

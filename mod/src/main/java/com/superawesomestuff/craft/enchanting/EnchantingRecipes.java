@@ -297,7 +297,6 @@ public final class EnchantingRecipes {
 		d.rising(Items.MAGMA_BLOCK, "fire_protection");
 		d.rising(Items.CACTUS, "thorns");
 		d.rising(Items.WIND_CHARGE, "sweeping_edge");
-		d.rising(Items.PUFFERFISH, "respiration");
 		d.rising(Items.PRISMARINE_CRYSTALS, "aqua_affinity");
 		d.rising(Items.PRISMARINE_SHARD, "depth_strider", "impaling");
 		d.rising(Items.SNOW_BLOCK, "frost_walker", "sac:frost_aspect");
@@ -307,6 +306,7 @@ public final class EnchantingRecipes {
 		perLevel.put(Identifier.withDefaultNamespace("channeling"), Cost.of(Items.HEART_OF_THE_SEA, 1));
 		d.rare(Items.TNT, "sac:excavating");
 		d.rare(Items.OBSIDIAN, "blast_protection");
+		d.rare(Items.PUFFERFISH, "respiration");
 		d.rare(Items.DIAMOND, "breach", "infinity");
 		d.rare(Items.ENDER_PEARL, "sac:reach", "loyalty");
 		d.rare(Items.BREEZE_ROD, "lunge", "wind_burst");
