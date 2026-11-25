@@ -45,7 +45,7 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 	private static final int INFO_H = 52;
 	private static final int MATERIAL_BOX_Y = 64;
 	private static final int MATERIAL_BOX_H = LIST_Y + LIST_H - MATERIAL_BOX_Y;
-	private static final int BUTTON_Y = 108;
+	private static final int BUTTON_Y = 106;
 	private static final int BUTTON_H = 14;
 	private static final int ACTION_X = 166;
 	private static final int ACTION_W = 41;
