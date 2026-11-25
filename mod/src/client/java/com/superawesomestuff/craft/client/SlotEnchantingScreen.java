@@ -121,8 +121,8 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		return entry.kind == Kind.ENCHANTMENT ? this.menu.addCosts(entry.enchantment, entry.add) : entry.add.costs();
 	}
 
-	private boolean usesVoucher(Entry entry) {
-		return entry.kind == Kind.ENCHANTMENT && entry.add.ok() && this.menu.voucherSlot(entry.enchantment) >= 0;
+	private boolean usesBook(Entry entry) {
+		return entry.kind == Kind.ENCHANTMENT && entry.add.ok() && this.menu.bookSlot(entry.enchantment) >= 0;
 	}
 
 	private boolean canAdd(Entry entry) {
@@ -322,8 +322,9 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 		if (entry.add.ok()) {
 			List<Cost> costs = this.payCosts(entry);
 			int row = 0;
-			if (this.usesVoucher(entry)) {
-				this.smallWrapped(graphics, Component.translatable("superawesomecraft.enchanting.voucher"), labelX,
+			if (this.usesBook(entry)) {
+				Component level = Component.translatable("enchantment.level." + this.menu.bookTarget(entry.enchantment));
+				this.smallWrapped(graphics, Component.translatable("superawesomecraft.enchanting.book", level), labelX,
 					y + SlotEnchantingMenu.MATERIAL_Y + 1, labelW, GREEN, 2);
 				row = 1;
 			}
@@ -334,7 +335,7 @@ public class SlotEnchantingScreen extends AbstractContainerScreen<SlotEnchanting
 				this.smallWrapped(graphics, label, labelX, y + SlotEnchantingMenu.MATERIAL_Y + 1 + (row + i) * SlotEnchantingMenu.MATERIAL_GAP,
 					labelW, enough ? TEXT_LIGHT : RED, 2);
 			}
-			if (costs.isEmpty() && !this.usesVoucher(entry)) {
+			if (costs.isEmpty() && !this.usesBook(entry)) {
 				this.small(graphics, Component.translatable("superawesomecraft.enchanting.free"), labelX, y + SlotEnchantingMenu.MATERIAL_Y + 4, GREEN);
 			}
 		} else {

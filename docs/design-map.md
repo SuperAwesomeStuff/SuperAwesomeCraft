@@ -73,6 +73,7 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use Catalysts.
   - A Villager starts trading an Era's materials once a player gives it some.
   - In Season 1, librarians sell Catalysts and new-system books; other trades stay vanilla.
+  - A Season 1 Villager trade rework in the spirit of the Super Awesome Villagers datapack (not brainstormed yet). Enchanted books are uncapped and combine at the anvil, so book prices should keep a high-level book (Efficiency V from 16 level I books) a reasonable cost, not a shortcut.
   - From the retired [library design](season-1/enchanting/retired/library.md), in case shared progress needs a boost later:
     - **Library tab:** a chest-like tab in the table showing every Chiseled Bookshelf nearby.
     - **Chipping in:** a table holds a half-paid recipe that anyone can add materials to.

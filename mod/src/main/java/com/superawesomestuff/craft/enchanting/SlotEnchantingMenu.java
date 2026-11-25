@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -23,8 +24,8 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * The Season 1 enchanting table, laid out like Ascendant Arcana's. Slots: the item, and two material slots the player
- * fills from their inventory to pay for the selected enchantment. An enchanted book in a material slot is a voucher: it
- * pays one level's material of an enchantment it holds, up to the book's own level, and loses that level. Actions arrive as menu button ids:
+ * fills from their inventory to pay for the selected enchantment. An enchanted book in a material slot takes one of its
+ * enchantments straight up to the book's level instead, and that enchantment comes off the book. Actions arrive as menu button ids:
  * {@code action * 1000 + argument}.
  */
 public class SlotEnchantingMenu extends AbstractContainerMenu {
@@ -78,7 +79,7 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		this.addStandardInventorySlots(inventory, INVENTORY_X, INVENTORY_Y);
 	}
 
-	/** Tools, weapons and armour go in the item slot. Books don't: they're vouchers, used from a material slot. */
+	/** Tools, weapons and armour go in the item slot. Books don't: they're used from a material slot. */
 	public static boolean canEnchant(ItemStack stack) {
 		return !stack.is(Items.BOOK) && !stack.is(Items.ENCHANTED_BOOK)
 			&& (stack.isDamageableItem() || stack.has(DataComponents.ENCHANTABLE));
@@ -97,48 +98,72 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		return Payment.count(this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, cost);
 	}
 
-	// Book vouchers
+	// Books
 
 	/**
-	 * The material slot holding a book that can pay for the next level of {@code enchantment}, or -1. A book pays only up
-	 * to its own level: taking an item to level III needs a book of level III or higher. That way cheap low-level books
-	 * (from Villagers, say) can't pay for the expensive top levels.
+	 * The material slot holding the best book for {@code enchantment}, or -1. A book takes the enchantment straight up to
+	 * the book's level, so it only counts if that's higher than the item's current level.
 	 */
-	public int voucherSlot(Holder<Enchantment> enchantment) {
-		int target = EnchantRules.enchantments(this.item()).getLevel(enchantment) + 1;
+	public int bookSlot(Holder<Enchantment> enchantment) {
+		int current = EnchantRules.enchantments(this.item()).getLevel(enchantment);
+		int best = -1;
+		int bestLevel = current;
 		for (int i = FIRST_MATERIAL_SLOT; i <= LAST_MATERIAL_SLOT; i++) {
 			ItemStack stack = this.table.getItem(i);
-			if (stack.is(Items.ENCHANTED_BOOK)
-				&& stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) >= target) {
-				return i;
+			int level = stack.is(Items.ENCHANTED_BOOK)
+				? stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment) : 0;
+			if (level > bestLevel) {
+				best = i;
+				bestLevel = level;
 			}
 		}
-		return -1;
+		return best;
 	}
 
-	/** What adding a level of {@code enchantment} costs right now: a book voucher replaces its material (not Blaze Rods). */
+	/** The level a book in the material slots would take {@code enchantment} to, or 0 if there's no usable book. */
+	public int bookTarget(Holder<Enchantment> enchantment) {
+		int slot = this.bookSlot(enchantment);
+		if (slot < 0) {
+			return 0;
+		}
+		int level = this.table.getItem(slot).getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment);
+		return Math.min(level, enchantment.value().getMaxLevel());
+	}
+
+	/**
+	 * What adding {@code enchantment} costs right now. With a book, the book replaces the materials for every level it
+	 * adds, but the high-level cost (Blaze Rods) is still due for each level from {@link EnchantingRecipes#highLevelFrom()}
+	 * it adds.
+	 */
 	public List<Cost> addCosts(Holder<Enchantment> enchantment, EnchantRules.Check check) {
-		if (!check.ok() || this.voucherSlot(enchantment) < 0 || check.costs().isEmpty()) {
+		int target = this.bookTarget(enchantment);
+		if (!check.ok() || target == 0) {
 			return check.costs();
 		}
-		return check.costs().subList(1, check.costs().size());
+		int current = EnchantRules.enchantments(this.item()).getLevel(enchantment);
+		Identifier id = EnchantRules.id(enchantment);
+		if (id != null && EnchantingRecipes.highLevelExempt(id)) {
+			return List.of();
+		}
+		int highLevels = Math.max(0, target - Math.max(current, EnchantingRecipes.highLevelFrom() - 1));
+		if (highLevels == 0) {
+			return List.of();
+		}
+		Cost high = EnchantingRecipes.highLevelCost();
+		return List.of(new Cost(high.display(), high.tag(), high.count() * highLevels, 0));
 	}
 
-	private void spendVoucher(int slot, Holder<Enchantment> enchantment) {
+	/** Takes {@code enchantment} off the book in {@code slot}. A book with nothing left becomes a plain Book. */
+	private void spendBook(int slot, Holder<Enchantment> enchantment) {
 		ItemStack book = this.table.getItem(slot);
-		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
-		int level = stored.getLevel(enchantment);
-		ItemEnchantments.Mutable mutable = new ItemEnchantments.Mutable(stored);
-		if (level <= 1) {
-			mutable.removeIf(enchantment::equals);
-		} else {
-			mutable.set(enchantment, level - 1);
-		}
-		ItemEnchantments left = mutable.toImmutable();
-		if (left.isEmpty()) {
+		ItemEnchantments.Mutable left = new ItemEnchantments.Mutable(
+			book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY));
+		left.removeIf(enchantment::equals);
+		ItemEnchantments rest = left.toImmutable();
+		if (rest.isEmpty()) {
 			this.table.setItem(slot, book.transmuteCopy(Items.BOOK));
 		} else {
-			book.set(DataComponents.STORED_ENCHANTMENTS, left);
+			book.set(DataComponents.STORED_ENCHANTMENTS, rest);
 		}
 	}
 
@@ -166,12 +191,15 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				if (action == ACTION_ADD) {
 					check = EnchantRules.checkAddLevel(item, enchantment);
 					costs = this.addCosts(enchantment, check);
-					int voucher = this.voucherSlot(enchantment);
+					int bookSlot = this.bookSlot(enchantment);
+					int target = this.bookTarget(enchantment);
 					apply = () -> {
-						if (voucher >= 0 && costs.size() < check.costs().size()) {
-							this.spendVoucher(voucher, enchantment);
+						if (bookSlot >= 0) {
+							this.spendBook(bookSlot, enchantment);
+							EnchantRules.setLevel(item, enchantment, target);
+						} else {
+							EnchantRules.addLevel(item, enchantment);
 						}
-						EnchantRules.addLevel(item, enchantment);
 					};
 				} else {
 					check = EnchantRules.checkRemove(item, enchantment);

@@ -206,6 +206,11 @@ public final class EnchantRules {
 		return new Check(Status.OK, costs);
 	}
 
+	/** Sets {@code enchantment} on {@code stack} to exactly {@code level} (used by books). */
+	public static void setLevel(ItemStack stack, Holder<Enchantment> enchantment, int level) {
+		EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.set(enchantment, level));
+	}
+
 	public static void addLevel(ItemStack stack, Holder<Enchantment> enchantment) {
 		int level = enchantments(stack).getLevel(enchantment);
 		EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.set(enchantment, level + 1));

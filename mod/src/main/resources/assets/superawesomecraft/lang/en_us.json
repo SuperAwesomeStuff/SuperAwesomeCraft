@@ -91,9 +91,9 @@
   "superawesomecraft.enchanting.button.confirm": "Sure?",
   "superawesomecraft.durability.repair": "Repair with: %s",
   "superawesomecraft.durability.repair_any": "%s or similar",
-  "superawesomecraft.enchanting.voucher": "Book pays this level",
   "enchantment.superawesomecraft.magnetism": "Magnetism",
   "enchantment.superawesomecraft.harvesting": "Harvesting",
   "superawesomecraft.enchanting.desc.superawesomecraft.magnetism": "What you mine or kill goes straight to your inventory.",
-  "superawesomecraft.enchanting.desc.superawesomecraft.harvesting": "Tills 3x3. Right-click ripe crops to harvest and replant."
+  "superawesomecraft.enchanting.desc.superawesomecraft.harvesting": "Tills 3x3. Right-click ripe crops to harvest and replant.",
+  "superawesomecraft.enchanting.book": "Book takes this to %s"
 }

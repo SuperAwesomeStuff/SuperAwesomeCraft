@@ -72,7 +72,7 @@ That's the whole system: slots from material, one material per enchantment that 
 **One-off:** Channeling costs 1 Heart of the Sea (it has only one level).
 
 - **Removing a curse:** 32 Gold Ingots.
-- **Found books:** vouchers. In a material slot, a book pays one level's material of an enchantment it holds and loses that level, but only up to the book's own level (Unbreaking I to II needs an Unbreaking II book). Blaze Rods and slots still apply. Two books combine at the anvil for free with vanilla's rules.
+- **Found books:** in a material slot, a book takes one of its enchantments straight up to the book's level, if that's higher than the item's, and the enchantment comes off the book. Blaze Rods for levels IV and V and slots still apply. Two books combine at the anvil for free with vanilla's rules.
 - **Repair:** in the crafting grid, the item plus its own material. Each material item restores 50%. Elytra repair with Popped Chorus Fruit.
 
 ## What a finished item costs

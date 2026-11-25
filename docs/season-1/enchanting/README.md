@@ -112,7 +112,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ### Found books, Villagers and curses
 
-- **A found enchanted book is a voucher.** Put it in a material slot and it pays one level's material of an enchantment it holds, then loses that level (a used-up book becomes a plain Book). **A book only pays up to its own level:** taking a pick from Unbreaking I to II needs a book of Unbreaking II or higher. So cheap low-level books (from Librarians, say) can't skip the expensive top levels. Blaze Rods for levels IV and V are still needed, and the enchantment still needs a slot.
+- **A found enchanted book takes an enchantment up to the book's level.** Put it in a material slot instead of the materials: a Sharpness III book takes a sword from nothing (or Sharpness I) straight to Sharpness III, and that enchantment comes off the book (an empty book becomes a plain Book). It only works if the book's level is higher than the item's. Blaze Rods are still due for each level IV and V the book adds (not for Efficiency), and the enchantment still needs a slot. A low-level book can't help with high levels, so cheap books can't skip the expensive top. Books aren't capped: the planned Villager rework is where book prices get kept sensible.
 - **Books combine at the anvil for free**, with vanilla's rules, so two level I books make a level II book.
 - **Random sources (loot, fishing, mob drops) cap every enchantment at level III**, the highest level that doesn't need Blaze Rods, so found books are an early boost without skipping the Nether.
 - **Librarians sell Convenience books only.**
@@ -140,7 +140,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.12):** the slot rules, the table screen, every recipe, the slot upgrades, found books as vouchers (up to their own level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.13):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

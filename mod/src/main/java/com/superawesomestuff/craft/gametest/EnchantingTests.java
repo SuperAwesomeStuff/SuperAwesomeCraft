@@ -136,24 +136,31 @@ public class EnchantingTests {
 	}
 
 	@GameTest
-	public void booksPayOneLevelUpToTheirOwnLevel(GameTestHelper helper) {
+	public void booksTakeAnEnchantmentUpToTheirLevel(GameTestHelper helper) {
 		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 		SlotEnchantingMenu menu = new SlotEnchantingMenu(1, player.getInventory(), ContainerLevelAccess.NULL);
 		menu.getSlot(SlotEnchantingMenu.ITEM_SLOT).set(new ItemStack(Items.IRON_SWORD));
 		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book(helper, Enchantments.KNOCKBACK, 2));
-		int knockback = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
-			.getId(ench(helper, Enchantments.KNOCKBACK).value());
-		int button = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, knockback);
+		var registry = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+		int knockback = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, registry.getId(ench(helper, Enchantments.KNOCKBACK).value()));
 
-		helper.assertTrue(menu.clickMenuButton(player, button), "a Knockback II book pays for level I");
-		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.KNOCKBACK)), 1, "knockback level");
-		helper.assertValueEqual(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem()
-			.get(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS).getLevel(ench(helper, Enchantments.KNOCKBACK)), 1, "the book lost a level");
-		helper.assertFalse(menu.clickMenuButton(player, button), "a Knockback I book can't pay for level II");
+		helper.assertTrue(menu.clickMenuButton(player, knockback), "a Knockback II book takes a fresh sword to Knockback II");
+		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.KNOCKBACK)), 2, "knockback level");
+		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem().is(Items.BOOK), "the used book is a plain book");
 
 		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book(helper, Enchantments.KNOCKBACK, 2));
-		helper.assertTrue(menu.clickMenuButton(player, button), "a Knockback II book pays for level II");
-		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).getItem().is(Items.ENCHANTED_BOOK), "one level is left on the book");
+		helper.assertValueEqual(menu.bookSlot(ench(helper, Enchantments.KNOCKBACK)), -1, "a Knockback II book can't raise Knockback II");
+		helper.assertFalse(menu.clickMenuButton(player, knockback), "and there are no materials either");
+
+		// High levels still cost Blaze Rods, even from a book.
+		menu.getSlot(SlotEnchantingMenu.ITEM_SLOT).set(new ItemStack(Items.NETHERITE_SWORD));
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(book(helper, Enchantments.SHARPNESS, 5));
+		int sharpness = SlotEnchantingMenu.button(SlotEnchantingMenu.ACTION_ADD, registry.getId(ench(helper, Enchantments.SHARPNESS).value()));
+		helper.assertFalse(menu.clickMenuButton(player, sharpness), "Sharpness V from a book still needs Blaze Rods");
+		menu.getSlot(SlotEnchantingMenu.LAST_MATERIAL_SLOT).set(new ItemStack(Items.BLAZE_ROD, 8));
+		helper.assertTrue(menu.clickMenuButton(player, sharpness), "8 Blaze Rods for levels IV and V");
+		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.SHARPNESS)), 5, "sharpness level");
+		helper.assertTrue(menu.getSlot(SlotEnchantingMenu.LAST_MATERIAL_SLOT).getItem().isEmpty(), "the Blaze Rods were spent");
 		helper.succeed();
 	}
 
