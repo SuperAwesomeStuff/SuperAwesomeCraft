@@ -46,7 +46,6 @@ That's the whole system: slots from material, one material per enchantment that 
 | Slime Balls | Knockback, Punch, Rebounding, Step Assist |
 | Feathers | Feather Falling |
 | Leather | Projectile Protection |
-| Gunpowder | Blast Protection |
 | Magma Blocks | Fire Protection |
 | Cactus | Thorns |
 | Wind Charges | Sweeping Edge |
@@ -62,6 +61,7 @@ That's the whole system: slots from material, one material per enchantment that 
 | Blaze Rods | Fire Aspect, Flame, Smelting |
 | Cobwebs | Silk Touch |
 | TNT | Excavating |
+| Obsidian | Blast Protection |
 | Diamonds | Breach, Infinity |
 | Ender Pearls | Reach, Loyalty |
 | Breeze Rods | Lunge, Wind Burst |
@@ -95,6 +95,6 @@ That's the whole system: slots from material, one material per enchantment that 
 
 - **Rising costs replace 32 per level.** High levels of common enchantments cost more than before (Sharpness V: 240 Amethyst, was 160); low levels cost less.
 - **Efficiency IV and V no longer need Blaze Rods.** Instant mining still lands on the beacon (Haste II).
-- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Diamonds for Breach (it ignores armour, so it costs a rare material), Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, a Heart of the Sea for Channeling.
+- **New materials:** Copper for Unbreaking, Cobwebs for Silk Touch, Emeralds for Bane of Illagers, Diamonds for Breach (it ignores armour, so it costs a rare material), Obsidian for Blast Protection, Magma Blocks for Fire Protection (you need it before the Nether), Wind Charges for Sweeping Edge, TNT for Excavating (Convenience shouldn't need Diamonds), Blaze Rods for Fire Aspect, Flame and Smelting, a Heart of the Sea for Channeling.
 - **Emeralds are a material for one enchantment** (Bane of Illagers), so trading can buy that one. Accepted because it's niche.
 - **No separate ability slot.** Silk Touch, Fortune and Excavating compete for ordinary slots, and vanilla exclusivity still stops Silk Touch with Fortune.
