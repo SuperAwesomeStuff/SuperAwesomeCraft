@@ -31,7 +31,7 @@ Written down before the playtest so it can actually fail:
 ### The table
 
 - The Enchanting Table uses the vanilla shape with **Amethyst Blocks for the Obsidian and Lapis Lazuli for the Diamonds** (1 Book, 2 Lapis, 4 Amethyst Blocks), so enchanting starts in the iron age, before diamonds.
-- **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. The screen copies Ascendant Arcana's: the item goes in on the left, you scroll a list of enchantment tiles in the middle, the selected one is described (with its numbers) top right, and you put its materials into two slots bottom right, which lights up the Enchant button. Removing an enchantment needs a second click to confirm. Books can't go in the item slot; found books go in a material slot as vouchers (below).
+- **All enchanting happens at the table.** Crafting stays vanilla: no tool parts, no smeltery. The screen copies Ascendant Arcana's: the item goes in on the left, you scroll a list of enchantment tiles in the middle, the selected one is described (with its numbers) top right, and you put its materials into two slots bottom right, which lights up the Enchant button. Removing an enchantment needs a second click to confirm. Books can't go in the item slot; found books go in a material slot instead of materials (below).
 - Enchanted books are never applied to gear at the anvil. The anvil renames for free, and combines two enchanted books for free with vanilla's book rules (two equal levels make the next level; different levels keep the higher).
 
 ### Slots
