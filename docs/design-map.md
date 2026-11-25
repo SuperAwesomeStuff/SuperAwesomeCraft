@@ -2,7 +2,7 @@
 
 A rough map of the whole design, so ideas have somewhere to live before they're decided. Each area lists what's **Decided**, what we're **Leaning** toward, loose **Ideas**, and **Open** questions. Ideas here aren't commitments; promote them when the Season that needs them gets designed.
 
-Details for decided items live in [vision.md](vision.md), terms in [GLOSSARY.md](../GLOSSARY.md), and big decisions in [adr/](adr/).
+Systems wanted for the Season 1 playtest are gathered in the [playtest wishlist](season-1/playtest-wishlist.md). Details for decided items live in [vision.md](vision.md), terms in [GLOSSARY.md](../GLOSSARY.md), and big decisions in [adr/](adr/).
 
 ```
 SuperAwesomeCraft
@@ -111,9 +111,19 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
 - **Leaning:**
   - Powered rails are crafted from copper, and a stronger gold rail is added.
   - A Travel cart beside the unchanged vanilla minecart. Roughly 16 m/s on powered rails and 24+ on gold rails.
+- **Ideas:**
+  - Survival-friendly ways to do what /home, /spawn and /tp do, without commands. Could share an item or block with grave teleporting.
+  - A grapple hook as a way to get around.
+  - Graves start from the Vanilla Tweaks Graves datapack the group already uses (right-click restores your slots, owner only, never despawns), then add a body that looks like you and can be seen from far off for the early game, a death compass to find it, and a paid item that brings the grave's items to you (safe for arenas, unlike teleporting to it). Background: [graves and corpses](research/graves-and-corpses.md).
 - **Open:**
   - What is the glider, and how do you get it?
   - Recall or teleport items?
+
+## Beacons and brewing
+
+- **Ideas:**
+  - Beacon rework: range depends on the pyramid's blocks, a way to raise effect levels, maybe more effects. Haste above II moves the instant-mining line in [Season 1 enchanting](season-1/enchanting/README.md).
+  - Look at potions and brewing, which went unused in the September 2026 playtest.
 
 ## Settlements
 
