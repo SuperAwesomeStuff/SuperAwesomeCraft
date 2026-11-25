@@ -19,8 +19,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Harvesting, on hoes: right-clicking a ripe crop harvests it and replants it with one of its own seeds, and tilling
- * tills the 3x3 around the block you clicked. Crouch to till a single block.
+ * Harvesting, on hoes, works in a 3x3 around the block you click: right-clicking a ripe crop harvests and replants every
+ * ripe crop in the 3x3 (each with one of its own seeds), and tilling tills the 3x3. Mining is 3x3 too, like Excavating (see
+ * {@link ToolAbilities}). Crouch to do a single block.
  */
 public final class Harvesting {
 	private static final ThreadLocal<Boolean> TILLING_EXTRA = ThreadLocal.withInitial(() -> false);
@@ -40,9 +41,9 @@ public final class Harvesting {
 		}
 		BlockPos pos = hit.getBlockPos();
 		BlockState state = level.getBlockState(pos);
-		if (state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state)) {
+		if (isRipe(state)) {
 			if (level instanceof ServerLevel serverLevel) {
-				harvest(serverLevel, player, pos, state, hoe, hand);
+				harvestArea(serverLevel, player, pos, hoe, hand);
 			}
 			return InteractionResult.SUCCESS;
 		}
@@ -51,6 +52,27 @@ public final class Harvesting {
 		}
 		// The clicked block itself is tilled by the hoe as normal.
 		return InteractionResult.PASS;
+	}
+
+	private static boolean isRipe(BlockState state) {
+		return state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state);
+	}
+
+	/** Harvests and replants the ripe crop at {@code center}, and every ripe crop around it unless the player is crouching. */
+	public static void harvestArea(ServerLevel level, Player player, BlockPos center, ItemStack hoe, InteractionHand hand) {
+		int radius = player.isShiftKeyDown() ? 0 : 1;
+		for (int dx = -radius; dx <= radius; dx++) {
+			for (int dz = -radius; dz <= radius; dz++) {
+				BlockPos pos = center.offset(dx, 0, dz);
+				BlockState state = level.getBlockState(pos);
+				if (hoe.isEmpty() || hoe.isBroken()) {
+					return;
+				}
+				if (isRipe(state)) {
+					harvest(level, player, pos, state, hoe, hand);
+				}
+			}
+		}
 	}
 
 	/** Harvests a ripe crop and replants it, keeping back one seed from its drops. */

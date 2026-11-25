@@ -218,11 +218,21 @@ public class EnchantingTests {
 		ItemStack hoe = new ItemStack(Items.IRON_HOE);
 		hoe.enchant(ench(helper, sac("harvesting")), 1);
 		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, hoe);
+		// A ripe neighbour is harvested too; an unripe one is left alone.
+		helper.setBlock(2, 0, 1, net.minecraft.world.level.block.Blocks.FARMLAND);
+		helper.setBlock(2, 1, 1, net.minecraft.world.level.block.Blocks.CARROTS.defaultBlockState()
+			.setValue(net.minecraft.world.level.block.CropBlock.AGE, 7));
+		helper.setBlock(0, 0, 1, net.minecraft.world.level.block.Blocks.FARMLAND);
+		helper.setBlock(0, 1, 1, net.minecraft.world.level.block.Blocks.WHEAT.defaultBlockState()
+			.setValue(net.minecraft.world.level.block.CropBlock.AGE, 3));
 		net.minecraft.core.BlockPos pos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1));
-		com.superawesomestuff.craft.enchanting.Harvesting.harvest(helper.getLevel(), player, pos, helper.getLevel().getBlockState(pos), hoe,
+		com.superawesomestuff.craft.enchanting.Harvesting.harvestArea(helper.getLevel(), player, pos, hoe,
 			net.minecraft.world.InteractionHand.MAIN_HAND);
 		helper.assertValueEqual(helper.getLevel().getBlockState(pos).getValue(net.minecraft.world.level.block.CropBlock.AGE), 0, "replanted");
+		helper.assertValueEqual(helper.getLevel().getBlockState(pos.east()).getValue(net.minecraft.world.level.block.CropBlock.AGE), 0, "the ripe carrots next to it too");
+		helper.assertValueEqual(helper.getLevel().getBlockState(pos.west()).getValue(net.minecraft.world.level.block.CropBlock.AGE), 3, "unripe wheat is left alone");
 		helper.assertItemEntityPresent(Items.WHEAT);
+		helper.assertItemEntityPresent(Items.CARROT);
 		helper.succeed();
 	}
 
@@ -413,6 +423,27 @@ public class EnchantingTests {
 		}
 		helper.assertTrue(piglin.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS), "60 blocked hits at 30% should disarm the piglin");
 		helper.assertValueEqual(piglin.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE), 0.0, "a disarmed mob's hits do nothing");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void harvestingHoesMine3x3LikeExcavating(GameTestHelper helper) {
+		for (int x = 0; x <= 2; x++) {
+			for (int y = 1; y <= 3; y++) {
+				helper.setBlock(x, y, 2, net.minecraft.world.level.block.Blocks.HAY_BLOCK);
+			}
+		}
+		helper.setBlock(1, 4, 2, net.minecraft.world.level.block.Blocks.HAY_BLOCK);
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		player.setGameMode(GameType.SURVIVAL);
+		player.snapTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 1, 0.5)), 0, 0);
+		ItemStack hoe = new ItemStack(Items.IRON_HOE);
+		hoe.enchant(ench(helper, sac("harvesting")), 1);
+		player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, hoe);
+		player.gameMode.destroyBlock(helper.absolutePos(new net.minecraft.core.BlockPos(1, 2, 2)));
+		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, 0, 1, 2);
+		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, 2, 3, 2);
+		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.HAY_BLOCK, 1, 4, 2);
 		helper.succeed();
 	}
 }

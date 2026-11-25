@@ -96,7 +96,7 @@ Two rules for anything new: **it must do something no existing enchantment does*
 | **Reach** | Chestplate | II | Convenience | +1 block reach per level for breaking and placing blocks. Never affects hitting mobs |
 | **Magnetism** | Any tool, weapon | I | Convenience | Drops from blocks you mine and mobs you kill in melee go straight into your inventory (what doesn't fit drops as normal). Only *your own* breaks and kills, so hoppers and farms behave as in vanilla |
 | **Smelting** | Pick, shovel, axe | I | Convenience | Mined blocks drop their smelted form (sand to glass, ore to ingot). No bonus drops. Exclusive with Silk Touch |
-| **Harvesting** | Hoe | I | Convenience | Tills 3×3 (crouch for one block), and right-clicking a ripe crop harvests it and replants it with one of its own seeds |
+| **Harvesting** | Hoe | I | Convenience | The hoe works 3×3: it mines 3×3 like Excavating on blocks hoes are good at (hay, leaves, moss, sculk; same slowdown unless instant), tills 3×3, and right-clicking a ripe crop harvests and replants every ripe crop in the 3×3, each with one of its own seeds. Crouch for one block |
 | **Step Assist** | Boots | I | Convenience | Step up full blocks without jumping |
 | **Beheading** | Sword, axe | III | Convenience | 10% chance per level for a player's kill to drop the mob's head. Vanilla heads (zombie, skeleton, wither skeleton, creeper, piglin, dragon) always work. With the Vanilla Tweaks *More Mob Heads* data pack installed, every mob it covers works too, with the right variant ([research](../../research/more-mob-heads.md)) |
 | **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Can sit beside the other damage enchantments |
@@ -140,7 +140,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.14):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.15):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

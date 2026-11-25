@@ -33,7 +33,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 /**
- * Season 1 tool enchantments with Java behaviour: Excavating (3x3), Felling (whole trees), Smelting (smelted drops),
+ * Season 1 tool enchantments with Java behaviour: Excavating and Harvesting (3x3), Felling (whole trees), Smelting (smelted drops),
  * Magnetism (drops straight to the inventory) and Beheading (see {@link Beheading}). Area abilities break each extra block through the normal break path, so every block costs
  * durability and drops normally. Crouching turns Excavating and Felling off.
  */
@@ -67,12 +67,19 @@ public final class ToolAbilities {
 		return speed >= hardness * 30.0F ? speed : speed * EXCAVATING_SPEED;
 	}
 
-	/** True when the player's Excavating tool is digging a block it's good at, so the 3x3 (and its slowdown) applies. */
+	/**
+	 * True when the player's tool digs 3x3 and is digging a block it's good at, so the 3x3 (and its slowdown) applies.
+	 * Excavating does this on picks and shovels, Harvesting on hoes.
+	 */
 	public static boolean excavates(Player player, BlockState state) {
 		ItemStack tool = player.getMainHandItem();
-		return !player.isShiftKeyDown()
-			&& ModEnchantments.level(player.level().registryAccess(), tool, ModEnchantments.EXCAVATING) > 0
-			&& tool.isCorrectToolForDrops(state);
+		return !player.isShiftKeyDown() && digsArea(player.level().registryAccess(), tool) && tool.isCorrectToolForDrops(state);
+	}
+
+	/** Excavating, or Harvesting on a hoe: the tool mines a 3x3. */
+	public static boolean digsArea(net.minecraft.core.HolderLookup.Provider registries, ItemStack tool) {
+		return ModEnchantments.level(registries, tool, ModEnchantments.EXCAVATING) > 0
+			|| (tool.is(net.minecraft.tags.ItemTags.HOES) && ModEnchantments.level(registries, tool, ModEnchantments.HARVESTING) > 0);
 	}
 
 	/** The face of {@code pos} the player is looking at, from a fresh ray cast. Falls back to their look direction. */
@@ -90,7 +97,7 @@ public final class ToolAbilities {
 		}
 		ItemStack tool = player.getMainHandItem();
 		List<BlockPos> extra = new ArrayList<>();
-		if (ModEnchantments.level(level.registryAccess(), tool, ModEnchantments.EXCAVATING) > 0) {
+		if (digsArea(level.registryAccess(), tool)) {
 			extra = excavationArea(player, pos, state, level, tool);
 		} else if (ModEnchantments.level(level.registryAccess(), tool, ModEnchantments.FELLING) > 0 && state.is(BlockTags.LOGS)) {
 			extra = connectedLogs(level, pos);

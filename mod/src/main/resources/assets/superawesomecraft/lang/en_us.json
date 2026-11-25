@@ -94,6 +94,6 @@
   "enchantment.superawesomecraft.magnetism": "Magnetism",
   "enchantment.superawesomecraft.harvesting": "Harvesting",
   "superawesomecraft.enchanting.desc.superawesomecraft.magnetism": "What you mine or kill goes straight to your inventory.",
-  "superawesomecraft.enchanting.desc.superawesomecraft.harvesting": "Tills 3x3. Right-click ripe crops to harvest and replant.",
+  "superawesomecraft.enchanting.desc.superawesomecraft.harvesting": "Hoe works 3x3: mines, tills, and harvests and replants ripe crops. Crouch for one.",
   "superawesomecraft.enchanting.book": "Book takes this to %s"
 }
