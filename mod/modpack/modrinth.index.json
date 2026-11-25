@@ -3,7 +3,7 @@
 	"game": "minecraft",
 	"versionId": "${version}",
 	"name": "Super Awesome Craft",
-	"summary": "Season 0 dev build.",
+	"summary": "Super Awesome Craft test build.",
 	"files": [
 		{
 			"path": "mods/fabric-api-0.166.2+26.3.jar",
