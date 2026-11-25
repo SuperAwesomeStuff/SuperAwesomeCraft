@@ -20,16 +20,15 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jspecify.annotations.Nullable;
 
 /**
- * What everything at the enchanting table costs. The defaults below mirror docs/season-1/enchanting/recipes.md: a pile of
- * one material per level, 32 of a common one or 4 of a rare one; levels IV and V also cost Blaze Rods.
+ * What everything at the enchanting table costs. The defaults below mirror docs/season-1/enchanting/recipes.md: one
+ * material per enchantment, 16 for level I and 16 more for each level after, or a flat 4 of a rare one; levels IV and V
+ * also cost Blaze Rods, except for Efficiency.
  *
  * <p>The live table comes from {@code config/superawesomecraft/enchanting.json}, written with these defaults the first
  * time the server starts. The server reads it on start and on {@code /reload} and sends it to every player, so the
@@ -38,17 +37,18 @@ import org.jspecify.annotations.Nullable;
 public final class EnchantingRecipes {
 	public static final String FILE_NAME = "enchanting.json";
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-	private static final java.util.regex.Pattern COST_BLOCK = java.util.regex.Pattern.compile("\\{\\s*(\"tag\"[^\\n]*\\s*)?\"item\"[^\\n]*\\s*\"count\": \\d+\\s*}");
+	private static final java.util.regex.Pattern COST_BLOCK = java.util.regex.Pattern.compile("\\{\\s*(\"tag\"[^\\n]*\\s*)?\"item\"[^\\n]*\\s*\"count\": \\d+(,\\s*\"per_level\": \\d+)?\\s*}");
 	private static final String README = "Costs at the enchanting table. 'enchantments' maps each enchantment to what ONE level costs; "
 		+ "an enchantment missing from the list can't be made at the table. A cost is {\"item\": id, \"count\": n}, or "
-		+ "{\"tag\": item tag, \"item\": item shown on screen, \"count\": n} to accept any item in a tag. 'high_levels' is "
-		+ "added on top for every level from 'from_level' up. Edit, then run /reload or restart. Delete this file to get "
-		+ "the defaults back.";
+		+ "{\"tag\": item tag, \"item\": item shown on screen, \"count\": n} to accept any item in a tag. Add "
+		+ "\"per_level\": n to make each level after the first cost n more (count 16, per_level 16 is 16, 32, 48...). "
+		+ "'high_levels' is added on top for every level from 'from_level' up, except for the enchantments in 'except'. "
+		+ "Edit, then run /reload or restart. Delete this file to get the defaults back.";
 
 	/** Every cost the table charges. */
 	public record Table(
-		Map<Identifier, Cost> perLevel, int highLevelFrom, Cost highLevelCost, Cost curseRemoval,
-		Map<SlotUpgrade, List<Cost>> upgrades
+		Map<Identifier, Cost> perLevel, int highLevelFrom, Cost highLevelCost, java.util.Set<Identifier> highLevelExempt,
+		Cost curseRemoval, Map<SlotUpgrade, List<Cost>> upgrades
 	) {
 	}
 
@@ -67,6 +67,11 @@ public final class EnchantingRecipes {
 	/** The first level that also costs {@link #highLevelCost()}. */
 	public static int highLevelFrom() {
 		return current.highLevelFrom;
+	}
+
+	/** Enchantments whose high levels don't add {@link #highLevelCost()} (Efficiency). */
+	public static boolean highLevelExempt(Identifier enchantment) {
+		return current.highLevelExempt.contains(enchantment);
 	}
 
 	public static Cost highLevelCost() {
@@ -119,6 +124,9 @@ public final class EnchantingRecipes {
 		JsonObject high = new JsonObject();
 		high.addProperty("from_level", table.highLevelFrom);
 		high.add("cost", costToJson(table.highLevelCost));
+		JsonArray except = new JsonArray();
+		new java.util.TreeSet<>(table.highLevelExempt).forEach(id -> except.add(id.toString()));
+		high.add("except", except);
 		root.add("high_levels", high);
 		root.add("curse_removal", costToJson(table.curseRemoval));
 		JsonObject upgrades = new JsonObject();
@@ -145,6 +153,7 @@ public final class EnchantingRecipes {
 
 		int highFrom = fallback.highLevelFrom;
 		Cost highCost = fallback.highLevelCost;
+		java.util.Set<Identifier> exempt = fallback.highLevelExempt;
 		if (root.has("high_levels")) {
 			JsonObject high = root.getAsJsonObject("high_levels");
 			if (high.has("from_level")) {
@@ -152,6 +161,18 @@ public final class EnchantingRecipes {
 			}
 			if (high.has("cost")) {
 				highCost = orElse(costFromJson(high.get("cost"), "high_levels.cost"), highCost);
+			}
+			if (high.has("except")) {
+				java.util.Set<Identifier> ids = new java.util.HashSet<>();
+				for (JsonElement element : high.getAsJsonArray("except")) {
+					Identifier id = Identifier.tryParse(element.getAsString());
+					if (id == null) {
+						SuperAwesomeCraft.LOGGER.warn("Enchanting recipes: '{}' in high_levels.except isn't a valid enchantment id", element);
+					} else {
+						ids.add(id);
+					}
+				}
+				exempt = ids;
 			}
 		}
 		Cost curse = root.has("curse_removal")
@@ -190,7 +211,7 @@ public final class EnchantingRecipes {
 		} else {
 			perLevel = fallback.perLevel;
 		}
-		return new Table(Map.copyOf(perLevel), highFrom, highCost, curse, Map.copyOf(upgrades));
+		return new Table(Map.copyOf(perLevel), highFrom, highCost, java.util.Set.copyOf(exempt), curse, Map.copyOf(upgrades));
 	}
 
 	private static JsonObject costToJson(Cost cost) {
@@ -200,6 +221,9 @@ public final class EnchantingRecipes {
 		}
 		json.addProperty("item", BuiltInRegistries.ITEM.getKey(cost.display()).toString());
 		json.addProperty("count", cost.count());
+		if (cost.step() != 0) {
+			json.addProperty("per_level", cost.step());
+		}
 		return json;
 	}
 
@@ -219,15 +243,20 @@ public final class EnchantingRecipes {
 			SuperAwesomeCraft.LOGGER.warn("Enchanting recipes: {} needs a count of at least 1", where);
 			return null;
 		}
+		int step = json.has("per_level") ? json.get("per_level").getAsInt() : 0;
+		if (step < 0) {
+			SuperAwesomeCraft.LOGGER.warn("Enchanting recipes: {} can't have a negative per_level", where);
+			return null;
+		}
 		if (json.has("tag")) {
 			Identifier tag = Identifier.tryParse(json.get("tag").getAsString().replaceFirst("^#", ""));
 			if (tag == null) {
 				SuperAwesomeCraft.LOGGER.warn("Enchanting recipes: {} has an invalid tag", where);
 				return null;
 			}
-			return Cost.of(TagKey.create(Registries.ITEM, tag), item, count);
+			return new Cost(item, TagKey.create(Registries.ITEM, tag), count, step);
 		}
-		return Cost.of(item, count);
+		return new Cost(item, null, count, step);
 	}
 
 	private static @Nullable Item item(String id) {
@@ -241,39 +270,47 @@ public final class EnchantingRecipes {
 
 	// Defaults
 
-	private static final int COMMON = 32;
+	/** Most enchantments: 16 for level I, then 16 more for each level after. */
+	private static final int RISING = 16;
+	/** Rare materials: a flat 4 per level. */
 	private static final int RARE = 4;
 
 	public static Table defaults() {
 		Map<Identifier, Cost> perLevel = new TreeMap<>();
 		Defaults d = new Defaults(perLevel);
-		d.common(Items.REDSTONE, "efficiency", "quick_charge");
-		d.common(Items.IRON_INGOT, "unbreaking", "protection", "sac:magnetism", "sac:bulwark");
-		d.common(Items.LAPIS_LAZULI, "fortune", "looting", "luck_of_the_sea", "sac:bane_of_illagers");
-		d.common(Items.AMETHYST_SHARD, "sharpness", "power");
-		d.common(Items.FLINT, "breach", "piercing");
-		perLevel.put(Identifier.withDefaultNamespace("silk_touch"), Cost.of(ItemTags.WOOL, Items.WOOL.pick(DyeColor.WHITE), COMMON));
-		d.common(Items.STRING, "lure", "multishot");
-		d.common(Items.COAL, "sac:smelting");
-		d.common(Items.COPPER_INGOT, "sac:felling", "channeling");
-		d.common(Items.GOLD_INGOT, "density");
-		d.common(Items.BONE_MEAL, "sac:harvesting");
-		d.common(Items.BONE, "sac:beheading");
-		d.common(Items.ROTTEN_FLESH, "smite");
-		d.common(Items.SPIDER_EYE, "bane_of_arthropods");
-		d.common(Items.SLIME_BALL, "knockback", "punch", "sac:rebounding", "sac:step_assist");
-		d.common(Items.FEATHER, "feather_falling");
-		d.common(Items.LEATHER, "projectile_protection");
-		d.common(Items.GUNPOWDER, "blast_protection");
-		d.common(Items.CACTUS, "thorns");
-		d.common(Items.IRON_NUGGET, "sweeping_edge");
-		d.common(Items.KELP, "respiration", "aqua_affinity");
-		d.common(Items.PRISMARINE_SHARD, "depth_strider", "impaling");
-		d.common(Items.SNOW_BLOCK, "frost_walker", "sac:frost_aspect");
-		d.common(Items.SOUL_SOIL, "soul_speed");
-		d.rare(Items.DIAMOND, "sac:excavating", "infinity");
+		d.rising(Items.REDSTONE, "efficiency", "quick_charge");
+		d.rising(Items.COPPER_INGOT, "unbreaking");
+		d.rising(Items.IRON_INGOT, "protection", "sac:felling", "sac:magnetism", "sac:bulwark");
+		d.rising(Items.LAPIS_LAZULI, "fortune", "looting", "luck_of_the_sea");
+		d.rising(Items.EMERALD, "sac:bane_of_illagers");
+		d.rising(Items.AMETHYST_SHARD, "sharpness", "power");
+		d.rising(Items.POINTED_DRIPSTONE, "breach");
+		d.rising(Items.FLINT, "piercing");
+		d.rising(Items.STRING, "lure", "multishot");
+		d.rising(Items.GOLD_INGOT, "density");
+		d.rising(Items.BONE_MEAL, "sac:harvesting");
+		d.rising(Items.BONE, "sac:beheading");
+		d.rising(Items.ROTTEN_FLESH, "smite");
+		d.rising(Items.SPIDER_EYE, "bane_of_arthropods");
+		d.rising(Items.SLIME_BALL, "knockback", "punch", "sac:rebounding", "sac:step_assist");
+		d.rising(Items.FEATHER, "feather_falling");
+		d.rising(Items.LEATHER, "projectile_protection");
+		d.rising(Items.GUNPOWDER, "blast_protection");
+		d.rising(Items.MAGMA_BLOCK, "fire_protection");
+		d.rising(Items.CACTUS, "thorns");
+		d.rising(Items.WIND_CHARGE, "sweeping_edge");
+		d.rising(Items.KELP, "respiration", "aqua_affinity");
+		d.rising(Items.PRISMARINE_SHARD, "depth_strider", "impaling");
+		d.rising(Items.SNOW_BLOCK, "frost_walker", "sac:frost_aspect");
+		d.rising(Items.SOUL_SOIL, "soul_speed");
+		d.rare(Items.COBWEB, "silk_touch");
+		d.rare(Items.BLAZE_ROD, "fire_aspect", "flame", "sac:smelting");
+		// Any rusting stage of lightning rod counts.
+		perLevel.put(Identifier.withDefaultNamespace("channeling"), Cost.of(
+			TagKey.create(Registries.ITEM, SuperAwesomeCraft.id("lightning_rods")), Items.LIGHTNING_ROD.asList().getFirst(), RARE));
+		d.rare(Items.TNT, "sac:excavating");
+		d.rare(Items.DIAMOND, "infinity");
 		d.rare(Items.ENDER_PEARL, "sac:reach", "loyalty");
-		d.rare(Items.BLAZE_POWDER, "fire_aspect", "flame", "fire_protection");
 		d.rare(Items.BREEZE_ROD, "lunge", "wind_burst");
 		d.rare(Items.ECHO_SHARD, "swift_sneak");
 		d.rare(Items.NAUTILUS_SHELL, "riptide");
@@ -283,22 +320,23 @@ public final class EnchantingRecipes {
 		upgrades.put(SlotUpgrade.NETHER, List.of(Cost.of(Items.NETHER_STAR, 1)));
 		upgrades.put(SlotUpgrade.END, List.of(Cost.of(Items.SHULKER_SHELL, 4)));
 
-		return new Table(Map.copyOf(perLevel), 4, Cost.of(Items.BLAZE_ROD, 4), Cost.of(Items.GOLD_INGOT, 32), Map.copyOf(upgrades));
+		return new Table(Map.copyOf(perLevel), 4, Cost.of(Items.BLAZE_ROD, 4), java.util.Set.of(Identifier.withDefaultNamespace("efficiency")),
+			Cost.of(Items.GOLD_INGOT, 32), Map.copyOf(upgrades));
 	}
 
 	private record Defaults(Map<Identifier, Cost> perLevel) {
-		void common(Item item, String... ids) {
-			this.add(item, COMMON, ids);
+		void rising(Item item, String... ids) {
+			this.add(Cost.rising(item, RISING, RISING), ids);
 		}
 
 		void rare(Item item, String... ids) {
-			this.add(item, RARE, ids);
+			this.add(Cost.of(item, RARE), ids);
 		}
 
-		private void add(Item item, int count, String... ids) {
+		private void add(Cost cost, String... ids) {
 			for (String id : ids) {
 				Identifier key = id.startsWith("sac:") ? SuperAwesomeCraft.id(id.substring(4)) : Identifier.withDefaultNamespace(id);
-				this.perLevel.put(key, Cost.of(item, count));
+				this.perLevel.put(key, cost);
 			}
 		}
 	}

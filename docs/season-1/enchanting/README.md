@@ -57,20 +57,20 @@ Vanilla makes the damage enchantments and the four Protections exclusive. Here *
 
 Every recipe is in [slots and recipes](recipes.md), which also has the one-screen summary for the wiki.
 
-- **Each level costs a pile of one material**: 32 of a common one (Redstone for Efficiency, Amethyst for Sharpness, Lapis for Fortune, Iron for Unbreaking) or 4 of a rare one (Diamonds for Excavating, Ender Pearls for Reach). This copies how Tinkers' Construct prices its stat modifiers (45 Redstone a level for Haste, 36 Quartz for Sharpness).
-- **Levels IV and V also need 4 Blaze Rods each**, so the top levels wait for the Nether.
+- **Each enchantment has one material, and each level costs more of it**: 16 for level I, then 16 more per level (Redstone for Efficiency, Amethyst for Sharpness, Lapis for Fortune, Copper for Unbreaking). A few rare materials cost a flat 4 per level (Blaze Rods for Fire Aspect, Ender Pearls for Reach, TNT for Excavating). This follows how Tinkers' Construct prices its stat modifiers (45 Redstone a level for Haste, 36 Quartz for Sharpness), with a rising cost so farms make low levels cheap but not high ones.
+- **Levels IV and V also need 4 Blaze Rods each**, so the top levels wait for the Nether. Efficiency is the exception: mining speed is Convenience.
 - **The End lives in the last slot upgrade** (4 Shulker Shells), so maxed gear still needs the End.
-- Every material is mined or dropped by mobs, with nothing to craft first. Materials share themes so they're easy to remember: redstone is speed, iron is toughness, lapis is luck, slime is push.
+- Materials are mined, dropped or simple to craft (TNT, Lightning Rods), and share themes so they're easy to remember: redstone is speed, lapis is luck, slime is push, blaze rods are fire. Where possible no material repeats on one item's list.
 - **Villagers can sell the bulk materials, but never Blaze Rods, Shulker Shells, Nether Stars, books for combat or loot enchantments, or enchanted gear.** The climb is protected by slots and the Era materials, not by every ingredient.
 
 ### Breakpoints
 
 Some thresholds matter more than the levels between them. They're placed on purpose:
 
-- **Instant-mining stone stays as in vanilla:** a diamond pickaxe with Efficiency V reaches 34 mining speed, stone needs 45, and Haste II from a full beacon lifts it to about 48. Deepslate never instant-mines. Efficiency IV and V need Blaze Rods and Haste II needs the Wither, so this lands on the group's beacon: a block players build, which helps whoever stands near it. Efficiency III is all Overworld, so building isn't slow before then.
+- **Instant-mining stone stays as in vanilla:** a diamond pickaxe with Efficiency V reaches 34 mining speed, stone needs 45, and Haste II from a full beacon lifts it to about 48. Deepslate never instant-mines. Efficiency V is all Overworld, but Haste II needs the Wither, so this lands on the group's beacon: a block players build, which helps whoever stands near it.
 - **Protection IV and Feather Falling IV** need Blaze Rods, so they arrive with the Nether.
-- **Excavating** costs Diamonds, so it comes after the first diamonds.
-- **Fortune III and Looting III** only go to III, so they're Overworld; only the lapis slows them. Watch them in the playtest, since they multiply income.
+- **Excavating** costs TNT, so builders get it early.
+- **Fortune III and Looting III** only go to III, so they're Overworld: 96 Lapis each. Fortune III will be the first thing people chase, and it shouldn't send anyone rushing to a blaze spawner. Watch them in the playtest, since they multiply income.
 
 ### Durability
 
@@ -139,7 +139,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.5, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.6, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

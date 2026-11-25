@@ -31,7 +31,7 @@ import org.jspecify.annotations.Nullable;
  * {@link SlotUpgrade}s.</li>
  * <li>Damage enchantments can be mixed on one weapon and Protections on one armour piece; each still takes a slot.
  * Otherwise vanilla exclusivity applies.</li>
- * <li>Each level costs its recipe; levels IV and V also cost Blaze Rods.</li>
+ * <li>Each level costs its recipe; levels IV and V also cost Blaze Rods (not Efficiency).</li>
  * </ul>
  */
 public final class EnchantRules {
@@ -199,8 +199,8 @@ public final class EnchantRules {
 			}
 		}
 		List<Cost> costs = new ArrayList<>();
-		costs.add(perLevel);
-		if (level + 1 >= EnchantingRecipes.highLevelFrom()) {
+		costs.add(perLevel.atLevel(level + 1));
+		if (level + 1 >= EnchantingRecipes.highLevelFrom() && !EnchantingRecipes.highLevelExempt(id(enchantment))) {
 			costs.add(EnchantingRecipes.highLevelCost());
 		}
 		return new Check(Status.OK, costs);

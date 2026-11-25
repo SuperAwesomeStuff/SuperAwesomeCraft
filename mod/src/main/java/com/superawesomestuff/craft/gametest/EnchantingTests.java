@@ -106,6 +106,9 @@ public class EnchantingTests {
 		add(helper, pick, Enchantments.EFFICIENCY, 2);
 		EnchantRules.Check third = EnchantRules.checkAddLevel(pick, ench(helper, Enchantments.EFFICIENCY));
 		helper.assertFalse(third.costs().stream().anyMatch(c -> c.display() == Items.BLAZE_ROD), "Level III needs no Blaze Rods");
+		add(helper, pick, Enchantments.EFFICIENCY, 1);
+		EnchantRules.Check effFourth = EnchantRules.checkAddLevel(pick, ench(helper, Enchantments.EFFICIENCY));
+		helper.assertFalse(effFourth.costs().stream().anyMatch(c -> c.display() == Items.BLAZE_ROD), "Efficiency IV needs no Blaze Rods");
 		helper.succeed();
 	}
 
@@ -260,13 +263,14 @@ public class EnchantingTests {
 		player.getInventory().add(new ItemStack(Items.REDSTONE, 64));
 		helper.assertFalse(menu.clickMenuButton(player, button), "redstone in the inventory doesn't count");
 
-		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 20));
-		helper.assertFalse(menu.clickMenuButton(player, button), "20 redstone is not enough");
+		menu.getSlot(SlotEnchantingMenu.FIRST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 10));
+		helper.assertFalse(menu.clickMenuButton(player, button), "10 redstone is not enough");
 
-		menu.getSlot(SlotEnchantingMenu.LAST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 20));
-		helper.assertTrue(menu.clickMenuButton(player, button), "40 redstone across both slots is enough");
+		menu.getSlot(SlotEnchantingMenu.LAST_MATERIAL_SLOT).set(new ItemStack(Items.REDSTONE, 30));
+		helper.assertTrue(menu.clickMenuButton(player, button), "40 redstone across both slots pays for level I (16)");
 		helper.assertValueEqual(EnchantRules.enchantments(menu.item()).getLevel(ench(helper, Enchantments.EFFICIENCY)), 1, "efficiency level");
-		helper.assertValueEqual(menu.materialCount(com.superawesomestuff.craft.enchanting.Cost.of(Items.REDSTONE, 1)), 8, "redstone left in the slots");
+		helper.assertValueEqual(menu.materialCount(com.superawesomestuff.craft.enchanting.Cost.of(Items.REDSTONE, 1)), 24, "redstone left in the slots");
+		helper.assertFalse(menu.clickMenuButton(player, button), "24 redstone is not enough for level II (32)");
 		helper.assertValueEqual(player.getInventory().countItem(Items.REDSTONE), 64, "inventory untouched");
 		helper.succeed();
 	}
@@ -295,14 +299,14 @@ public class EnchantingTests {
 			{
 			  "high_levels": { "from_level": 3, "cost": { "item": "minecraft:emerald", "count": 2 } },
 			  "enchantments": {
-			    "minecraft:sharpness": { "item": "minecraft:quartz", "count": 10 },
+			    "minecraft:sharpness": { "item": "minecraft:quartz", "count": 10, "per_level": 5 },
 			    "minecraft:silk_touch": { "tag": "#minecraft:wool", "item": "minecraft:white_wool", "count": 5 },
 			    "minecraft:smite": { "item": "minecraft:not_an_item", "count": 10 },
 			    "minecraft:knockback": { "item": "minecraft:slime_ball" }
 			  }
 			}
 			""");
-		helper.assertValueEqual(table.perLevel().get(Identifier.withDefaultNamespace("sharpness")), Cost.of(Items.QUARTZ, 10), "sharpness");
+		helper.assertValueEqual(table.perLevel().get(Identifier.withDefaultNamespace("sharpness")).atLevel(3), Cost.of(Items.QUARTZ, 20), "sharpness III is 10 + 5 + 5");
 		helper.assertTrue(table.perLevel().get(Identifier.withDefaultNamespace("silk_touch")).matches(new ItemStack(Items.WOOL.pick(net.minecraft.world.item.DyeColor.RED))), "any wool");
 		helper.assertFalse(table.perLevel().containsKey(Identifier.withDefaultNamespace("smite")), "unknown items are skipped");
 		helper.assertFalse(table.perLevel().containsKey(Identifier.withDefaultNamespace("knockback")), "entries without a count are skipped");
