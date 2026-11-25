@@ -40,7 +40,7 @@ Every item has a limited number of slots, so you have to choose what goes on it.
 
 - **Every enchantment uses one slot, at any level.** Efficiency I and Efficiency V both take one.
 - **The material sets the slots:** wood, stone, gold and leather 1; copper, iron, chainmail, bows, crossbows, shields, fishing rods and turtle shells 2; diamond, tridents and maces 3; Netherite 4. Smithing an item to Netherite keeps its enchantments and gains the extra slot.
-- **Three one-off upgrades add a slot each**, once per item: a Diamond Block with a Gold Block (Overworld), a Nether Star (Nether) and 4 Shulker Shells (End). That caps a Netherite item at 7.
+- **Three one-off upgrades add a slot each**, once per item: a Diamond Block with a Gold Block (Overworld), a Wither Skeleton Skull (Nether) and a Chorus Flower (End). That caps a Netherite item at 7.
 - **Removing an enchantment at the table (or a grindstone) frees its slot, but the materials are lost.** A bad choice is never permanent, but swapping back and forth isn't free.
 
 A diamond pickaxe fits Efficiency, Unbreaking and one of Silk Touch, Fortune or Excavating, so builder comfort fits on a diamond tool, and the third slot is the real choice.
@@ -59,9 +59,9 @@ Every recipe is in [slots and recipes](recipes.md), which also has the one-scree
 
 - **Each enchantment has one material, and each level costs more of it**: 16 for level I, then 16 more per level (Redstone for Efficiency, Amethyst for Sharpness, Lapis for Fortune, Copper for Unbreaking). A few rare materials cost a flat 4 per level (Blaze Rods for Fire Aspect, Ender Pearls for Reach, TNT for Excavating). This follows how Tinkers' Construct prices its stat modifiers (45 Redstone a level for Haste, 36 Quartz for Sharpness), with a rising cost so farms make low levels cheap but not high ones.
 - **Levels IV and V also need 4 Blaze Rods each**, so the top levels wait for the Nether. Efficiency is the exception: mining speed is Convenience.
-- **The End lives in the last slot upgrade** (4 Shulker Shells), so maxed gear still needs the End.
+- **The End lives in the last slot upgrade** (a Chorus Flower), so maxed gear still needs the End.
 - Materials are mined, dropped, found or simple to craft (TNT), and share themes so they're easy to remember: redstone is speed, lapis is luck, slime is push, blaze rods are fire. Where possible no material repeats on one item's list.
-- **Villagers can sell the bulk materials, but never Blaze Rods, Shulker Shells, Nether Stars, books for combat or loot enchantments, or enchanted gear.** The climb is protected by slots and the Era materials, not by every ingredient.
+- **Villagers can sell the bulk materials, but never Blaze Rods, Wither Skeleton Skulls, Chorus Flowers, books for combat or loot enchantments, or enchanted gear.** The climb is protected by slots and the Era materials, not by every ingredient.
 
 ### Breakpoints
 
@@ -78,7 +78,7 @@ Durability returns, but it's never a big deal:
 
 - **Gear never breaks.** At 0 durability it stops working until it's repaired. Nothing is lost.
 - **Repair in the crafting grid**: the item plus the material it was made from, in any arrangement, free and with no XP. **Each item restores 50%.** Netherite gear repairs with **Diamonds**, since Netherite Ingots are too dear to spend on repairs.
-- Items keep **vanilla durability** (a diamond pickaxe has 1,561 uses). Every repairable item's tooltip says what repairs it. Gear vanilla can't repair gets a material: bows, crossbows and fishing rods use String, tridents Prismarine Shards, shields, shears and flint and steel Iron Ingots, brushes Copper Ingots.
+- Items keep **vanilla durability** (a diamond pickaxe has 1,561 uses). Every repairable item's tooltip says what repairs it. Gear vanilla can't repair gets a material: bows, crossbows and fishing rods use String, tridents Prismarine Shards, shields, shears and flint and steel Iron Ingots, brushes Copper Ingots. Elytra use Popped Chorus Fruit instead of Phantom Membrane.
 - **Unbreaking returns** and uses a slot, so fewer repairs competes with other enchantments.
 - **Mending is gone.** It would cancel the repair cost, the way Unbreakable did in the playtest.
 
@@ -139,7 +139,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.8, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.9, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

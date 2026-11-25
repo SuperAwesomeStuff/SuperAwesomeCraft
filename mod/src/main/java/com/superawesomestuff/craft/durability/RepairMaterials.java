@@ -14,17 +14,19 @@ import net.minecraft.world.item.enchantment.Repairable;
  * crafting grid and says so in its tooltip.
  */
 public final class RepairMaterials {
-	private static final Map<Item, Item> MATERIALS = Map.of(
-		Items.BOW, Items.STRING,
-		Items.CROSSBOW, Items.STRING,
-		Items.FISHING_ROD, Items.STRING,
-		Items.TRIDENT, Items.PRISMARINE_SHARD,
-		Items.SHIELD, Items.IRON_INGOT,
-		Items.SHEARS, Items.IRON_INGOT,
-		Items.FLINT_AND_STEEL, Items.IRON_INGOT,
-		Items.BRUSH, Items.COPPER_INGOT,
-		Items.CARROT_ON_A_STICK, Items.CARROT,
-		Items.WARPED_FUNGUS_ON_A_STICK, Items.WARPED_FUNGUS
+	private static final Map<Item, Item> MATERIALS = Map.ofEntries(
+		Map.entry(Items.BOW, Items.STRING),
+		Map.entry(Items.CROSSBOW, Items.STRING),
+		Map.entry(Items.FISHING_ROD, Items.STRING),
+		Map.entry(Items.TRIDENT, Items.PRISMARINE_SHARD),
+		Map.entry(Items.SHIELD, Items.IRON_INGOT),
+		Map.entry(Items.SHEARS, Items.IRON_INGOT),
+		Map.entry(Items.FLINT_AND_STEEL, Items.IRON_INGOT),
+		Map.entry(Items.BRUSH, Items.COPPER_INGOT),
+		Map.entry(Items.CARROT_ON_A_STICK, Items.CARROT),
+		Map.entry(Items.WARPED_FUNGUS_ON_A_STICK, Items.WARPED_FUNGUS),
+		// Vanilla uses Phantom Membrane; ours keeps the Elytra tied to the End.
+		Map.entry(Items.ELYTRA, Items.POPPED_CHORUS_FRUIT)
 	);
 
 	private RepairMaterials() {

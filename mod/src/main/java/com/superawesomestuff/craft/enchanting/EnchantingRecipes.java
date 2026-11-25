@@ -297,7 +297,8 @@ public final class EnchantingRecipes {
 		d.rising(Items.MAGMA_BLOCK, "fire_protection");
 		d.rising(Items.CACTUS, "thorns");
 		d.rising(Items.WIND_CHARGE, "sweeping_edge");
-		d.rising(Items.KELP, "respiration", "aqua_affinity");
+		d.rising(Items.PUFFERFISH, "respiration");
+		d.rising(Items.PRISMARINE_CRYSTALS, "aqua_affinity");
 		d.rising(Items.PRISMARINE_SHARD, "depth_strider", "impaling");
 		d.rising(Items.SNOW_BLOCK, "frost_walker", "sac:frost_aspect");
 		d.rising(Items.SOUL_SOIL, "soul_speed");
@@ -314,8 +315,8 @@ public final class EnchantingRecipes {
 
 		Map<SlotUpgrade, List<Cost>> upgrades = new EnumMap<>(SlotUpgrade.class);
 		upgrades.put(SlotUpgrade.OVERWORLD, List.of(Cost.of(Items.DIAMOND_BLOCK, 1), Cost.of(Items.GOLD_BLOCK, 1)));
-		upgrades.put(SlotUpgrade.NETHER, List.of(Cost.of(Items.NETHER_STAR, 1)));
-		upgrades.put(SlotUpgrade.END, List.of(Cost.of(Items.SHULKER_SHELL, 4)));
+		upgrades.put(SlotUpgrade.NETHER, List.of(Cost.of(Items.WITHER_SKELETON_SKULL, 1)));
+		upgrades.put(SlotUpgrade.END, List.of(Cost.of(Items.CHORUS_FLOWER, 1)));
 
 		return new Table(Map.copyOf(perLevel), 4, Cost.of(Items.BLAZE_ROD, 4), java.util.Set.of(Identifier.withDefaultNamespace("efficiency")),
 			Cost.of(Items.GOLD_INGOT, 32), Map.copyOf(upgrades));

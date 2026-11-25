@@ -75,7 +75,8 @@ public class DurabilityTests {
 	@GameTest
 	public void gearVanillaCantRepairGetsAMaterial(GameTestHelper helper) {
 		for (var pair : List.of(List.of(Items.BOW, Items.STRING), List.of(Items.CROSSBOW, Items.STRING),
-			List.of(Items.TRIDENT, Items.PRISMARINE_SHARD), List.of(Items.SHIELD, Items.IRON_INGOT), List.of(Items.FISHING_ROD, Items.STRING))) {
+			List.of(Items.TRIDENT, Items.PRISMARINE_SHARD), List.of(Items.SHIELD, Items.IRON_INGOT), List.of(Items.FISHING_ROD, Items.STRING),
+			List.of(Items.ELYTRA, Items.POPPED_CHORUS_FRUIT))) {
 			ItemStack tool = new ItemStack(pair.get(0));
 			tool.setDamageValue(10);
 			helper.assertTrue(MaterialRepairRecipe.INSTANCE.matches(CraftingInput.of(2, 1, List.of(tool, new ItemStack(pair.get(1)))),
