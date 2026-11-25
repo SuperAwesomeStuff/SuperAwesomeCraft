@@ -1,7 +1,10 @@
 package com.superawesomestuff.craft.mixin;
 
 import com.superawesomestuff.craft.enchanting.ModEnchantments;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,7 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Bulwark: blocking a melee hit with a Bulwark shield has a 15% chance per level to disarm the attacker for 5 seconds.
- * A player's weapon goes on cooldown; a mob gets Weakness strong enough that its hits do nothing.
+ * A player's weapon goes on cooldown; a mob gets Weakness strong enough that its hits do nothing. A disarm clangs (the
+ * shield-break sound) and throws sparks off the attacker so it's obvious when it happens.
  */
 @Mixin(LivingEntity.class)
 public abstract class BulwarkMixin {
@@ -41,5 +45,8 @@ public abstract class BulwarkMixin {
 		} else {
 			attacker.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, DISARM_TICKS, 9));
 		}
+		level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1.0F, 0.8F);
+		level.sendParticles(ParticleTypes.CRIT, attacker.getX(), attacker.getY() + attacker.getBbHeight() * 0.6, attacker.getZ(),
+			20, 0.3, 0.3, 0.3, 0.2);
 	}
 }

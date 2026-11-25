@@ -387,4 +387,32 @@ public class EnchantingTests {
 		helper.assertValueEqual(table.curseRemoval(), EnchantingRecipes.defaults().curseRemoval(), "missing sections keep the defaults");
 		helper.succeed();
 	}
+
+	@GameTest
+	public void bulwarkDisarmsBlockedMeleeAttackers(GameTestHelper helper) {
+		net.minecraft.server.level.ServerPlayer player = helper.makeMockServerPlayerInLevel();
+		player.setGameMode(GameType.SURVIVAL);
+		player.snapTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 1, 1.5)), 0, 0);
+		ItemStack shield = new ItemStack(Items.SHIELD);
+		shield.enchant(ench(helper, sac("bulwark")), 2);
+		player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, shield);
+		player.startUsingItem(net.minecraft.world.InteractionHand.OFF_HAND);
+		try {
+			java.lang.reflect.Field remaining = net.minecraft.world.entity.LivingEntity.class.getDeclaredField("useItemRemaining");
+			remaining.setAccessible(true);
+			remaining.setInt(player, remaining.getInt(player) - 40);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+		helper.assertTrue(player.isBlocking(), "the player is blocking");
+
+		var piglin = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIFIED_PIGLIN, new net.minecraft.core.BlockPos(1, 1, 3));
+		for (int i = 0; i < 60 && !piglin.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS); i++) {
+			// The shield-block step of a real hit (mock players can't take damage, so call it directly).
+			player.applyItemBlocking(helper.getLevel(), helper.getLevel().damageSources().mobAttack(piglin), 5.0F);
+		}
+		helper.assertTrue(piglin.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS), "60 blocked hits at 30% should disarm the piglin");
+		helper.assertValueEqual(piglin.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE), 0.0, "a disarmed mob's hits do nothing");
+		helper.succeed();
+	}
 }

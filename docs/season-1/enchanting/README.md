@@ -102,7 +102,7 @@ Two rules for anything new: **it must do something no existing enchantment does*
 | **Bane of Illagers** | Sword, axe, spear, mace | V | Power | Extra damage against illagers. Can sit beside the other damage enchantments |
 | **Frost Aspect** | Sword, axe, spear, mace | II | Power | Slows the target instead of burning it. Exclusive with Fire Aspect |
 | **Rebounding** | Chestplate | III | Power | Knocks melee attackers away. Can sit beside Thorns, which damages instead |
-| **Bulwark** | Shield | II | Power | -50% knockback per level while held, and blocking a melee hit has a 15% chance per level to disarm the attacker for 5 seconds (a player's weapon goes on cooldown; a mob's hits do nothing). Shields' first real choice |
+| **Bulwark** | Shield | II | Power | -50% knockback per level while held, and blocking a melee hit has a 15% chance per level to disarm the attacker for 5 seconds (a player's weapon goes on cooldown; a mob's hits do nothing). A disarm clangs and throws sparks off the attacker. Shields' first real choice |
 
 **Vanilla enchantments on more items** (same name, same effect, nothing new to learn):
 
@@ -140,7 +140,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.13):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.14):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.
