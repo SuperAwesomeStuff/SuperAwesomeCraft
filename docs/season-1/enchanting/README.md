@@ -139,10 +139,11 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 ## Building it
 
-**Built (mod 0.1.4, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.5, branch `season-1-enchanting`):** the slot rules, the table screen, every recipe, the slot upgrades, found books, durability that never breaks gear with grid repair, the loot and Villager limits, and these new enchantments: Excavating, Felling, Smelting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark (knockback resistance only) and Breach on more weapons. **Not built yet:** Magnetism, Harvesting, and Bulwark's weapon disable. Recipes live in `EnchantingRecipes.java` and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.
+- Every cost (each enchantment's material, the Blaze Rods for high levels, curse removal and the slot upgrades) comes from `config/superawesomecraft/enchanting.json`. The mod writes it with the numbers in [recipes.md](recipes.md) on first start; edit it and run `/reload`. The server sends it to players so the screen matches. Leaving an enchantment out means the table can't make it.
 - Recipes are data: one file per enchantment, with per-level costs and the slot type.
 - Durability-at-zero: items at 0 stop working instead of breaking (hook the break event and the item's use and attack paths). Repair is a shapeless crafting recipe type.
 - Random-source caps hook the vanilla loot functions and enchanting helpers (`EnchantRandomlyFunction`, `SetEnchantmentsFunction`, `EnchantmentHelper`).

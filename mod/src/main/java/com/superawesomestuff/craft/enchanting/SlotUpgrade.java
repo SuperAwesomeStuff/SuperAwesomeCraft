@@ -2,28 +2,31 @@ package com.superawesomestuff.craft.enchanting;
 
 import java.util.List;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Items;
 
 /** The three one-off upgrades that add a slot to an item, one per Era. */
 public enum SlotUpgrade {
-	OVERWORLD("overworld", List.of(Cost.of(Items.DIAMOND_BLOCK, 1), Cost.of(Items.GOLD_BLOCK, 1))),
-	NETHER("nether", List.of(Cost.of(Items.NETHER_STAR, 1))),
-	END("end", List.of(Cost.of(Items.SHULKER_SHELL, 4)));
+	OVERWORLD("overworld"),
+	NETHER("nether"),
+	END("end");
 
 	private final String name;
-	private final List<Cost> costs;
 
-	SlotUpgrade(String name, List<Cost> costs) {
+	SlotUpgrade(String name) {
 		this.name = name;
-		this.costs = costs;
+	}
+
+	/** The name used in the config file and translation keys. */
+	public String key() {
+		return this.name;
 	}
 
 	public int bit() {
 		return 1 << this.ordinal();
 	}
 
+	/** What this upgrade costs, from the enchanting recipes config. */
 	public List<Cost> costs() {
-		return this.costs;
+		return EnchantingRecipes.upgradeCosts(this);
 	}
 
 	public Component title() {

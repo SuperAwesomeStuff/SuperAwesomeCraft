@@ -35,7 +35,7 @@ import org.jspecify.annotations.Nullable;
  * </ul>
  */
 public final class EnchantRules {
-	public static final int MAX_LEVEL_WITHOUT_BLAZE_RODS = 3;
+	public static final int RANDOM_LEVEL_CAP = 3;
 	private static final List<TagKey<Item>> SLOT_TAGS = List.of(
 		slotTag(4), slotTag(3), slotTag(2), slotTag(1)
 	);
@@ -200,8 +200,8 @@ public final class EnchantRules {
 		}
 		List<Cost> costs = new ArrayList<>();
 		costs.add(perLevel);
-		if (level + 1 > MAX_LEVEL_WITHOUT_BLAZE_RODS) {
-			costs.add(EnchantingRecipes.blazeRods());
+		if (level + 1 >= EnchantingRecipes.highLevelFrom()) {
+			costs.add(EnchantingRecipes.highLevelCost());
 		}
 		return new Check(Status.OK, costs);
 	}
@@ -217,7 +217,7 @@ public final class EnchantRules {
 		if (enchantments(stack).getLevel(enchantment) <= 0) {
 			return Check.fail(Status.EMPTY);
 		}
-		return new Check(Status.OK, isCurse(enchantment) ? List.of(EnchantingRecipes.CURSE_REMOVAL) : List.of());
+		return new Check(Status.OK, isCurse(enchantment) ? List.of(EnchantingRecipes.curseRemoval()) : List.of());
 	}
 
 	public static void remove(ItemStack stack, Holder<Enchantment> enchantment) {

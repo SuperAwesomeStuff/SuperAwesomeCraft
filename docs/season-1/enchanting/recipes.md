@@ -2,6 +2,8 @@
 
 **Status: Leaning (agreed November 2026).** Numbers are a first pass to tune in the playtest. Simplified after the first review: one kind of slot, and one material per enchantment, the way Tinkers' Construct prices its stat modifiers (45 Redstone for Haste, 36 Quartz for Sharpness, 45 Lapis for Killager). It applies the agreed [slot design](README.md), but it changes the two slot types into one. Nothing here is on the wiki yet.
 
+In the mod these numbers are defaults: the live costs are in `config/superawesomecraft/enchanting.json`, which can be edited and reloaded with `/reload` without a new build. Keep this page in step when the playtest numbers change.
+
 ## The whole system
 
 1. **Every enchantment uses one slot**, at any level. Efficiency V and Efficiency I both take one slot.

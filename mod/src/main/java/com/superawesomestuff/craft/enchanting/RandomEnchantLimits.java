@@ -59,8 +59,8 @@ public final class RandomEnchantLimits {
 			Holder<Enchantment> enchantment = entry.getKey();
 			if (enchantment.is(Enchantments.MENDING)) {
 				mutable.removeIf(enchantment::equals);
-			} else if (!EnchantRules.isCurse(enchantment) && entry.getIntValue() > EnchantRules.MAX_LEVEL_WITHOUT_BLAZE_RODS) {
-				mutable.set(enchantment, EnchantRules.MAX_LEVEL_WITHOUT_BLAZE_RODS);
+			} else if (!EnchantRules.isCurse(enchantment) && entry.getIntValue() > EnchantRules.RANDOM_LEVEL_CAP) {
+				mutable.set(enchantment, EnchantRules.RANDOM_LEVEL_CAP);
 			}
 		}
 		stack.set(type, mutable.toImmutable());

@@ -1,5 +1,7 @@
 package com.superawesomestuff.craft.gametest;
 
+import com.superawesomestuff.craft.enchanting.EnchantingRecipes;
+import com.superawesomestuff.craft.enchanting.Cost;
 import com.superawesomestuff.craft.enchanting.EnchantRules;
 import com.superawesomestuff.craft.enchanting.EnchantRules.Status;
 import com.superawesomestuff.craft.enchanting.SlotEnchantingMenu;
@@ -11,6 +13,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -275,6 +278,38 @@ public class EnchantingTests {
 		helper.assertTrue(SlotEnchantingMenu.canEnchant(new ItemStack(Items.SHIELD)), "shield");
 		helper.assertTrue(SlotEnchantingMenu.canEnchant(new ItemStack(Items.IRON_SWORD)), "sword");
 		helper.assertFalse(EnchantRules.checkUpgrade(new ItemStack(Items.BOOK), SlotUpgrade.OVERWORLD).ok(), "no slot upgrades on books");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void recipeConfigRoundTrips(GameTestHelper helper) {
+		EnchantingRecipes.Table defaults = EnchantingRecipes.defaults();
+		EnchantingRecipes.Table parsed = EnchantingRecipes.fromJson(EnchantingRecipes.toJson(defaults));
+		helper.assertValueEqual(parsed, defaults, "defaults survive writing and reading the config");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void recipeConfigChangesCosts(GameTestHelper helper) {
+		EnchantingRecipes.Table table = EnchantingRecipes.fromJson("""
+			{
+			  "high_levels": { "from_level": 3, "cost": { "item": "minecraft:emerald", "count": 2 } },
+			  "enchantments": {
+			    "minecraft:sharpness": { "item": "minecraft:quartz", "count": 10 },
+			    "minecraft:silk_touch": { "tag": "#minecraft:wool", "item": "minecraft:white_wool", "count": 5 },
+			    "minecraft:smite": { "item": "minecraft:not_an_item", "count": 10 },
+			    "minecraft:knockback": { "item": "minecraft:slime_ball" }
+			  }
+			}
+			""");
+		helper.assertValueEqual(table.perLevel().get(Identifier.withDefaultNamespace("sharpness")), Cost.of(Items.QUARTZ, 10), "sharpness");
+		helper.assertTrue(table.perLevel().get(Identifier.withDefaultNamespace("silk_touch")).matches(new ItemStack(Items.WOOL.pick(net.minecraft.world.item.DyeColor.RED))), "any wool");
+		helper.assertFalse(table.perLevel().containsKey(Identifier.withDefaultNamespace("smite")), "unknown items are skipped");
+		helper.assertFalse(table.perLevel().containsKey(Identifier.withDefaultNamespace("knockback")), "entries without a count are skipped");
+		helper.assertFalse(table.perLevel().containsKey(Identifier.withDefaultNamespace("power")), "left-out enchantments can't be made");
+		helper.assertValueEqual(table.highLevelFrom(), 3, "high levels start at III");
+		helper.assertValueEqual(table.highLevelCost(), Cost.of(Items.EMERALD, 2), "high level cost");
+		helper.assertValueEqual(table.curseRemoval(), EnchantingRecipes.defaults().curseRemoval(), "missing sections keep the defaults");
 		helper.succeed();
 	}
 }
