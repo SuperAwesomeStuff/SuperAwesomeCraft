@@ -1,10 +1,14 @@
 package com.superawesomestuff.craft.enchanting;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
@@ -181,6 +185,8 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		EnchantRules.Check check;
 		List<Cost> costs;
 		Runnable apply;
+		String event;
+		JsonObject details = new JsonObject();
 		switch (action) {
 			case ACTION_ADD, ACTION_REMOVE -> {
 				Optional<? extends Holder<Enchantment>> holder = registry.get(argument);
@@ -193,6 +199,12 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 					costs = this.addCosts(enchantment, check);
 					int bookSlot = this.bookSlot(enchantment);
 					int target = this.bookTarget(enchantment);
+					int from = EnchantRules.enchantments(item).getLevel(enchantment);
+					event = "enchant";
+					details.addProperty("enchantment", String.valueOf(EnchantRules.id(enchantment)));
+					details.addProperty("from", from);
+					details.addProperty("to", bookSlot >= 0 ? target : from + 1);
+					details.addProperty("via", bookSlot >= 0 ? "book" : "materials");
 					apply = () -> {
 						if (bookSlot >= 0) {
 							this.spendBook(bookSlot, enchantment);
@@ -204,6 +216,9 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				} else {
 					check = EnchantRules.checkRemove(item, enchantment);
 					costs = check.costs();
+					event = "unenchant";
+					details.addProperty("enchantment", String.valueOf(EnchantRules.id(enchantment)));
+					details.addProperty("from", EnchantRules.enchantments(item).getLevel(enchantment));
 					apply = () -> EnchantRules.remove(item, enchantment);
 				}
 			}
@@ -214,6 +229,8 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 				SlotUpgrade upgrade = SlotUpgrade.values()[argument];
 				check = EnchantRules.checkUpgrade(item, upgrade);
 				costs = check.costs();
+				event = "slot_upgrade";
+				details.addProperty("upgrade", upgrade.key());
 				apply = () -> EnchantRules.applyUpgrade(item, upgrade);
 			}
 			default -> {
@@ -229,12 +246,30 @@ public class SlotEnchantingMenu extends AbstractContainerMenu {
 		}
 		Payment.take(player, this.table, FIRST_MATERIAL_SLOT, LAST_MATERIAL_SLOT, costs);
 		apply.run();
+		this.record(player, event, details, costs);
 		this.table.setChanged();
 		this.broadcastChanges();
 		this.access.execute((level, pos) -> level.playSound(
 			null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F
 		));
 		return true;
+	}
+
+	/** Writes what was just done at the table, what it cost and the item afterwards to the playtest log. */
+	private void record(Player player, String event, JsonObject details, List<Cost> costs) {
+		JsonArray paid = new JsonArray();
+		for (Cost cost : costs) {
+			JsonObject json = new JsonObject();
+			json.addProperty("item", cost.tag() != null ? "#" + cost.tag().location() : BuiltInRegistries.ITEM.getKey(cost.display()).toString());
+			json.addProperty("count", cost.count());
+			paid.add(json);
+		}
+		details.add("cost", paid);
+		if (player.hasInfiniteMaterials()) {
+			details.addProperty("creative", true);
+		}
+		details.add("item", PlaytestLog.item(this.item()));
+		PlaytestLog.event(player, event, details);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.mixin;
 
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import com.superawesomestuff.craft.enchanting.BookMerging;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -47,6 +48,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		this.cost.set(0);
 		this.repairItemCountCost = 0;
 		this.broadcastChanges();
+	}
+
+	@Inject(method = "onTake", at = @At("HEAD"))
+	private void superawesomecraft$recordBookMerge(Player player, ItemStack carried, CallbackInfo ci) {
+		if (!this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT).isEmpty()) {
+			com.google.gson.JsonObject data = new com.google.gson.JsonObject();
+			data.add("item", PlaytestLog.item(carried));
+			PlaytestLog.event(player, "book_merge", data);
+		}
 	}
 
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)

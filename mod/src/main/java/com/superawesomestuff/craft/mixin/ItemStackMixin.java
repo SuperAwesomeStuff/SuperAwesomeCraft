@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.mixin;
 
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import net.minecraft.core.Holder;
@@ -40,10 +41,19 @@ public abstract class ItemStackMixin {
 	@Shadow
 	public abstract void setDamageValue(int value);
 
+	@Shadow
+	public abstract int getDamageValue();
+
 	@Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
 	private void superawesomecraft$neverBreak(int newDamage, @Nullable ServerPlayer player, Consumer<ItemStack> onBreak, CallbackInfo ci) {
 		if (newDamage >= this.getMaxDamage()) {
+			boolean wasWorking = this.getDamageValue() < this.getMaxDamage();
 			this.setDamageValue(this.getMaxDamage());
+			if (player != null && wasWorking) {
+				com.google.gson.JsonObject data = new com.google.gson.JsonObject();
+				data.add("item", PlaytestLog.item((ItemStack) (Object) this));
+				PlaytestLog.event(player, "gear_broken", data);
+			}
 			ci.cancel();
 		}
 	}

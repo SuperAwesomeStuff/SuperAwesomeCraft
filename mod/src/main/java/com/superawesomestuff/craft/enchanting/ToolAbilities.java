@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.enchanting;
 
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -105,17 +106,24 @@ public final class ToolAbilities {
 		if (extra.isEmpty()) {
 			return;
 		}
+		String ability = digsArea(level.registryAccess(), tool)
+			? (ModEnchantments.level(level.registryAccess(), tool, ModEnchantments.EXCAVATING) > 0 ? "excavating_blocks" : "harvesting_blocks")
+			: "felling_logs";
+		int broken = 0;
 		BREAKING_EXTRA.set(true);
 		try {
 			for (BlockPos target : extra) {
 				if (tool.isEmpty() || tool.isBroken() || player.getMainHandItem() != tool) {
 					break;
 				}
-				serverPlayer.gameMode.destroyBlock(target);
+				if (serverPlayer.gameMode.destroyBlock(target)) {
+					broken++;
+				}
 			}
 		} finally {
 			BREAKING_EXTRA.set(false);
 		}
+		PlaytestLog.count(serverPlayer, ability, broken);
 	}
 
 	/** The other eight blocks of a 3x3 facing the player, limited to blocks the tool mines and no harder than the first. */
@@ -182,13 +190,17 @@ public final class ToolAbilities {
 		if (player == null || tool == null || ModEnchantments.level(context.getLevel().registryAccess(), tool, ModEnchantments.MAGNETISM) <= 0) {
 			return;
 		}
+		int collected = 0;
 		for (ListIterator<ItemStack> it = drops.listIterator(); it.hasNext(); ) {
 			ItemStack drop = it.next();
+			int before = drop.getCount();
 			player.getInventory().add(drop);
+			collected += before - drop.getCount();
 			if (drop.isEmpty()) {
 				it.remove();
 			}
 		}
+		PlaytestLog.count(player, "magnetism_items", collected);
 	}
 
 	private static void smelt(LootContext context, List<ItemStack> drops) {
@@ -209,6 +221,9 @@ public final class ToolAbilities {
 				if (!result.isEmpty()) {
 					result.setCount(result.getCount() * drop.getCount());
 					it.set(result);
+					if (context.getOptional(LootContextParams.THIS_ENTITY) instanceof Player player) {
+						PlaytestLog.count(player, "smelting_items", result.getCount());
+					}
 				}
 			}
 		}

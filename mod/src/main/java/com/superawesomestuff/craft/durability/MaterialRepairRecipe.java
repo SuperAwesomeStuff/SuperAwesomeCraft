@@ -24,14 +24,16 @@ public class MaterialRepairRecipe extends CustomRecipe {
 	public static final StreamCodec<RegistryFriendlyByteBuf, MaterialRepairRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
 	public static final RecipeSerializer<MaterialRepairRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
-	private record Found(ItemStack tool, int materials) {
+	/** A repair the grid holds: the damaged item and how many material items it uses. */
+	public record Found(ItemStack tool, int materials) {
 	}
 
 	public static int perMaterial(ItemStack tool) {
 		return (tool.getMaxDamage() + 1) / 2;
 	}
 
-	private static @Nullable Found find(CraftingInput input) {
+	/** The repair {@code input} makes, or null if it isn't one. */
+	public static @Nullable Found find(CraftingInput input) {
 		ItemStack tool = null;
 		for (int i = 0; i < input.size(); i++) {
 			ItemStack stack = input.getItem(i);

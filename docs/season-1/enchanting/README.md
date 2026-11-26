@@ -138,9 +138,11 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 5. **Repairs:** how often gear hits 0, and whether repairing feels like a chore.
 6. **Retention:** players still enchanting in week two.
 
+The mod's playtest log records what these need (every enchant, removal, slot upgrade, repair and gear hitting 0, plus a gear snapshot every 5 minutes), and `tools/playtest/events.py` turns it into these six measures. "Max Power gear" there means an item with every slot used and every enchantment at its top level. See [tools/playtest](../../../tools/playtest/README.md).
+
 ## Building it
 
-**Built (mod 0.1.15):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.16):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

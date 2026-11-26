@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.enchanting;
 
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,11 +62,9 @@ public final class Beheading {
 			return;
 		}
 		Item vanilla = VANILLA_HEADS.get(victim.getType());
-		if (vanilla != null) {
-			drops.add(new ItemStack(vanilla));
-			return;
-		}
-		drops.addAll(packHead(context, victim));
+		List<ItemStack> heads = vanilla != null ? List.of(new ItemStack(vanilla)) : packHead(context, victim);
+		drops.addAll(heads);
+		PlaytestLog.count(player, "beheading_heads", heads.size());
 	}
 
 	/** Only the victim's own loot table, so packs that nest tables can't make Beheading roll twice. */

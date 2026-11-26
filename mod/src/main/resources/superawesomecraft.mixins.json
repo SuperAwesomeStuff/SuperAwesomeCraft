@@ -10,6 +10,7 @@
 		"ExcavatingSpeedMixin",
 		"ItemStackMixin",
 		"PlayerMixin",
+		"RepairRecordMixin",
 		"RandomChanceMixin",
 		"RandomChanceWithEnchantedBonusMixin",
 		"RandomEnchantingMixin",

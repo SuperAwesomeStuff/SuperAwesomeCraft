@@ -8,6 +8,7 @@ import com.superawesomestuff.craft.enchanting.RandomEnchantLimits;
 import com.superawesomestuff.craft.enchanting.ToolAbilities;
 import com.superawesomestuff.craft.durability.MaterialRepairRecipe;
 import com.superawesomestuff.craft.durability.RepairMaterials;
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,6 +31,7 @@ public class SuperAwesomeCraft implements ModInitializer {
 		ToolAbilities.init();
 		Harvesting.init();
 		EnchantingRecipesSync.init();
+		PlaytestLog.init();
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("material_repair"), MaterialRepairRecipe.SERIALIZER);
 		LOGGER.info("Super Awesome Craft loaded");
 	}

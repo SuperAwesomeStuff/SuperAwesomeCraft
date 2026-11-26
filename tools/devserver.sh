@@ -103,6 +103,11 @@ cmd_pull() {
 	echo "Copying player data to $out"
 	scp -q -r "$HOST:$DIR/logs" "$HOST:$DIR/usercache.json" "$out/"
 	scp -q -r "$HOST:$DIR/world/players" "$out/world/"
+	# The mod's playtest log (PlaytestLog.java); missing on servers that ran an older mod.
+	if ssh "$HOST" "test -d $DIR/world/superawesomecraft/playtest"; then
+		mkdir -p "$out/world/superawesomecraft"
+		scp -q -r "$HOST:$DIR/world/superawesomecraft/playtest" "$out/world/superawesomecraft/"
+	fi
 }
 
 case "${1:-}" in

@@ -25,7 +25,8 @@
 		"fabric-gametest": [
 			"com.superawesomestuff.craft.gametest.NoExperienceTests",
 			"com.superawesomestuff.craft.gametest.EnchantingTests",
-			"com.superawesomestuff.craft.gametest.DurabilityTests"
+			"com.superawesomestuff.craft.gametest.DurabilityTests",
+			"com.superawesomestuff.craft.gametest.PlaytestLogTests"
 		]
 	},
 	"mixins": [

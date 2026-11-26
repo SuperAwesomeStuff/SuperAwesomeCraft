@@ -1,5 +1,6 @@
 package com.superawesomestuff.craft.enchanting;
 
+import com.superawesomestuff.craft.playtest.PlaytestLog;
 import java.util.List;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
@@ -92,6 +93,7 @@ public final class Harvesting {
 			}
 		}
 		hoe.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+		PlaytestLog.count(player, "harvesting_replants", 1);
 	}
 
 	/** Uses the hoe on the eight blocks around the clicked one, on the clicked face's plane. */
@@ -114,7 +116,9 @@ public final class Harvesting {
 					}
 					BlockPos target = center.offset(dx, 0, dz);
 					BlockHitResult targetHit = new BlockHitResult(Vec3.atCenterOf(target).relative(face, 0.5), face, target, false);
-					hoe.useOn(new UseOnContext(player, hand, targetHit));
+					if (hoe.useOn(new UseOnContext(player, hand, targetHit)).consumesAction()) {
+						PlaytestLog.count(player, "harvesting_tilled", 1);
+					}
 				}
 			}
 		} finally {
