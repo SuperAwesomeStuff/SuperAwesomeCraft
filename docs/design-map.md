@@ -2,7 +2,7 @@
 
 A rough map of the whole design, so ideas have somewhere to live before they're decided. Each area lists what's **Decided**, what we're **Leaning** toward, loose **Ideas**, and **Open** questions. Ideas here aren't commitments; promote them when the Season that needs them gets designed.
 
-Systems wanted for the Season 1 playtest are gathered in the [playtest wishlist](season-1/playtest-wishlist.md). Details for decided items live in [vision.md](vision.md), terms in [GLOSSARY.md](../GLOSSARY.md), and big decisions in [adr/](adr/).
+Season 1 ships everything in the [playtest wishlist](season-1/playtest-wishlist.md) alongside Gear; those systems' designs are still Ideas below. Details for decided items live in [vision.md](vision.md), terms in [GLOSSARY.md](../GLOSSARY.md), and big decisions in [adr/](adr/).
 
 ```
 SuperAwesomeCraft
@@ -29,7 +29,9 @@ SuperAwesomeCraft
 ## How we build it
 
 - **Decided:** build in Seasons with vanilla as the placeholder for anything not built yet. Fabric mod on client and server ([ADR-0001](adr/0001-fabric-client-and-server-mod.md)), shipped as a one-click modpack.
-- **Leaning:** Season 0 is setup (mod skeleton, modpack, dev server, playtest scripts). Season 1 is Gear.
+- **Leaning:** Season 0 is setup (mod skeleton, modpack, dev server, playtest scripts).
+- **Decided:** Season 1 is Gear plus the [playtest wishlist](season-1/playtest-wishlist.md): beacons, Villager trading, getting around, graves, home/spawn/friends without commands, brewing and earlier Shulkers.
+- **Decided:** the mod keeps a playtest log of what players do (enchanting, repairs, deaths, gear snapshots), and each new system adds its own events. See [tools/playtest](../tools/playtest/README.md).
 - **Open:** order of the Seasons after Gear. Target hours of play per Era.
 
 ## Progression

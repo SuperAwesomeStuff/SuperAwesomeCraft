@@ -1,10 +1,10 @@
 # Season 1 playtest wishlist
 
-**Status: Idea.** A jot-down of systems to have in before the Season 1 playtest. Nothing here is designed yet. Each entry links to where the idea already appears in the docs, so the pieces aren't scattered. Promote an entry to Leaning or Decided (and into [vision.md](../vision.md)) only once it's designed.
+**Status: Decided** that every system here ships in Season 1, the "Also in" ones included. **Each system's design is still an Idea.** Each entry links to where the idea already appears in the docs, so the pieces aren't scattered. Promote an entry's design to Leaning or Decided (and into [vision.md](../vision.md)) once it's designed.
 
-**Scope question:** [vision.md](../vision.md#seasons) says Season 1 is Gear and everything else stays vanilla, with rails and Settlements in later Seasons. Bringing these into the Season 1 playtest widens it. Decide whether they ship in Season 1, or whether the playtest just gets an early slice of each.
+**Scope:** Season 1 is Gear (enchanting, durability, no XP) plus everything on this page ([vision.md](../vision.md#seasons)). Each new system logs what players do with it through the mod's playtest log (`PlaytestLog`, see [tools/playtest](../../tools/playtest/README.md)), so the playtest can tell which system changed how people play.
 
-## Want for the playtest
+## In Season 1
 
 ### Beacon rework
 
@@ -53,7 +53,7 @@
 - New; not in the docs yet. Nearest: "Travel tools that keep distant homes connected to the group" ([vision.md](../vision.md)) and the open "Recall or teleport items?" ([design map](../design-map.md#getting-around)).
 - Ties into grave teleporting above.
 
-## Maybe
+## Also in Season 1
 
 ### Potions and brewing
 

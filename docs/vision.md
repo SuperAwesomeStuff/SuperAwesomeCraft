@@ -123,8 +123,8 @@ There is no single currency everything converts into. Each playstyle earns rewar
 The game is built one Season at a time (see Constraints). Only the next Season is designed in detail.
 
 - **Season 0 (no playtest):** a Fabric client-and-server mod skeleton, a one-click modpack (Modrinth pack), a dev server on the home server PC, and the playtest scripts pointed at it. Targets the latest Minecraft version Fabric supports when work starts.
-- **Season 1, Gear:** no XP, durability that never breaks gear, and slot enchanting that starts early. Everything else stays vanilla. The question: when enchanting is a long climb with real choices that runs through every Era, do people keep playing past where they quit last time?
-- **Later, in some order:** rails and the Travel cart, the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
+- **Season 1, Gear:** no XP, durability that never breaks gear, and slot enchanting that starts early. It also brings in everything on the [playtest wishlist](season-1/playtest-wishlist.md): a beacon rework, a Villager trading rework, getting around (minecarts, horses, a glider or grapple), graves, survival ways to get home, to spawn and to friends, brewing, and earlier Shulker boxes. Everything else stays vanilla. The question: when enchanting is a long climb with real choices that runs through every Era, do people keep playing past where they quit last time? The mod logs what players do with each system so the playtest can tell them apart.
+- **Later, in some order:** the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
 
 ## Constraints
 
@@ -132,7 +132,7 @@ The game is built one Season at a time (see Constraints). Only the next Season i
 - Balance for 5 to 10 players of varying skill on one shared world.
 - Avoid first-come finite resources that the first player can claim. Generated loot is per player.
 - **Technical parity:** how vanilla mechanics behave (physics, redstone timing, mob AI, spawning, item movement) stays exactly vanilla. It doesn't protect whether a resource exists: XP farms stop mattering because XP is gone, and dispensers using shears never run out. When we want different behavior, we add a separate variant instead of changing the original.
-- **Seasons:** the game is built one Season at a time. Each replaces one part of vanilla and gets a short playtest that answers one question; anything not built yet stays vanilla.
+- **Seasons:** the game is built one Season at a time. Each centres on one part of vanilla and gets a short playtest that answers one question; anything not built yet stays vanilla.
 
 ## Open questions
 
