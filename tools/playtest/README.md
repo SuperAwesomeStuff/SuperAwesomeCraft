@@ -20,6 +20,7 @@ Vanilla stats can't see what was enchanted, what it cost, or when gear hit 0, so
 | `unenchant` | an enchantment is removed | `enchantment`, `from`, `cost`, `item` |
 | `slot_upgrade` | a slot upgrade is applied | `upgrade`, `cost`, `item` |
 | `book_merge` | two books are combined at the anvil | `item` |
+| `transfer` | enchantments are moved to a new item at the anvil | `from` (the old item), `item` (the new one) |
 | `repair` | gear is repaired in the crafting grid | `materials`, `damage_before`, `item` |
 | `gear_broken` | gear hits 0 durability | `item` |
 | `death` | a player dies | position, `cause`, `killer` |

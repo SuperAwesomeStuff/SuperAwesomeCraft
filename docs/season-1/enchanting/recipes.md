@@ -73,6 +73,7 @@ That's the whole system: slots from material, one material per enchantment that 
 
 - **Removing a curse:** 32 Gold Ingots.
 - **Found books:** in a material slot, a book takes one of its enchantments straight up to the book's level, if that's higher than the item's, and the enchantment comes off the book. Blaze Rods for levels IV and V and slots still apply. Two books combine at the anvil for free with vanilla's rules.
+- **Moving enchantments:** free at the anvil, from an enchanted item on the right to an unenchanted one of the same kind on the left, if they fit its slots. Slot upgrades and curses move too; the old item is used up.
 - **Repair:** in the crafting grid, the item plus its own material. Each material item restores 50%. Elytra repair with Popped Chorus Fruit.
 
 ## What a finished item costs

@@ -114,6 +114,17 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 
 - **A found enchanted book takes an enchantment up to the book's level.** Put it in a material slot instead of the materials: a Sharpness III book takes a sword from nothing (or Sharpness I) straight to Sharpness III, and that enchantment comes off the book (an empty book becomes a plain Book). It only works if the book's level is higher than the item's. Blaze Rods are still due for each level IV and V the book adds (not for Efficiency), and the enchantment still needs a slot. A low-level book can't help with high levels, so cheap books can't skip the expensive top. Books aren't capped: the planned Villager rework is where book prices get kept sensible.
 - **Books combine at the anvil for free**, with vanilla's rules, so two level I books make a level II book.
+
+### Moving enchantments
+
+Without this, enchanting iron gear is wasted the moment you find diamonds, so the sensible move is to save everything for diamond: the opposite of starting early.
+
+- **At the anvil, enchantments move to a new item of the same kind, in any material.** As in vanilla, the item being worked on goes on the left: an unenchanted item. The enchanted one goes on the right. An iron pickaxe's enchantments go onto a diamond pickaxe; all helmets (turtle shell included) count as one kind, and so on for chestplates, leggings, boots, swords, axes, pickaxes, shovels, hoes and spears. Any other item only matches itself.
+- **Everything moves:** every enchantment, curses included (so moving isn't a free way to drop a curse), and every slot upgrade.
+- **It's free, and the old item is used up.** The new item keeps its own durability.
+- **The enchantments have to fit.** If they need more slots than the new item has (counting the slot upgrades that move with them), the anvil gives nothing and says how many slots it needs. Diamond to Netherite still happens at the smithing table, which already keeps enchantments.
+- **Only onto an unenchanted item.** Merging two enchanted items would bring back vanilla combining.
+- **Watch in the playtest:** materials spent early are no longer lost, so the total spent to reach max gear drops. That trades against the pace goal for more early enchanting.
 - **Random sources (loot, fishing, mob drops) cap every enchantment at level III**, the highest level that doesn't need Blaze Rods, so found books are an early boost without skipping the Nether.
 - **Librarians sell Convenience books only.**
 - **Curses come only from loot, don't use a slot, and can be removed at the table for a material cost.**
@@ -134,7 +145,7 @@ Left out on purpose: Icy Thorns (too close to Thorns), Air Affinity (no useful w
 1. **Pace:** hours to max Power gear for the fastest player, and how many reach it.
 2. **Spending:** materials spent on enchanting, repairs and slot upgrades per player per week.
 3. **Variety:** how different players' enchantments are on the same kind of item, how often they remove and swap, and whether mixed damage and protection builds appear. Watch that general Protection still gets used, and that Breach with Sharpness isn't the only sword anyone makes.
-4. **Usage:** which enchantments get picked and which never do, especially new ones.
+4. **Usage:** which enchantments get picked and which never do, especially new ones. How often enchantments get moved to a new item, and how early players start enchanting.
 5. **Repairs:** how often gear hits 0, and whether repairing feels like a chore.
 6. **Retention:** players still enchanting in week two.
 
@@ -142,7 +153,7 @@ The mod's playtest log records what these need (every enchant, removal, slot upg
 
 ## Building it
 
-**Built (mod 0.1.16):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
+**Built (mod 0.1.17):** the slot rules, the table screen, every recipe, the slot upgrades, found books (take an enchantment up to the book's level), free book combining at the anvil, moving enchantments to a new item at the anvil, durability that never breaks gear with grid repair, the loot and Villager limits, and every new enchantment: Excavating, Felling, Smelting, Magnetism, Harvesting, Beheading, Reach, Step Assist, Bane of Illagers, Frost Aspect, Rebounding, Bulwark and Breach on more weapons. Default recipes live in `EnchantingRecipes.java` (live ones in the config file) and slot counts in the `superawesomecraft:enchant_slots/1..4` item tags.
 
 - The table screen is ours (client and server): item slot, enchantment list, recipe with missing items in red, and a slot display.
 - Slots and slot upgrades are item data components. Starting slots come from a data file keyed by item tag, so materials can be tuned without code.

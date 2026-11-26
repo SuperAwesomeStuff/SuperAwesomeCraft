@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Opens the enchanting table in a real client and takes screenshots: empty, a sword with an enchantment selected,
- * and the materials filled in. Run with {@code ./gradlew runClientGametest}; screenshots land in
+ * and the materials filled in. Then the anvil, moving enchantments to a sword with too few slots and to one with room. Run with {@code ./gradlew runClientGametest}; screenshots land in
  * build/clientgametest/screenshots.
  */
 public class EnchantingScreenClientTest implements FabricClientGameTest {
@@ -72,6 +72,37 @@ public class EnchantingScreenClientTest implements FabricClientGameTest {
 			});
 			context.waitTicks(5);
 			context.takeScreenshot("enchanting-materials");
+
+			// The anvil: a transfer that doesn't fit, then one that does.
+			singleplayer.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.closeContainer();
+				BlockPos pos = player.blockPosition().relative(player.getDirection().getClockWise(), 2);
+				player.level().setBlockAndUpdate(pos, Blocks.ANVIL.defaultBlockState());
+				player.level().getBlockState(pos).useWithoutItem(player.level(), player,
+					new BlockHitResult(Vec3.atCenterOf(pos), player.getDirection().getOpposite(), pos, false));
+			});
+			context.waitForScreen(net.minecraft.client.gui.screens.inventory.AnvilScreen.class);
+			singleplayer.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				var registry = server.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+				ItemStack old = new ItemStack(Items.DIAMOND_SWORD);
+				EnchantRules.addLevel(old, registry.getOrThrow(Enchantments.SHARPNESS));
+				EnchantRules.addLevel(old, registry.getOrThrow(Enchantments.LOOTING));
+				EnchantRules.addLevel(old, registry.getOrThrow(Enchantments.UNBREAKING));
+				player.containerMenu.getSlot(0).set(new ItemStack(Items.IRON_SWORD));
+				player.containerMenu.getSlot(1).set(old);
+				player.containerMenu.broadcastChanges();
+			});
+			context.waitTicks(5);
+			context.takeScreenshot("anvil-too-few-slots");
+			singleplayer.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.containerMenu.getSlot(0).set(new ItemStack(Items.NETHERITE_SWORD));
+				player.containerMenu.broadcastChanges();
+			});
+			context.waitTicks(5);
+			context.takeScreenshot("anvil-transfer");
 		}
 	}
 }

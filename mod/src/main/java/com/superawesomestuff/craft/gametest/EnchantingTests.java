@@ -446,4 +446,77 @@ public class EnchantingTests {
 		helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.HAY_BLOCK, 1, 4, 2);
 		helper.succeed();
 	}
+
+	// Moving enchantments at the anvil
+
+	/** An anvil with {@code left} and {@code right} in its input slots. */
+	private static net.minecraft.world.inventory.AnvilMenu anvil(Player player, ItemStack left, ItemStack right) {
+		var menu = new net.minecraft.world.inventory.AnvilMenu(1, player.getInventory());
+		menu.getSlot(net.minecraft.world.inventory.AnvilMenu.INPUT_SLOT).set(left);
+		menu.getSlot(net.minecraft.world.inventory.AnvilMenu.ADDITIONAL_SLOT).set(right);
+		return menu;
+	}
+
+	@GameTest
+	public void anvilMovesEnchantmentsUpATierAndUsesUpTheOldItem(GameTestHelper helper) {
+		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+		ItemStack iron = new ItemStack(Items.IRON_PICKAXE);
+		add(helper, iron, Enchantments.EFFICIENCY, 3);
+		add(helper, iron, Enchantments.UNBREAKING, 1);
+		EnchantRules.applyUpgrade(iron, SlotUpgrade.OVERWORLD);
+		iron.enchant(ench(helper, Enchantments.VANISHING_CURSE), 1);
+		ItemStack diamond = new ItemStack(Items.DIAMOND_PICKAXE);
+		diamond.setDamageValue(7);
+
+		var menu = anvil(player, diamond, iron);
+		ItemStack result = menu.getSlot(net.minecraft.world.inventory.AnvilMenu.RESULT_SLOT).getItem();
+		helper.assertTrue(result.is(Items.DIAMOND_PICKAXE), "the result is the diamond pickaxe");
+		helper.assertValueEqual(EnchantRules.enchantments(result).getLevel(ench(helper, Enchantments.EFFICIENCY)), 3, "efficiency");
+		helper.assertValueEqual(EnchantRules.enchantments(result).getLevel(ench(helper, Enchantments.UNBREAKING)), 1, "unbreaking");
+		helper.assertValueEqual(EnchantRules.enchantments(result).getLevel(ench(helper, Enchantments.VANISHING_CURSE)), 1, "curses move too");
+		helper.assertTrue(EnchantRules.hasUpgrade(result, SlotUpgrade.OVERWORLD), "slot upgrades move");
+		helper.assertValueEqual(EnchantRules.totalSlots(result), 4, "diamond 3 + the upgrade");
+		helper.assertValueEqual(result.getDamageValue(), 7, "keeps its own durability");
+
+		menu.getSlot(net.minecraft.world.inventory.AnvilMenu.RESULT_SLOT).onTake(player, result);
+		helper.assertTrue(menu.getSlot(net.minecraft.world.inventory.AnvilMenu.ADDITIONAL_SLOT).getItem().isEmpty(), "the old pickaxe is used up");
+		helper.assertTrue(menu.getSlot(net.minecraft.world.inventory.AnvilMenu.INPUT_SLOT).getItem().isEmpty(), "the left slot is taken");
+		helper.succeed();
+	}
+
+	@GameTest
+	public void anvilTransferNeedsRoomTheSameKindAndABlankItem(GameTestHelper helper) {
+		ItemStack diamond = new ItemStack(Items.DIAMOND_SWORD);
+		add(helper, diamond, Enchantments.SHARPNESS, 1);
+		add(helper, diamond, Enchantments.LOOTING, 1);
+		add(helper, diamond, Enchantments.UNBREAKING, 1);
+		var tooSmall = com.superawesomestuff.craft.enchanting.EnchantTransfer.check(new ItemStack(Items.IRON_SWORD), diamond);
+		helper.assertValueEqual(tooSmall.status(), com.superawesomestuff.craft.enchanting.EnchantTransfer.Status.TOO_FEW_SLOTS, "3 enchantments into 2 slots");
+		helper.assertValueEqual(tooSmall.needed(), 3, "needed");
+		helper.assertValueEqual(tooSmall.available(), 2, "available");
+
+		EnchantRules.applyUpgrade(diamond, SlotUpgrade.NETHER);
+		helper.assertTrue(com.superawesomestuff.craft.enchanting.EnchantTransfer.check(new ItemStack(Items.IRON_SWORD), diamond).ok(),
+			"the upgrade moves with them, so an iron sword fits 3");
+
+		helper.assertValueEqual(com.superawesomestuff.craft.enchanting.EnchantTransfer.check(new ItemStack(Items.IRON_AXE), diamond).status(),
+			com.superawesomestuff.craft.enchanting.EnchantTransfer.Status.DIFFERENT_KIND, "sword to axe");
+		ItemStack enchanted = new ItemStack(Items.NETHERITE_SWORD);
+		add(helper, enchanted, Enchantments.SMITE, 1);
+		helper.assertValueEqual(com.superawesomestuff.craft.enchanting.EnchantTransfer.check(enchanted, diamond).status(),
+			com.superawesomestuff.craft.enchanting.EnchantTransfer.Status.TARGET_ENCHANTED, "onto an enchanted sword");
+
+		Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+		helper.assertTrue(anvil(player, new ItemStack(Items.IRON_AXE), diamond)
+			.getSlot(net.minecraft.world.inventory.AnvilMenu.RESULT_SLOT).getItem().isEmpty(), "no result for a blocked transfer");
+		helper.assertTrue(com.superawesomestuff.craft.enchanting.EnchantTransfer.check(new ItemStack(Items.TURTLE_HELMET), helmet(helper)).ok(),
+			"helmets count as one kind, turtle shell included");
+		helper.succeed();
+	}
+
+	private static ItemStack helmet(GameTestHelper helper) {
+		ItemStack helmet = new ItemStack(Items.IRON_HELMET);
+		add(helper, helmet, Enchantments.RESPIRATION, 1);
+		return helmet;
+	}
 }

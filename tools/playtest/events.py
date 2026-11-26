@@ -64,6 +64,7 @@ def summarise(events):
     spent = defaultdict(lambda: defaultdict(Counter))  # player -> week -> material -> count
     repair_materials = defaultdict(lambda: defaultdict(int))
     picked, removed, upgrades, broken, repairs = Counter(), Counter(), Counter(), Counter(), Counter()
+    transfers = Counter()  # from item -> to item
     ability = Counter()
     enchant_weeks = defaultdict(set)
     deaths = defaultdict(list)
@@ -90,6 +91,8 @@ def summarise(events):
             removed[short(e['enchantment'])] += 1
         elif kind == 'slot_upgrade':
             upgrades[e['upgrade']] += 1
+        elif kind == 'transfer':
+            transfers[f"{short(e['from']['id'])} -> {short(e['item']['id'])}"] += 1
         elif kind == 'gear_broken':
             broken[p] += 1
         elif kind == 'repair':
@@ -122,6 +125,7 @@ def summarise(events):
         'enchantments_picked': picked.most_common(),
         'enchantments_removed': removed.most_common(),
         'slot_upgrades': dict(upgrades),
+        'transfers': transfers.most_common(),
         'ability_use': dict(ability.most_common()),
         'variety': variety,
         'retention': {
@@ -153,6 +157,7 @@ def show(s):
     print('  picked:  ' + ', '.join(f"{e} {n}" for e, n in s['enchantments_picked']))
     print('  removed: ' + ', '.join(f"{e} {n}" for e, n in s['enchantments_removed']))
     print('  slot upgrades: ' + ', '.join(f"{u} {n}" for u, n in s['slot_upgrades'].items()))
+    print('  moved: ' + ', '.join(f"{t} {n}" for t, n in s['transfers']))
     print('  abilities: ' + ', '.join(f"{a} {n}" for a, n in s['ability_use'].items()))
     print('\n# Repairs')
     for p in s['players']:

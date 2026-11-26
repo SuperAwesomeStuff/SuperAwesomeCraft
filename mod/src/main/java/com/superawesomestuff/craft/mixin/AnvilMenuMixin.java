@@ -2,6 +2,7 @@ package com.superawesomestuff.craft.mixin;
 
 import com.superawesomestuff.craft.playtest.PlaytestLog;
 import com.superawesomestuff.craft.enchanting.BookMerging;
+import com.superawesomestuff.craft.enchanting.EnchantTransfer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
@@ -21,8 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * No XP: the anvil renames for free and combines two enchanted books for free (vanilla's book rules, see
- * {@link BookMerging}). Everything else it used to combine or repair is disabled; enchanting gear happens at the table.
+ * No XP: the anvil renames for free, combines two enchanted books for free (vanilla's book rules, see
+ * {@link BookMerging}) and moves enchantments from an item on the right to an unenchanted one of the same kind on the left
+ * (see {@link EnchantTransfer}). Everything else it used to combine or repair is disabled; enchanting gear happens at the
+ * table.
  */
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
@@ -38,11 +41,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		super(menuType, containerId, inventory, access, itemInputSlots);
 	}
 
-	@Inject(method = "createResult", at = @At("TAIL"))
+	@Inject(method = "createResult", at = @At("RETURN"))
 	private void superawesomecraft$renameOnly(CallbackInfo ci) {
 		ItemStack right = this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT);
 		if (!right.isEmpty()) {
-			this.resultSlots.setItem(0, BookMerging.merge(this.inputSlots.getItem(AnvilMenu.INPUT_SLOT), right));
+			ItemStack left = this.inputSlots.getItem(AnvilMenu.INPUT_SLOT);
+			ItemStack moved = EnchantTransfer.result(left, right);
+			this.resultSlots.setItem(0, moved.isEmpty() ? BookMerging.merge(left, right) : moved);
 		}
 
 		this.cost.set(0);
@@ -51,12 +56,19 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	}
 
 	@Inject(method = "onTake", at = @At("HEAD"))
-	private void superawesomecraft$recordBookMerge(Player player, ItemStack carried, CallbackInfo ci) {
-		if (!this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT).isEmpty()) {
-			com.google.gson.JsonObject data = new com.google.gson.JsonObject();
-			data.add("item", PlaytestLog.item(carried));
-			PlaytestLog.event(player, "book_merge", data);
+	private void superawesomecraft$record(Player player, ItemStack carried, CallbackInfo ci) {
+		ItemStack left = this.inputSlots.getItem(AnvilMenu.INPUT_SLOT);
+		ItemStack right = this.inputSlots.getItem(AnvilMenu.ADDITIONAL_SLOT);
+		if (right.isEmpty()) {
+			return;
 		}
+		com.google.gson.JsonObject data = new com.google.gson.JsonObject();
+		boolean transfer = EnchantTransfer.check(left, right).ok();
+		if (transfer) {
+			data.add("from", PlaytestLog.item(right));
+		}
+		data.add("item", PlaytestLog.item(carried));
+		PlaytestLog.event(player, transfer ? "transfer" : "book_merge", data);
 	}
 
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
