@@ -14,14 +14,13 @@
 - **Watch:** the instant-mining breakpoint. Efficiency V on a diamond pick plus Haste II just instant-mines stone, and deepslate never instant-mines ([enchanting](enchanting/README.md), "Instant-mining stone"). Haste III or higher moves that line. Deepslate would need Haste VIII or more with Efficiency V, so a small bump is safe for deepslate but makes stone easier to reach.
 - Already in the docs: the beacon as a shared build ([vision.md](../vision.md#vision-statement), [enchanting](enchanting/README.md) "Being near the group").
 
-### Villager trading rework
+### Villages
 
-- Similar in spirit to the Super Awesome Villagers datapack.
-- Already in the docs:
-  - [Design map](../design-map.md#gear), Ideas: the trade rework itself, librarians selling new-system books, and book prices that keep Efficiency V from being a shortcut.
+- Started as a Villager trading rework similar in spirit to the Super Awesome Villagers datapack; now a full Village system: the Steward, Prosperity levels, quests and salary, Builders, guards and level-up Raids.
+- Design: [Season 1 Villages](villages/README.md).
+- Also in the docs:
   - [Enchanting](enchanting/README.md): what Villagers may never sell (Blaze Rods, Wither Skeleton Skulls, Shulker Shells, combat or loot books, enchanted gear).
-  - [vision.md](../vision.md): the September 2026 playtest, where selling everything to Villagers for Emeralds made every route end at the same activity. Open question there: which parts of Super Awesome Villagers carry over.
-  - [vision.md](../vision.md#settlements): Settlements, Prosperity and no single currency (later Season).
+  - [vision.md](../vision.md#villages-and-raids): Villages and Raids, and the September 2026 playtest, where selling everything to Villagers for Emeralds made every route end at the same activity.
 
 ### Getting around
 

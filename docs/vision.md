@@ -35,14 +35,14 @@ The design targets **motivations**, not fixed archetypes, because every real pla
 
 | Motivation | What serves it |
 | --- | --- |
-| Being near the group | A central Settlement worth living in or near; shared events |
+| Being near the group | Villages worth living in or near, run together; shared events |
 | Having space of their own | Travel tools that keep distant homes connected to the group |
 | Huge long-term projects | Bulk materials and builder tools that make large projects possible to finish, and systems that give those projects a function |
-| Growth with no cap, as long as it's useful | Settlement expansion, deep resource layers, large-scale scaling systems |
+| Growth with no cap, as long as it's useful | Village expansion, deep resource layers, large-scale scaling systems |
 | Gear and power | Strongholds, encounter loot, horizontal gear choices |
 | Collecting | A Collection Log with rewards for breadth |
 | Exploration and challenge | Dungeons and areas that unlock in sequence; structures found by learnable rules, not luck |
-| Running a settlement | Villagers who live in, use and grow with what players build |
+| Running a village | Villages that grow with what players build, quests and defence |
 | Mischief and PvP | Opt-in arenas and minigame spaces |
 | Pure building | Cheap convenience and plentiful blocks; building never requires combat |
 
@@ -91,9 +91,11 @@ Everything here except no XP is preliminary. The final shape gets settled when S
   2. Stats come from each Era's tool tier, and enchanting covers only behaviour.
   3. A stat upgrade stays, but it is discoverable in-game: in the vanilla recipe book, with tooltips that explain it.
 
-### Settlements and Raids
+### Villages and Raids
 
-Villagers move into Settlements that players build and use their buildings. A Settlement's prosperity grows with what's been built and how it's used, which unlocks trades and services. Prosperity draws Raids: wave-based group encounters that scale with the Settlement. A Raid never destroys player blocks. Walls and layout matter, fighters have a reason to defend, and everyone has a reason to show up.
+**Decided:** Villages extend vanilla villages. Every generated village counts, and players can found as many of their own as they like by bringing Villagers to a bell, alone or together. The bell is the job block of the **Steward**, one per Village, who stays near it and is the Village's interface (salary, quests, Prosperity requirements, stats); the bell keeps its vanilla behaviour. Everything is available from a single Village; biomes add only slight variety.
+
+**Leaning:** players earn Emeralds from a Village's quest board and a daily salary for what they've done for it. A Village's **Prosperity** rises in levels, each with visible requirements (Villagers, job buildings, materials) and a Raid to survive; each level raises every Villager's level and unlocks better trades. Players build the required buildings themselves in any style, or hire a Builder Villager who builds them from supplied materials. Villagers can be assigned as guards. A Raid never destroys player blocks. Walls and layout matter, fighters have a reason to defend, and everyone has a reason to show up. Details: [Season 1 Villages](season-1/villages/README.md).
 
 ### Adventuring
 
@@ -118,13 +120,15 @@ Exploration should be painless but not free. Vanilla's adventuring problems are 
 
 There is no single currency everything converts into. Each playstyle earns rewards that are useful in their own right instead of an exchange rate that can be optimized. Buyer-side income has limits. Farms are welcome but never required.
 
+**Leaning:** Emeralds stay as the Village currency, but they're earned from Villages (quests, salary, defence) rather than by selling resources, so playstyles don't become exchange rates. Villager trades stay supplemental: a way to get what a player would rather not gather, never the only sensible route.
+
 ## Seasons
 
 The game is built one Season at a time (see Constraints). Only the next Season is designed in detail.
 
 - **Season 0 (no playtest):** a Fabric client-and-server mod skeleton, a one-click modpack (Modrinth pack), a dev server on the home server PC, and the playtest scripts pointed at it. Targets the latest Minecraft version Fabric supports when work starts.
-- **Season 1, Gear:** no XP, durability that never breaks gear, and slot enchanting that starts early. It also brings in everything on the [playtest wishlist](season-1/playtest-wishlist.md): a beacon rework, a Villager trading rework, getting around (minecarts, horses, a glider or grapple), graves, survival ways to get home, to spawn and to friends, brewing, and earlier Shulker boxes. Everything else stays vanilla. The question: when enchanting is a long climb with real choices that runs through every Era, do people keep playing past where they quit last time? The mod logs what players do with each system so the playtest can tell them apart.
-- **Later, in some order:** the first Stronghold and the Nether Era, Settlements and Raids, the sky dimension, the rebuilt End.
+- **Season 1, Gear:** no XP, durability that never breaks gear, and slot enchanting that starts early. It also brings in everything on the [playtest wishlist](season-1/playtest-wishlist.md): a beacon rework, a Villager trading rework, getting around (minecarts, horses, a glider or grapple), graves, survival ways to get home, to spawn and to friends, brewing, and earlier Shulker boxes. It also brings in Villages: Prosperity, the Steward, quests and salary, Builders, guards and level-up Raids. Everything else stays vanilla. The question: when enchanting is a long climb with real choices that runs through every Era, do people keep playing past where they quit last time? The mod logs what players do with each system so the playtest can tell them apart.
+- **Later, in some order:** the first Stronghold and the Nether Era, bigger Raids, the sky dimension, the rebuilt End.
 
 ## Constraints
 
@@ -139,8 +143,8 @@ The game is built one Season at a time (see Constraints). Only the next Season i
 - What is the setting or theme that gives Eras a reason to exist?
 - How many Eras, and what does each one unlock?
 - What does each Stronghold look like as a dungeon, and how is the climax arena protected?
-- How is Settlement prosperity measured without dictating how people build?
-- What replaces the Emerald economy, and what are the limits on buyer income?
+- What exactly counts as a Village building, so Prosperity doesn't dictate how people build?
+- What caps Emerald income from quests and salary when one player runs several Villages, and which buy trades stay?
 - What are the target hours played for each Era?
 - Where do raw stats come from: Augments, enchantments, or tool tiers?
 - How much health do Heart upgrades give per dimension, and how does healing scale?

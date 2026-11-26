@@ -18,7 +18,7 @@ SuperAwesomeCraft
 │   └── Heart upgrades
 ├── World ──────────── readable generation, per-player loot, Era-gated blocks
 ├── Getting around ─── mounts, glider, rails and Travel cart, graves
-├── Settlements ────── Villagers, Prosperity, Raids, economy
+├── Villages ───────── Steward, Prosperity, quests, Raids, economy
 └── Social ─────────── Collection Log, PvP and minigames
 ```
 
@@ -30,7 +30,7 @@ SuperAwesomeCraft
 
 - **Decided:** build in Seasons with vanilla as the placeholder for anything not built yet. Fabric mod on client and server ([ADR-0001](adr/0001-fabric-client-and-server-mod.md)), shipped as a one-click modpack.
 - **Leaning:** Season 0 is setup (mod skeleton, modpack, dev server, playtest scripts).
-- **Decided:** Season 1 is Gear plus the [playtest wishlist](season-1/playtest-wishlist.md): beacons, Villager trading, getting around, graves, home/spawn/friends without commands, brewing and earlier Shulkers.
+- **Decided:** Season 1 is Gear plus the [playtest wishlist](season-1/playtest-wishlist.md): beacons, Villages (trading, Prosperity, quests, guards), getting around, graves, home/spawn/friends without commands, brewing and earlier Shulkers.
 - **Decided:** the mod keeps a playtest log of what players do (enchanting, repairs, deaths, gear snapshots), and each new system adds its own events. See [tools/playtest](../tools/playtest/README.md).
 - **Open:** order of the Seasons after Gear. Target hours of play per Era.
 
@@ -75,7 +75,7 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Stat enchantments (Efficiency, Sharpness, Protection, Power) become Augments. Behavior enchantments (Silk Touch, Fortune, Looting, Feather Falling and so on) stay and use the enchanting materials.
   - A Villager starts trading an Era's materials once a player gives it some.
   - In Season 1, librarians sell enchanting materials and new-system books; other trades stay vanilla.
-  - A Season 1 Villager trade rework in the spirit of the Super Awesome Villagers datapack (not brainstormed yet). Enchanted books are uncapped and combine at the anvil, so book prices should keep a high-level book (Efficiency V from 16 level I books) a reasonable cost, not a shortcut.
+  - A Season 1 Villager trade rework in the spirit of the Super Awesome Villagers datapack, now part of [Season 1 Villages](season-1/villages/README.md). Enchanted books are uncapped and combine at the anvil, so book prices should keep a high-level book (Efficiency V from 16 level I books) a reasonable cost, not a shortcut.
   - From the retired [library design](season-1/enchanting/retired/library.md), in case shared progress needs a boost later:
     - **Library tab:** a chest-like tab in the table showing every Chiseled Bookshelf nearby.
     - **Chipping in:** a table holds a half-paid recipe that anyone can add materials to.
@@ -127,18 +127,36 @@ Everything in Gear except no XP is preliminary until Season 1 is designed.
   - Beacon rework: range depends on the pyramid's blocks, a way to raise effect levels, maybe more effects. Haste above II moves the instant-mining line in [Season 1 enchanting](season-1/enchanting/README.md).
   - Look at potions and brewing, which went unused in the September 2026 playtest.
 
-## Settlements
+## Villages
 
+Design: [Season 1 Villages](season-1/villages/README.md).
+
+- **Decided:**
+  - Villages ship in Season 1.
+  - Villages extend vanilla villages: every generated village counts, and players found as many as they like by bringing Villagers to a bell, alone or together.
+  - The bell is the job block of the Steward, one per Village, who stays near it and is the Village's interface. The bell keeps its vanilla behaviour.
+  - Everything is available from one Village; biomes add only slight variety.
 - **Leaning:**
-  - Villagers move into player-built Settlements.
-  - Prosperity unlocks trades and services.
-  - Raids scale with Prosperity and never break blocks.
-  - No single universal currency.
+  - Emeralds come from a quest board and a daily salary for deeds around the Village, not from selling resources.
+  - Prosperity levels with Clash of Clans–style requirements (Villagers, job buildings, materials) and a Raid to survive; each level raises every Villager's level and unlocks better trades.
+  - Build required buildings yourself in any style, or hire a Builder Villager who builds them from supplied materials.
+  - Villagers can be assigned as guards, like Colony Survival.
+  - Raids never break blocks.
+- **Ideas:**
+  - One quest and salary cap per player across all Villages, with unused allowance building up for a few days.
+  - Salary from per-player, per-Village standing (quests, Raids defended, buildings, donations) rather than time or kills.
+  - Five Prosperity levels map to vanilla's five Villager levels.
+  - A building is a functional check (roof, door, light, job block, bed for houses) done once at registration, with the Steward naming what's missing.
+  - The Builder's catalogue is vanilla's village pieces for the biome; one delivery of materials; same cost as building it yourself plus a fee or wait.
+  - Guard posts are job blocks crafted from weapons; guards use a shared ammo chest; a Siege Mode equivalent stops walled-off Villages ignoring Raids; Raid strength is shown per Prosperity level.
+  - Founding by a Charter bought from an existing Steward, or leads on Villagers.
+  - An Era's decorative blocks become buyable once a player hands a Village a set amount.
+  - New Villager types beyond Steward, Builder and Guard.
 - **Open:**
-  - How is Prosperity measured without dictating how people build?
-  - Are Raids opt-in?
-  - What replaces Emeralds?
-  - What are the limits on buyer income?
+  - Prosperity requirements per level, quest types and rewards, the per-player cap.
+  - Which buy trades stay, and their caps.
+  - Is the level-up Raid a vanilla raid or a new variant?
+  - Village area, spacing, and who may use a Village's Steward, Builder and guards.
 
 ## Social
 

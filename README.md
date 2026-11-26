@@ -1,6 +1,6 @@
 # Super Awesome Craft
 
-A total conversion of Minecraft Java Edition for a small server of roughly 5 to 10 friends. It uses Minecraft as an engine and keeps vanilla's familiar moment-to-moment play, but replaces its progression with **Eras**: chains of dungeon encounters that unlock new areas, materials and systems. Living **Settlements** and **Raids** give the server shared reasons to gather.
+A total conversion of Minecraft Java Edition for a small server of roughly 5 to 10 friends. It uses Minecraft as an engine and keeps vanilla's familiar moment-to-moment play, but replaces its progression with **Eras**: chains of dungeon encounters that unlock new areas, materials and systems. Growing **Villages** and their **Raids** give the server shared reasons to gather.
 
 **Status:** Season 0. The mod removes XP, ships as a Prism modpack, and runs on a dev server.
 

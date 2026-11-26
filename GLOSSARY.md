@@ -79,17 +79,21 @@ _Avoid_: Fast minecart, locomotion cart
 **Gold rail**:
 A stronger powered rail that boosts only Travel carts beyond vanilla speed.
 
-## Settlements and social
+## Villages and social
 
-**Settlement**:
-A player-built place that Villagers move into and use. Its Prosperity unlocks trades and services, and it draws Raids.
-_Avoid_: Village, colony, base
+**Village**:
+A vanilla village, generated or founded by players bringing Villagers to a bell, extended with a Steward, Prosperity, quests and Raids. Players may run any number, alone or together.
+_Avoid_: Settlement, colony, town, base
+
+**Steward**:
+The one Villager per Village whose job block is the bell. He stays near it and is the Village's interface for salary, quests, Prosperity requirements and stats.
+_Avoid_: Chief, mayor, leader
 
 **Prosperity**:
-A Settlement's level of development, derived from what has been built and how it's used.
+A Village's level, raised by meeting that level's requirements and surviving a Raid. It raises every Villager's level and unlocks better trades.
 
 **Raid**:
-A wave-based group encounter against a Settlement that scales with its Prosperity. It never destroys player blocks.
+A wave-based group encounter against a Village that scales with its Prosperity. It never destroys player blocks.
 
 **Collection Log**:
 A per-player record of distinct items, creatures and places discovered, with rewards for breadth.
